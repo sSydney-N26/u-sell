@@ -1,79 +1,77 @@
----
+<h1>1. Database Setup Instructions (MySQL)</h1>
 
-1. Database Setup Instructions (MySQL)
+<h2>1.1 Install MySQL</h2>
+<ul>
+  <li>Download and install MySQL Community Server from: <a href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></li>
+</ul>
 
----
+<h2>1.2 Start MySQL Server</h2>
+<ul>
+  <li>macOS (if using Homebrew): <code>brew services start mysql</code></li>
+  <li>Windows: Start MySQL via Services or use <code>net start mysql</code></li>
+</ul>
 
-1.1 Install MySQL:
+<h3>Verify MySQL is Running</h3>
+<ul>
+  <li>Run: <code>mysqladmin ping -u root -p</code></li>
+  <li>If the server is running, it will respond with: <code>mysqld is alive</code></li>
+</ul>
 
-- Download and install MySQL Community Server from:
-  https://dev.mysql.com/downloads/mysql/
+<h2>1.3 Create the Sample Database and Table</h2>
+<ul>
+  <li>Open a terminal and log in to MySQL:</li>
+  <pre><code>mysql -u root -p</code></pre>
+  <li>Run the following SQL commands:</li>
+  <pre><code>
+CREATE DATABASE testDB;
+USE testDB;
 
-  1.2 Start MySQL Server:
-
-- macOS (if using Homebrew): brew services start mysql
-- Windows: Start MySQL via Services or use `net start mysql`
-
-- To confirm MySQL is running, run:
-
-  mysqladmin ping -u root -p
-
-  If the server is running, it will respond with:
-  mysqld is alive
-
-  1.3 Create the sample database and table:
-
-- Open a terminal and log in to MySQL:
-
-  mysql -u root -p
-
-- Then run the following SQL commands:
-
-  CREATE DATABASE testDB;
-  USE testDB;
-
-  CREATE TABLE student (
+CREATE TABLE student (
   uid DECIMAL(3, 0) NOT NULL PRIMARY KEY,
   name VARCHAR(30),
   score DECIMAL(3, 2)
-  );
+);
 
-  INSERT INTO student VALUES (1, 'alice', 0.1);
-  INSERT INTO student VALUES (2, 'bob', 0.4);
+INSERT INTO student VALUES (1, 'alice', 0.1);
+INSERT INTO student VALUES (2, 'bob', 0.4);
+  </code></pre>
+</ul>
 
----
+<hr>
 
-2. Application Setup (Next.js)
+<h1>2. Application Setup (Next.js)</h1>
 
----
+<h2>2.1 Prerequisites</h2>
+<ul>
+  <li>Node.js and npm installed</li>
+</ul>
 
-2.1 Prerequisites:
+<h2>2.2 Install Dependencies</h2>
+<ul>
+  <li>In your project directory, run:</li>
+  <pre><code>
+npm install
+npm install mysql2
+  </code></pre>
+</ul>
 
-- Node.js and npm installed
+<h2>2.3 Start the Development Server</h2>
+<pre><code>npm run dev</code></pre>
 
-  2.2 Install dependencies:
+<h2>2.4 API Route Setup</h2>
+<ul>
+  <li>API route located at: <code>app/api/test-connection/route.ts</code></li>
+  <li>Connects to the <code>testDB</code> MySQL database and runs a query:</li>
+  <pre><code>SELECT uid, name, score FROM student;</code></pre>
+</ul>
 
-- In your project directory, run:
+<h2>2.5 Frontend</h2>
+<ul>
+  <li>Located in: <code>app/page.tsx</code></li>
+  <li>On page load, it fetches from <code>/api/test-connection</code> and displays a list of students.</li>
+</ul>
 
-  npm install
-  npm install mysql2
-
-  2.3 Start the development server:
-
-  npm run dev
-
-  2.4 API Route Setup:
-
-- API route located at: app/api/test-connection/route.ts
-- Connects to the `testDB` MySQL database and runs a query:
-
-  SELECT uid, name, score FROM student;
-
-  2.5 Frontend:
-
-- Located in: app/page.tsx
-- On page load, it fetches from `/api/test-connection` and displays a list of students.
-
-  2.6 Test the app:
-
-- Open a browser and go to: http://localhost:3000
+<h2>2.6 Test the App</h2>
+<ul>
+  <li>Open a browser and go to: <a href="http://localhost:3000">http://localhost:3000</a></li>
+</ul>
