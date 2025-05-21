@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+1. Database Setup Instructions (MySQL)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1.1 Install MySQL:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Download and install MySQL Community Server from:
+  https://dev.mysql.com/downloads/mysql/
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  1.2 Start MySQL Server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- macOS (if using Homebrew): brew services start mysql
+- Windows: Start MySQL via Services or use `net start mysql`
 
-## Learn More
+- To confirm MySQL is running, run:
 
-To learn more about Next.js, take a look at the following resources:
+  mysqladmin ping -u root -p
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  If the server is running, it will respond with:
+  mysqld is alive
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  1.3 Create the sample database and table:
 
-## Deploy on Vercel
+- Open a terminal and log in to MySQL:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  mysql -u root -p
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Then run the following SQL commands:
+
+  CREATE DATABASE testDB;
+  USE testDB;
+
+  CREATE TABLE student (
+  uid DECIMAL(3, 0) NOT NULL PRIMARY KEY,
+  name VARCHAR(30),
+  score DECIMAL(3, 2)
+  );
+
+  INSERT INTO student VALUES (1, 'alice', 0.1);
+  INSERT INTO student VALUES (2, 'bob', 0.4);
+
+---
+
+2. Application Setup (Next.js)
+
+---
+
+2.1 Prerequisites:
+
+- Node.js and npm installed
+
+  2.2 Install dependencies:
+
+- In your project directory, run:
+
+  npm install
+  npm install mysql2
+
+  2.3 Start the development server:
+
+  npm run dev
+
+  2.4 API Route Setup:
+
+- API route located at: app/api/test-connection/route.ts
+- Connects to the `testDB` MySQL database and runs a query:
+
+  SELECT uid, name, score FROM student;
+
+  2.5 Frontend:
+
+- Located in: app/page.tsx
+- On page load, it fetches from `/api/test-connection` and displays a list of students.
+
+  2.6 Test the app:
+
+- Open a browser and go to: http://localhost:3000
