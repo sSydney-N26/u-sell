@@ -7,8 +7,7 @@
 
 <h2>1.2 Start MySQL Server</h2>
 <ul>
-  <li>macOS (if using Homebrew): <code>brew services start mysql</code></li>
-  <li>Windows: Start MySQL via Services or use <code>net start mysql</code></li>
+  <li>Run: <code>mysql -u root -p</code></li>
 </ul>
 
 <h3>Verify MySQL is Running</h3>
@@ -20,7 +19,7 @@
 <h2>1.3 Create the Sample Database and Table</h2>
 <ul>
   <li>Open a terminal and log in to MySQL:</li>
-  <pre><code>mysql -u root -p</code></pre>
+  <pre><code>mysql -u root -p (or sudo mysql -u root)</code></pre>
   <li>Run the following SQL commands:</li>
   <pre><code>
 CREATE DATABASE testDB;
