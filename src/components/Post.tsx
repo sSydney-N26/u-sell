@@ -40,7 +40,7 @@ export default function Post(post: PostInfo) {
             ${post.price}
           </span>
           <span
-            className="shadow-s shadow-amber-50 bg-pink-200
+            className="shadow-s shadow-amber-50 bg-amber-300
             uppercase text-sm text-gray-900 rounded-2xl font-bold mb-5 p-4"
           >
             {post.category}

@@ -1,4 +1,5 @@
 export const CATEGORIES = [
+    "All Listings",
     "Electronics",
     "Books",
     "Appliances",
