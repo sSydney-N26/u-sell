@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export interface PostInfo {
-  id: number;
   imageUrl: string;
   title: string;
   description: string;

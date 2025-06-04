@@ -14,6 +14,10 @@ export default function Listings() {
       ? mockListings
       : mockListings.filter((curr) => curr.category === currentFilter);
 
+  const handleClick = (category: string) => {
+    setCurrentFilter(category);
+  };
+
   return (
     <div>
       <div className="flex p-5 m-5 justify-between">
@@ -21,7 +25,7 @@ export default function Listings() {
           <FilterButton
             key={index}
             category={cat.value}
-            handleClick={() => setCurrentFilter(cat.value)}
+            handleClick={() => handleClick(cat.value)}
           />
         ))}
       </div>
@@ -29,12 +33,11 @@ export default function Listings() {
       <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
         {filteredListings.map((listing, id) => (
           <li
-            key={listing.id}
+            key={`${listing.title}-${id}-${listing.title}`}
             className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50
                       shadow-s overflow-hidden hover:shadow-lg transition hover:scale-105"
           >
             <Post
-              id={id}
               imageUrl={listing.imageUrl}
               title={listing.title}
               description={listing.description}
