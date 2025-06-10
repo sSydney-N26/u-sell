@@ -36,6 +36,27 @@ INSERT INTO student VALUES (2, 'bob', 0.4);
   </code></pre>
 </ul>
 
+<h2>1.4 Setup Mock Database and Schema</h2>
+<ul>
+  <li>Make the script executable:</>
+  <pre><code>chmod +x src/app/db/setup-db.sh</code></pre>
+  <li>Run the setup script to create the mock database and insert sample data:</li>
+  <pre><code>./src/app/db/setup-db.sh</code></pre>
+  <li>This script will drop the existing `u_sell` database, recreate it, and populate it with the schema and mock data.</li>
+</ul>
+
+<h2>1.5 Test Queries with Mock Data</h2>
+<ul>
+  <li>Connect to the `u_sell` database:</li>
+  <pre><code>mysql -u root</code></pre>
+  <pre><code>USE u_sell;</code></pre>
+  <li>Run SQL queries to test the mock data. For example:</li>
+  <pre><code>
+SELECT * FROM Users;
+SELECT * FROM Listing;
+  </code></pre>
+</ul>
+
 <hr>
 
 <h1>2. Application Setup (Next.js)</h1>
