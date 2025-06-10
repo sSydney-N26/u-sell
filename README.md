@@ -53,7 +53,16 @@ INSERT INTO student VALUES (2, 'bob', 0.4);
   <li>Run SQL queries to test the mock data. For example:</li>
   <pre><code>
 SELECT * FROM Users;
-SELECT * FROM Listing;
+  </code></pre>
+  this should return:
+  <pre><code>
++-----------+----------+--------------------+------------------------+------+---------------------+
+| uid       | username | email              | program                | year | created_at          |
++-----------+----------+--------------------+------------------------+------+---------------------+
+| uid_alice | alice    | alice@uwaterloo.ca | Computer Science       |    2 | 2025-06-10 10:50:09 |
+| uid_bob   | bob      | bob@uwaterloo.ca   | Electrical Engineering |    3 | 2025-06-10 10:50:09 |
+| uid_carol | carol    | carol@uwaterloo.ca | Mechanical Engineering |    1 | 2025-06-10 10:50:09 |
++-----------+----------+--------------------+------------------------+------+---------------------+
   </code></pre>
 </ul>
 
