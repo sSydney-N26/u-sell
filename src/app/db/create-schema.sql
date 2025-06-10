@@ -10,12 +10,12 @@ CREATE TABLE Users (
 
 -- Product Types table
 CREATE TABLE ProductType (
-    type VARCHAR(50) PRIMARY KEY,
+    type VARCHAR(50) PRIMARY KEY
 );
 
 -- Product Conditions table
-CREATE TABLE Condition (
-    type ENUM('new', 'like new', 'gently used', "fair",) PRIMARY KEY -- TODO: feel free to add more values/change it up!
+CREATE TABLE `Condition` (
+    type ENUM('new', 'like new', 'gently used', 'fair', 'poor') PRIMARY KEY -- TODO: feel free to add more values/change it up!
 );
 
 -- Listings table
@@ -33,7 +33,7 @@ CREATE TABLE Listing (
     status ENUM('for sale', 'pending', 'sold') DEFAULT 'for sale',
     image_storage_ref VARCHAR(255), -- Firebase Storage reference/ID for the image
     FOREIGN KEY (type) REFERENCES ProductType(type),
-    FOREIGN KEY (product_condition) REFERENCES Condition(type),
+    FOREIGN KEY (product_condition) REFERENCES `Condition`(type),
     FOREIGN KEY (posted_by) REFERENCES Users(uid)
 );
 
