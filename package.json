@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@firebase/auth": "^1.10.6",
+    "crypto-js": "^4.2.0",
+    "firebase": "^11.8.1",
     "mysql2": "^3.14.1",
     "next": "15.3.2",
     "react": "^19.0.0",
