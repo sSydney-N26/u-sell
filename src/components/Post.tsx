@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export interface PostInfo {
-  imageUrl: string;
+  imageUrl?: string;
   title: string;
   description: string;
   price: number;
@@ -13,11 +13,20 @@ export interface PostInfo {
 export default function Post(post: PostInfo) {
   return (
     <div className="w-full relative bg-white">
-      <Image
-        src={post.imageUrl}
-        alt={post.title}
-        className="w-full h-full border-2 rounded-md object-cover"
-      />
+      {post.imageUrl ? (
+        <Image
+          src={post.imageUrl}
+          alt={post.title}
+          className="w-full h-full border-2 rounded-md object-cover"
+        />
+      ) : (
+        <div className="w-full h-48 bg-gray-200 border-2 rounded-md flex items-center justify-center">
+          <div className="text-center text-gray-500">
+            <div className="text-4xl mb-2">📦</div>
+            <p className="text-sm">No Image Available</p>
+          </div>
+        </div>
+      )}
       {post.sold && (
         <span
           className="

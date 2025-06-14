@@ -1,8 +1,12 @@
 "use client";
 
+import Navigation from "@/components/Navigation";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
+      <Navigation />
+
       {/* Hero Section */}
       <div
         className="relative bg-gradient-to-r from-yellow-400 to-yellow-500"
