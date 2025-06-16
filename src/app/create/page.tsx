@@ -8,13 +8,13 @@ export default function CreateListingPage() {
 
   const [formData, setFormData] = useState({
     type: "Electronics", 
-    price: 0,
+    price: 0.01,
     title: "",
     description: "",
-    product_condition: "like new", 
+    product_condition: "like new",  
     quantity: 1,
     location: "",
-    posted_by: "uid_alice", // TODO
+    posted_by: "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", // TODO
     status: "for sale",
     image_storage_ref: "",
   });
@@ -61,8 +61,15 @@ export default function CreateListingPage() {
         placeholder="Price"
         className="w-full mb-3 p-2 border rounded bg-white text-black"
         type="number"
+        min="0.01"
+        step="0.01"
         value={formData.price}
-        onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
+        onChange={(e) =>
+          setFormData({
+            ...formData,
+            price: Math.max(0, parseFloat(e.target.value) || 0),
+          })
+        }
       />
 
       <textarea

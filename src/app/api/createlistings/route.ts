@@ -72,7 +72,7 @@ export async function GET(request : NextRequest) {
 const dbConfig = {
   host: "localhost",
   user: "admin",
-  password: "admin",
+  password: "admin1!",
   database: "u_sell",
 };
 
@@ -81,9 +81,10 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     console.log("Received body:", body);
+
     const {
       type,
-      price,
+      price, // TODO
       title,
       description,
       product_condition,
@@ -91,15 +92,16 @@ export async function POST(req: Request) {
       location,
       posted_by,
       status = "for sale",
-      image_storage_ref = null,
+      image_storage_ref = null, // TODO
     } = body;
 
     if (!type || !price || !title || !description || !product_condition || !location || !posted_by) {
+      console.log("Missing required fields");
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     const connection = await mysql.createConnection(dbConfig);
-
+    
     await connection.execute(
       `INSERT INTO Listing (type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
