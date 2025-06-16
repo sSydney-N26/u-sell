@@ -25,7 +25,7 @@ export default function CreateListingPage() {
         return;
     }
 
-    const res = await fetch("/api/listings", {
+    const res = await fetch("/api/createlistings", {
         
       method: "POST",
       headers: { "Content-Type": "application/json" },
