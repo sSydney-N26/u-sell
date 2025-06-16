@@ -38,8 +38,17 @@ export default function CreateListingPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto py-10 px-6">
-      <h1 className="text-2xl font-bold mb-6">Create New Listing</h1>
+      <div className="max-w-xl mx-auto py-10 px-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Create New Listing</h1>
+          <button
+            onClick={() => router.push("/")}
+            className="text-white text-xl hover:text-gray-300"
+            aria-label="Cancel and return home"
+          >
+            ✕
+          </button>
+      </div>
 
       <input
         placeholder="Title"
