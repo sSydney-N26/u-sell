@@ -1,19 +1,20 @@
 //Listings page
 
-'use client';
+"use client";
 
-import Post from '@/components/Post';
-import FilterButton from '@/components/FilterButton';
-import { useState } from 'react';
-import { mockListings } from '@/utils/mocklistings';
-import { CATEGORIES_MAP } from '@/utils/categories';
-import Link from 'next/link';
+import Post from "@/components/Post";
+import FilterButton from "@/components/FilterButton";
+import Navigation from "@/components/Navigation";
+import { useState } from "react";
+import { mockListings } from "@/utils/mocklistings";
+import { CATEGORIES_MAP } from "@/utils/categories";
+import Link from "next/link";
 
 export default function Listings() {
-  const [currentFilter, setCurrentFilter] = useState('All Listings');
+  const [currentFilter, setCurrentFilter] = useState("All Listings");
 
   const filteredListings =
-    currentFilter === 'All Listings'
+    currentFilter === "All Listings"
       ? mockListings
       : mockListings.filter((curr) => curr.category === currentFilter);
 
@@ -23,6 +24,7 @@ export default function Listings() {
 
   return (
     <div>
+      <Navigation />
       <div className="flex p-5 m-5 justify-between">
         {CATEGORIES_MAP.map((cat, index) => (
           <FilterButton
