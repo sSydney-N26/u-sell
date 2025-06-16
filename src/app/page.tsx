@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import Navigation from "@/components/Navigation";
 
@@ -23,12 +24,14 @@ export default function HomePage() {
               and buyers in a safe, easy-to-use platform.
             </p>
             <div className="mt-10 flex justify-center gap-4">
-              <button
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-yellow-400 bg-black hover:bg-gray-800 md:py-4 md:text-lg md:px-10"
-                style={{ color: "#FED34C" }}
-              >
-                Create Listing
-              </button>
+              <Link href="/create">
+                <button
+                  className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-yellow-400 bg-black hover:bg-gray-800 md:py-4 md:text-lg md:px-10"
+                  style={{ color: "#FED34C" }}
+                >
+                  Create Listing
+                </button>
+              </Link>
               <button
                 className="px-8 py-3 border border-black text-base font-medium rounded-md text-black hover:bg-black hover:text-yellow-400 md:py-4 md:text-lg md:px-10"
                 style={{ borderColor: "#000000", color: "#000000" }}
@@ -115,12 +118,14 @@ export default function HomePage() {
               Join our community of buyers and sellers today.
             </p>
             <div className="mt-8">
-              <button
-                className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-black bg-yellow-400 hover:bg-yellow-300 md:py-4 md:text-lg md:px-10"
-                style={{ backgroundColor: "#FED34C", color: "#000000" }}
-              >
-                Create Your First Listing
-              </button>
+              <Link href="/create">
+                <button
+                  className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-black bg-yellow-400 hover:bg-yellow-300 md:py-4 md:text-lg md:px-10"
+                  style={{ backgroundColor: "#FED34C", color: "#000000" }}
+                >
+                  Create Your First Listing
+                </button>
+              </Link>
             </div>
           </div>
         </div>
