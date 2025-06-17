@@ -12,7 +12,7 @@ CREATE TABLE Users (
 
 -- Product Types table
 CREATE TABLE ProductType (
-    type VARCHAR(50) PRIMARY KEY
+    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') PRIMARY KEY -- TODO: feel free to add more values/change it up!
 );
 
 -- Product Conditions table
@@ -23,7 +23,7 @@ CREATE TABLE `Condition` (
 -- Listings table
 CREATE TABLE Listing (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(50), -- TODO: not sure about this, do we want to have a separate table with fixed options for this?
+    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc'),
     price FLOAT NOT NULL,
     title VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
