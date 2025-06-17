@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import pool from "@/lib/db-config";
 import mysql from "mysql2/promise";
 
 const dbConfig = {
@@ -29,10 +30,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const connection = await mysql.createConnection(dbConfig);
+    //const connection = await mysql.createConnection(dbConfig);
 
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.execute(
         "SELECT uid, username, email, program, year, created_at FROM Users WHERE uid = ?",
         [uid]
       );
@@ -50,8 +51,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch user data" },
         { status: 500 }
       );
-    } finally {
-      await connection.end();
     }
   } catch (error) {
     console.error("API error:", error);
@@ -71,10 +70,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const connection = await mysql.createConnection(dbConfig);
+    //const connection = await mysql.createConnection(dbConfig);
 
     try {
-      await connection.execute(
+      await pool.query(
         "INSERT INTO Users (uid, username, email, program, year, created_at) VALUES (?, ?, ?, ?, ?, NOW())",
         [uid, username, email, program, year]
       );
@@ -107,8 +106,6 @@ export async function POST(request: NextRequest) {
         { error: "Failed to sync Firebase user to MySQL" },
         { status: 500 }
       );
-    } finally {
-      await connection.end();
     }
   } catch (error) {
     console.error("API error:", error);
