@@ -88,14 +88,14 @@ export async function POST(req: Request) {
       title,
       description,
       product_condition,
-      quantity = 1,
+      quantity,
       location,
       posted_by,
       status = "for sale",
       image_storage_ref = null, // TODO
     } = body;
 
-    if (!type || !price || !title || !description || !product_condition || !location || !posted_by) {
+    if (!type || price < 0 || !title || !description || !product_condition || !location || !posted_by) {
       console.log("Missing required fields");
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }

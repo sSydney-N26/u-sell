@@ -2,22 +2,61 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "@/lib/firebase/config";
+import { uploadImageToFirebase } from "@/lib/firebase/UploadImage";
+
 
 export default function CreateListingPage() {
   const router = useRouter();
+  const [isImageUploading, setIsImageUploading] = useState(false);
 
   const [formData, setFormData] = useState({
     type: "Electronics", 
-    price: 0.01,
+    price: 0,
     title: "",
     description: "",
     product_condition: "like new",  
     quantity: 1,
     location: "",
-    posted_by: "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", // TODO
+    posted_by: "uid_alice", // TODO
     status: "for sale",
     image_storage_ref: "",
   });
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+
+      if (!file) {
+        console.warn("No file selected.");
+        return;
+      }
+
+      console.log("File received:", file);
+      console.log("File type:", file.type);
+      console.log("File size (bytes):", file.size);
+
+      setIsImageUploading(true);
+
+      try {
+        const blob = file.slice(); // This is redundant in browsers but shown for debug
+        console.log("Blob created from file:", blob);
+
+        const url = await uploadImageToFirebase(blob as File); // ensure blob is a File-like object
+        setFormData((prev) => ({ ...prev, image_storage_ref: url }));
+
+        console.log("Image successfully uploaded to Firebase.");
+        console.log("Download URL:", url);
+      } catch (err) {
+        console.error("Image upload failed:", err);
+        alert("Image upload failed. See console for details.");
+      } finally {
+        setIsImageUploading(false);
+        console.log("Upload process complete.");
+      }
+    };
+
+
 
   const handleSubmit = async () => {
     if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(formData.price)) {
@@ -96,56 +135,79 @@ export default function CreateListingPage() {
 
       <div className="mb-3">
         <label
-            htmlFor="file-upload"
-            className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded hover:bg-yellow-300"
+          htmlFor="file-upload"
+          className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded hover:bg-yellow-300"
         >
-            {formData.image_storage_ref ? "Image Selected ✔️" : "Upload Image"}
+          {formData.image_storage_ref
+            ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
+            : "Upload Image"}
         </label>
 
-        {/* TODO: Uploading into Firebase */}
         <input
-            id="file-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => {
             const file = e.target.files?.[0];
-            if (file) {
-                const filename = file.name;
-                setFormData({ ...formData, image_storage_ref: `images/${filename}` });
-                console.log("Selected file:", file);
+            if (!file) {
+              alert("No file selected.");
+              return;
             }
-            }}
+
+            // Just show filename for now
+            setFormData({
+              ...formData,
+              image_storage_ref: `images/${Date.now()}-${file.name}`,
+            });
+
+            console.log("File selected:", file.name);
+          }}
         />
+      </div>
 
-        {/* Placeholder. Firebase setup is below () */}
-        {formData.image_storage_ref && (
-            <p className="text-sm mt-1 text-gray-700">
-            Selected file: <span className="font-medium">{formData.image_storage_ref.split("/").pop()}</span>
-            </p>
-        )}
+    {/* <div className="mb-3">
+      <label
+        htmlFor="file-upload"
+        className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded hover:bg-yellow-300"
+      >
+        {isImageUploading
+      ? "Uploading..."
+      : formData.image_storage_ref
+        ? "Image Selected ✔️"
+        : "Upload Image"}
+      </label>
 
-            {/* {formData.image_storage_ref && (
-            <>
-            <p className="text-sm mt-1 text-gray-700">
-                File URL:{" "}
-                <a
-                href={formData.image_storage_ref}
-                target="_blank"
-                className="text-blue-600 underline"
-                >
-                {formData.image_storage_ref.split("/").pop()}
-                </a>
-            </p>
-            <img
-                src={formData.image_storage_ref}
-                alt="Uploaded Preview"
-                className="mt-2 w-32 h-32 object-cover rounded shadow"
-            />
-            </>
-        )} */}
-    </div>
-        
+      <input
+        id="file-upload"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleImageUpload}
+      />
+
+      {formData.image_storage_ref && (
+        <>
+          <p className="text-sm mt-1 text-gray-700">
+            File URL:{" "}
+            <a
+              href={formData.image_storage_ref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline"
+            >
+              {formData.image_storage_ref.split("/").pop()}
+            </a>
+          </p>
+          <img
+            src={formData.image_storage_ref}
+            alt="Uploaded Preview"
+            className="mt-2 w-32 h-32 object-cover rounded shadow"
+          />
+        </>
+      )}
+    </div> */}
+  
     <select
         className="w-full mb-3 p-2 border rounded bg-white text-black"
         value={formData.type}
