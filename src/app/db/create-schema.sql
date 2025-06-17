@@ -1,4 +1,6 @@
 -- Users table
+DROP TABLE IF EXISTS Users, ProductType, `Condition`, Listing, Admin;
+
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY, -- TODO: not too sure about this, based on Firebase UID
     username VARCHAR(50) NOT NULL UNIQUE,
