@@ -1,27 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import mysql from "mysql2/promise";
-
-const dbConfig = {
-  host: "localhost",
-  user: "admin",
-  password: "admin1!",
-  database: "u_sell",
-};
-
-interface UserListing {
-  id: number;
-  type: string;
-  price: number;
-  title: string;
-  description: string;
-  product_condition: string;
-  quantity: number;
-  location: string;
-  posted_date: Date;
-  posted_by: string;
-  status: string;
-  image_storage_ref: string | null;
-}
+import pool from "@/lib/db-config";
+import UserListing from "@/utils/types/userListing";
 
 export async function GET(request: NextRequest) {
   try {
@@ -35,10 +14,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const connection = await mysql.createConnection(dbConfig);
-
     try {
-      const [rows] = await connection.execute(
+      const [rows] = await pool.query(
         `SELECT 
           id, type, price, title, description, product_condition, 
           quantity, location, posted_date, posted_by, status, image_storage_ref
@@ -57,8 +34,6 @@ export async function GET(request: NextRequest) {
         { error: "Failed to fetch user listings" },
         { status: 500 }
       );
-    } finally {
-      await connection.end();
     }
   } catch (error) {
     console.error("API error:", error);

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export interface PostInfo {
-  imageUrl?: string;
+  imageUrl: string | null;
   title: string;
   description: string;
   price: number;
@@ -17,7 +17,7 @@ export default function Post(post: PostInfo) {
         <Image
           src={post.imageUrl}
           alt={post.title}
-          className="w-full h-full border-2 rounded-md object-cover"
+          className="w-full h-full border-1 rounded-md object-cover"
         />
       ) : (
         <div className="w-full h-48 bg-gray-200 border-2 rounded-md flex items-center justify-center">

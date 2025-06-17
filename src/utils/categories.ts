@@ -1,11 +1,11 @@
 export const CATEGORIES = [
     "All Listings",
+    "School Supplies",
+    "Furniture",
+    "Kitchen",
     "Electronics",
-    "Books",
-    "Appliances",
-    "Clothes",
-    "Accessories",
-    "Food"
+    "Clothing",
+    "Misc",
 ]
 
 export const CATEGORIES_MAP = CATEGORIES.map(category => ({

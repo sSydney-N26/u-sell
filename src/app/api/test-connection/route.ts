@@ -1,19 +1,12 @@
 import { NextResponse } from "next/server";
-import mysql from "mysql2/promise";
+import pool from "@/lib/db-config";
 
 export async function GET() {
   try {
-    const connection = await mysql.createConnection({
-      host: "localhost",
-      user: "admin",
-      password: "admin1!",
-      database: "testDB",
-    });
 
-    const [rows] = await connection.execute(
+    const [rows] = await pool.query(
       "SELECT uid, name, score FROM student"
     );
-    await connection.end();
 
     return NextResponse.json({ students: rows });
   } catch (error) {

@@ -30,8 +30,28 @@ VALUES
   ('School Supplies', 40.00, 'CS 246 Textbook', 'Used for one term, some highlights', 'gently used', 1, 'UWaterloo SLC', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'for sale', 'images/cs246.jpg'),
   ('Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'uid_bob', 'for sale', 'images/chair.jpg'),
   ('Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'uid_carol', 'pending', 'images/toaster.jpg'),
-  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg');
-
+  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('School Supplies', 40.00, 'CS 246 Textbook', 'Used for one term, some highlights', 'gently used', 1, 'UWaterloo SLC', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'for sale', 'images/cs246.jpg'),
+  ('Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'uid_bob', 'for sale', 'images/chair.jpg'),
+  ('Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'uid_carol', 'pending', 'images/toaster.jpg'),
+  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('School Supplies', 40.00, 'CS 246 Textbook', 'Used for one term, some highlights', 'gently used', 1, 'UWaterloo SLC', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'for sale', 'images/cs246.jpg'),
+  ('Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'uid_bob', 'for sale', 'images/chair.jpg'),
+  ('Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'uid_carol', 'pending', 'images/toaster.jpg'),
+  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('School Supplies', 40.00, 'CS 246 Textbook', 'Used for one term, some highlights', 'gently used', 1, 'UWaterloo SLC', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'for sale', 'images/cs246.jpg'),
+  ('Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'uid_bob', 'for sale', 'images/chair.jpg'),
+  ('Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'uid_carol', 'pending', 'images/toaster.jpg'),
+  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('School Supplies', 40.00, 'CS 246 Textbook', 'Used for one term, some highlights', 'gently used', 1, 'UWaterloo SLC', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'for sale', 'images/cs246.jpg'),
+  ('Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'uid_bob', 'for sale', 'images/chair.jpg'),
+  ('Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'uid_carol', 'pending', 'images/toaster.jpg'),
+  ('Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg'),
+  ('Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'sold', 'images/speaker.jpg');
 -- === Admins ===
 INSERT INTO Admin (admin_id)
 VALUES
