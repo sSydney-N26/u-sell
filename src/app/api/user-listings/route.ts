@@ -17,10 +17,10 @@ export async function GET(request: NextRequest) {
     try {
       const [rows] = await pool.query(
         `SELECT 
-          id, type, price, title, description, product_condition, 
+          seller_id, id, type, price, title, description, product_condition, 
           quantity, location, posted_date, posted_by, status, image_storage_ref
          FROM Listing 
-         WHERE posted_by = ? 
+         WHERE seller_id = ? 
          ORDER BY posted_date DESC`,
         [uid]
       );

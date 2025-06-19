@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db-config";
-import mysql from "mysql2/promise";
-
-const dbConfig = {
-  host: "localhost",
-  user: "admin",
-  password: "admin1!",
-  database: "u_sell",
-};
 
 interface UserData {
   uid: string;
