@@ -27,3 +27,7 @@ ORDER BY posted_date ASC LIMIT 12 OFFSET 2;
 SELECT COUNT(*) AS totalItems
 FROM Listing
 WHERE type = "Electronics";
+
+SELECT COUNT(*) AS totalItems
+FROM Listing
+WHERE type = ?;
