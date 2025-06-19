@@ -81,7 +81,9 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("Received body:", body);
 
+    // TODO: In future, integrate with firebase so we can set 'posted_by' to be the username of the firebase user
     const {
+      seller_id,
       type,
       price, // TODO
       title,
@@ -102,9 +104,9 @@ export async function POST(req: Request) {
     const connection = await mysql.createConnection(dbConfig);
     
     await connection.execute(
-      `INSERT INTO Listing (type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref]
+      `INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref]
     );
 
     await connection.end();
