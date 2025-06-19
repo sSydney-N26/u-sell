@@ -44,9 +44,9 @@ SELECT * FROM Users;
 +-----------+----------+--------------------+------------------------+------+---------------------+
 | uid       | username | email              | program                | year | created_at          |
 +-----------+----------+--------------------+------------------------+------+---------------------+
-| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | alice    | alice@uwaterloo.ca | Computer Science       |    2 | 2025-06-10 10:50:09 |
-| uid_bob   | bob      | bob@uwaterloo.ca   | Electrical Engineering |    3 | 2025-06-10 10:50:09 |
-| uid_carol | carol    | carol@uwaterloo.ca | Mechanical Engineering |    1 | 2025-06-10 10:50:09 |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | Alice    | alice@uwaterloo.ca | Computer Science       |    2 | 2025-06-10 10:50:09 |
+| uid_bob   | Bob      | bob@uwaterloo.ca   | Electrical Engineering |    3 | 2025-06-10 10:50:09 |
+| uid_carol | Carol    | carol@uwaterloo.ca | Mechanical Engineering |    1 | 2025-06-10 10:50:09 |
 +-----------+----------+--------------------+------------------------+------+---------------------+
   </code></pre>
 </ul>
