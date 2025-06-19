@@ -1,0 +1,23 @@
++----+-----------------+-------+-------------------+--------------------------------------+-------------------+----------+----------------------------------+---------------------+-----------+----------+
+| id | type            | price | title             | description                          | product_condition | quantity | location                         | posted_date         | posted_by | status   |
++----+-----------------+-------+-------------------+--------------------------------------+-------------------+----------+----------------------------------+---------------------+-----------+----------+
+| 24 | Electronics     |   100 | Bluetooth Speaker | Bass heavy, battery still good       | fair              |        1 | UWaterloo Dana Porter Library    | 2025-06-19 00:38:28 | Alice     | sold     |
+| 23 | Kitchen         |    10 | Toaster           | Still works perfectly, just upgraded | fair              |        1 | Village 1                        | 2025-06-19 00:38:28 | Carol     | pending  |
+| 22 | Furniture       |    25 | IKEA Chair        | Sturdy and clean                     | like new          |        1 | Off-campus housing near Columbia | 2025-06-19 00:38:28 | Bob       | for sale |
+| 21 | School Supplies |    40 | CS 246 Textbook   | Used for one term, some highlights   | gently used       |        1 | UWaterloo SLC                    | 2025-06-19 00:38:28 | Alice     | for sale |
+| 20 | Misc            |   150 | Hair Dryer        | Dyson Hair Dryer                     | fair              |        1 | UWaterloo Dana Porter Library    | 2025-06-19 00:38:28 | Alice     | sold     |
+| 19 | Electronics     |   100 | Bluetooth Speaker | Bass heavy, battery still good       | fair              |        1 | UWaterloo Dana Porter Library    | 2025-06-19 00:38:28 | Alice     | sold     |
+| 18 | Kitchen         |    10 | Toaster           | Still works perfectly, just upgraded | fair              |        1 | Village 1                        | 2025-06-19 00:38:28 | Carol     | pending  |
+| 17 | Furniture       |    25 | IKEA Chair        | Sturdy and clean                     | like new          |        1 | Off-campus housing near Columbia | 2025-06-19 00:38:28 | Bob       | for sale |
+| 16 | School Supplies |    40 | CS 246 Textbook   | Used for one term, some highlights   | gently used       |        1 | UWaterloo SLC                    | 2025-06-19 00:38:28 | Alice     | for sale |
+| 15 | Misc            |   150 | Hair Dryer        | Dyson Hair Dryer                     | fair              |        1 | UWaterloo Dana Porter Library    | 2025-06-19 00:38:28 | Alice     | sold     |
+| 14 | Electronics     |   100 | Bluetooth Speaker | Bass heavy, battery still good       | fair              |        1 | UWaterloo Dana Porter Library    | 2025-06-19 00:38:28 | Alice     | sold     |
+|  1 | School Supplies |    40 | CS 246 Textbook   | Used for one term, some highlights   | gently used       |        1 | UWaterloo SLC                    | 2025-06-19 00:38:28 | Alice     | for sale |
++----+-----------------+-------+-------------------+--------------------------------------+-------------------+----------+----------------------------------+---------------------+-----------+----------+
+
+
++------------+
+| totalItems |
++------------+
+|          5 |
++------------+
