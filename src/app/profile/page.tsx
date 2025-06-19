@@ -38,6 +38,9 @@ export default function ProfilePage() {
   const [userListings, setUserListings] = useState<DatabaseListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -104,6 +107,42 @@ export default function ProfilePage() {
   const soldPosts = userListings
     .filter((listing) => listing.status === "sold")
     .map(convertToPostInfo);
+
+  // Handler to open confirmation modal
+  const openConfirm = (listingId: number) => {
+    setPendingDeleteId(listingId);
+    setShowConfirm(true);
+  };
+
+  // Handler to close confirmation modal
+  const closeConfirm = () => {
+    setShowConfirm(false);
+    setPendingDeleteId(null);
+  };
+
+  // Handler to actually delete after confirmation
+  const confirmDelete = async () => {
+    if (pendingDeleteId === null) return;
+    setDeletingId(pendingDeleteId);
+    setShowConfirm(false);
+    try {
+      const res = await fetch(
+        `/api/user-listings?uid=${user?.uid}&id=${pendingDeleteId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to delete listing");
+      }
+      setUserListings((prev) => prev.filter((l) => l.id !== pendingDeleteId));
+    } catch {
+      alert("Error deleting listing");
+    } finally {
+      setDeletingId(null);
+      setPendingDeleteId(null);
+    }
+  };
 
   // Loading state
   if (loading || isLoading) {
@@ -256,16 +295,30 @@ export default function ProfilePage() {
 
         {/* Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {(activeTab === "active" ? activePosts : soldPosts).map(
-            (post, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200"
-              >
-                <Post {...post} />
-              </div>
-            )
-          )}
+          {(activeTab === "active"
+            ? userListings.filter((listing) => listing.status === "for sale")
+            : userListings.filter((listing) => listing.status === "sold")
+          ).map((listing) => (
+            <div
+              key={listing.id}
+              className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200 relative"
+            >
+              <Post {...convertToPostInfo(listing)} />
+              {activeTab === "active" && (
+                <button
+                  onClick={() => openConfirm(listing.id)}
+                  disabled={deletingId === listing.id}
+                  className={`absolute top-2 right-2 px-3 py-1 rounded bg-red-500 text-white text-xs font-semibold shadow hover:bg-red-600 transition-colors ${
+                    deletingId === listing.id
+                      ? "opacity-60 cursor-not-allowed"
+                      : ""
+                  }`}
+                >
+                  {deletingId === listing.id ? "Deleting..." : "Delete"}
+                </button>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Empty State */}
@@ -283,6 +336,33 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full text-center relative">
+            <h2 className="text-xl font-bold mb-4">Delete Listing?</h2>
+            <p className="mb-6 text-gray-700">
+              Are you sure you want to delete this listing? This action cannot
+              be undone.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded font-semibold shadow"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={closeConfirm}
+                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded font-semibold shadow"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
