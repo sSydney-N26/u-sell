@@ -16,36 +16,21 @@
   <li>If the server is running, it will respond with: <code>mysqld is alive</code></li>
 </ul>
 
-<h2>1.3 Create the Sample Database and Table</h2>
+<h2>1.3 Setup Mock Database and Schema</h2>
 <ul>
-  <li>Open a terminal and log in to MySQL:</li>
-  <pre><code>mysql -u root -p (or sudo mysql -u root)</code></pre>
-  <li>Run the following SQL commands:</li>
-  <pre><code>
-CREATE DATABASE testDB;
-USE testDB;
-
-CREATE TABLE student (
-  uid DECIMAL(3, 0) NOT NULL PRIMARY KEY,
-  name VARCHAR(30),
-  score DECIMAL(3, 2)
-);
-
-INSERT INTO student VALUES (1, 'alice', 0.1);
-INSERT INTO student VALUES (2, 'bob', 0.4);
-  </code></pre>
-</ul>
-
-<h2>1.4 Setup Mock Database and Schema</h2>
-<ul>
+  <li>Navigate to: </>
+  <pre><code>src/app/db </code></pre>
   <li>Make the script executable:</>
   <pre><code>chmod +x src/app/db/setup-db.sh</code></pre>
   <li>Run the setup script to create the mock database and insert sample data:</li>
-  <pre><code>./src/app/db/setup-db.sh</code></pre>
-  <li>This script will drop the existing `u_sell` database, recreate it, and populate it with the schema and mock data.</li>
+  <pre><code>./setup-db.sh</code></pre> or <pre><code> bash setup-db.sh </code></pre>
+  <li> By the end, you should see the Database Setup Complete message </li>
+  <li>This script will drop the existing `u_sell` database if it exists, recreate it, and populate it with the schema and mock data. If u_sell data
+  base has never been created, it will create one and populate it with the
+  schema and mock data.</li>
 </ul>
 
-<h2>1.5 Test Queries with Mock Data</h2>
+<h2>1.4 Test Queries with Mock Data</h2>
 <ul>
   <li>Connect to the `u_sell` database:</li>
   <pre><code>mysql -u root</code></pre>
@@ -59,7 +44,7 @@ SELECT * FROM Users;
 +-----------+----------+--------------------+------------------------+------+---------------------+
 | uid       | username | email              | program                | year | created_at          |
 +-----------+----------+--------------------+------------------------+------+---------------------+
-| uid_alice | alice    | alice@uwaterloo.ca | Computer Science       |    2 | 2025-06-10 10:50:09 |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | alice    | alice@uwaterloo.ca | Computer Science       |    2 | 2025-06-10 10:50:09 |
 | uid_bob   | bob      | bob@uwaterloo.ca   | Electrical Engineering |    3 | 2025-06-10 10:50:09 |
 | uid_carol | carol    | carol@uwaterloo.ca | Mechanical Engineering |    1 | 2025-06-10 10:50:09 |
 +-----------+----------+--------------------+------------------------+------+---------------------+
