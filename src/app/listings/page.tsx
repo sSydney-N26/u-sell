@@ -55,7 +55,7 @@ export default function Listings() {
 
       try {
         const listingResponse = await fetch(
-          `/api/listings?page=${page}&category=${currentFilter}`,
+          `/api/createlistings?page=${page}&category=${currentFilter}`,
           { next: { revalidate: 0 } }
         );
         if (!listingResponse.ok) {
