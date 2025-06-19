@@ -1,0 +1,16 @@
+id      type    price   title   description     product_condition       quantity        location        posted_date     posted_by       status  image_storage_ref
+1       School Supplies 40      CS 246 Textbook Used for one term, some highlights      gently used     1       UWaterloo SLC   2025-06-19 12:26:15     Alice   for sale        images/cs246.jpg
+4       Electronics     100     Bluetooth Speaker       Bass heavy, battery still good  fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+5       Misc    150     Hair Dryer      Dyson Hair Dryer        fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+6       School Supplies 40      CS 246 Textbook Used for one term, some highlights      gently used     1       UWaterloo SLC   2025-06-19 12:26:15     Alice   for sale        images/cs246.jpg
+9       Electronics     100     Bluetooth Speaker       Bass heavy, battery still good  fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+10      Misc    150     Hair Dryer      Dyson Hair Dryer        fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+11      School Supplies 40      CS 246 Textbook Used for one term, some highlights      gently used     1       UWaterloo SLC   2025-06-19 12:26:15     Alice   for sale        images/cs246.jpg
+14      Electronics     100     Bluetooth Speaker       Bass heavy, battery still good  fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+15      Misc    150     Hair Dryer      Dyson Hair Dryer        fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+16      School Supplies 40      CS 246 Textbook Used for one term, some highlights      gently used     1       UWaterloo SLC   2025-06-19 12:26:15     Alice   for sale        images/cs246.jpg
+19      Electronics     100     Bluetooth Speaker       Bass heavy, battery still good  fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+20      Misc    150     Hair Dryer      Dyson Hair Dryer        fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+21      School Supplies 40      CS 246 Textbook Used for one term, some highlights      gently used     1       UWaterloo SLC   2025-06-19 12:26:15     Alice   for sale        images/cs246.jpg
+24      Electronics     100     Bluetooth Speaker       Bass heavy, battery still good  fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg
+25      Misc    150     Hair Dryer      Dyson Hair Dryer        fair    1       UWaterloo Dana Porter Library   2025-06-19 12:26:15     Alice   sold    images/speaker.jpg

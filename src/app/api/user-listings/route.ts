@@ -56,14 +56,14 @@ export async function DELETE(request: NextRequest) {
 
     // Check if the listing belongs to the user
     const [rows] = await pool.query(
-      `SELECT posted_by FROM Listing WHERE id = ?`,
+      `SELECT seller_id FROM Listing WHERE id = ?`,
       [id]
     );
-    const result = rows as { posted_by: string }[];
+    const result = rows as { seller_id: string }[];
     if (!result || result.length === 0) {
       return NextResponse.json({ error: "Listing not found" }, { status: 404 });
     }
-    if (result[0].posted_by !== uid) {
+    if (result[0].seller_id !== uid) {
       return NextResponse.json(
         { error: "Unauthorized: You can only delete your own listings" },
         { status: 403 }
