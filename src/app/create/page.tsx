@@ -103,11 +103,7 @@ export default function CreateListingPage() {
         min="0.01"
         step="0.01"
         value={formData.price}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            price: Math.max(0, parseFloat(e.target.value) || 0),
-          })
+        onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })
         }
       />
 
