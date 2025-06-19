@@ -2,10 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "@/lib/firebase/config";
-import { uploadImageToFirebase } from "@/lib/firebase/UploadImage";
-
 
 export default function CreateListingPage() {
   const router = useRouter();
@@ -139,7 +135,7 @@ export default function CreateListingPage() {
             : "Upload Image"}
         </label>
 
-        <input
+        <input // TODO: Upload into Firebase
           id="file-upload"
           type="file"
           accept="image/*"
@@ -152,57 +148,11 @@ export default function CreateListingPage() {
             }
 
             // Just show filename for now
-            setFormData({
-              ...formData,
-              image_storage_ref: `images/${Date.now()}-${file.name}`,
-            });
-
+            setFormData({ ...formData, image_storage_ref: `images/${Date.now()}-${file.name}`  });
             console.log("File selected:", file.name);
           }}
         />
       </div>
-
-    {/* <div className="mb-3">
-      <label
-        htmlFor="file-upload"
-        className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded hover:bg-yellow-300"
-      >
-        {isImageUploading
-      ? "Uploading..."
-      : formData.image_storage_ref
-        ? "Image Selected ✔️"
-        : "Upload Image"}
-      </label>
-
-      <input
-        id="file-upload"
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={handleImageUpload}
-      />
-
-      {formData.image_storage_ref && (
-        <>
-          <p className="text-sm mt-1 text-gray-700">
-            File URL:{" "}
-            <a
-              href={formData.image_storage_ref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 underline"
-            >
-              {formData.image_storage_ref.split("/").pop()}
-            </a>
-          </p>
-          <img
-            src={formData.image_storage_ref}
-            alt="Uploaded Preview"
-            className="mt-2 w-32 h-32 object-cover rounded shadow"
-          />
-        </>
-      )}
-    </div> */}
   
     <select
         className="w-full mb-3 p-2 border rounded bg-white text-black"
