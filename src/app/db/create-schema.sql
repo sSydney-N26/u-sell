@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS Listing, Admin, ProductType, ProductCondition, Users;
 
 CREATE TABLE Users (
-    uid VARCHAR(128) PRIMARY KEY, -- TODO: not too sure about this, based on Firebase UID
+    uid VARCHAR(128) PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     program VARCHAR(100),
@@ -12,12 +12,12 @@ CREATE TABLE Users (
 
 -- Product Types table
 CREATE TABLE ProductType (
-    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') PRIMARY KEY -- TODO: feel free to add more values/change it up!
+    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') PRIMARY KEY
 );
 
 -- Product Conditions table
 CREATE TABLE ProductCondition (
-    type ENUM('new', 'like new', 'gently used', 'fair', 'poor') PRIMARY KEY -- TODO: feel free to add more values/change it up!
+    type ENUM('new', 'like new', 'gently used', 'fair', 'poor') PRIMARY KEY
 );
 
 -- Listings table
@@ -42,7 +42,6 @@ CREATE TABLE Listing (
     PRIMARY KEY (id, seller_id)
 );
 
--- Administrator table TODO: not sure if we want a separate table for admins, or just use the Users table
 CREATE TABLE Admin (
     admin_id VARCHAR(128) PRIMARY KEY,
     FOREIGN KEY (admin_id) REFERENCES Users(uid)
