@@ -42,6 +42,8 @@ CREATE TABLE Listing (
     PRIMARY KEY (id, seller_id)
 );
 
+CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
+
 CREATE TABLE Admin (
     admin_id VARCHAR(128) PRIMARY KEY,
     FOREIGN KEY (admin_id) REFERENCES Users(uid)

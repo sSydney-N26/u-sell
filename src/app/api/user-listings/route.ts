@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db-config";
 import UserListing from "@/utils/types/userListing";
 
+interface ListingStats {
+  totalListings: number;
+  activeListings: number;
+  soldListings: number;
+  averagePrice: number;
+  minPrice: number;
+  maxPrice: number;
+  typeBreakdown: Record<string, number>;
+}
+
+interface EnhancedResponse {
+  listings: UserListing[];
+  statistics: ListingStats;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -14,17 +29,67 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const [rows] = await pool.query(
-      `SELECT id, type, price, title, description, product_condition,
-              quantity, location, posted_date, posted_by, status,
-              image_storage_ref
-         FROM Listing
-        WHERE seller_id = ?
-        ORDER BY posted_date DESC`,
-      [uid]
+    const [results] = await pool.query(
+      `EXPLAIN
+      SELECT 
+        l.id, l.type, l.price, l.title, l.description, l.product_condition,
+        l.quantity, l.location, l.posted_date, l.posted_by, l.status,
+        l.image_storage_ref,
+        (SELECT COUNT(*) FROM Listing WHERE seller_id = ?) as totalListings,
+        (SELECT SUM(status = 'for sale') FROM Listing WHERE seller_id = ?) as activeListings,
+        (SELECT SUM(status = 'sold') FROM Listing WHERE seller_id = ?) as soldListings,
+        (SELECT AVG(price) FROM Listing WHERE seller_id = ?) as averagePrice,
+        (SELECT MIN(price) FROM Listing WHERE seller_id = ?) as minPrice,
+        (SELECT MAX(price) FROM Listing WHERE seller_id = ?) as maxPrice
+       FROM Listing l
+       WHERE l.seller_id = ?
+       ORDER BY l.posted_date DESC`,
+      [uid, uid, uid, uid, uid, uid, uid]
     );
 
-    return NextResponse.json(rows as UserListing[], { status: 200 });
+    const listings = results as (UserListing & {
+      totalListings: number;
+      activeListings: number;
+      soldListings: number;
+      averagePrice: string;
+      minPrice: string;
+      maxPrice: string;
+    })[];
+
+    const stats: ListingStats = {
+      totalListings: listings[0]?.totalListings || 0,
+      activeListings: listings[0]?.activeListings || 0,
+      soldListings: listings[0]?.soldListings || 0,
+      averagePrice: parseFloat(listings[0]?.averagePrice || "0"),
+      minPrice: parseFloat(listings[0]?.minPrice || "0"),
+      maxPrice: parseFloat(listings[0]?.maxPrice || "0"),
+      typeBreakdown: listings.reduce((acc, listing) => {
+        acc[listing.type] = (acc[listing.type] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>),
+    };
+
+    const cleanListings: UserListing[] = listings.map((listing) => ({
+      id: listing.id,
+      type: listing.type,
+      price: listing.price,
+      title: listing.title,
+      description: listing.description,
+      product_condition: listing.product_condition,
+      quantity: listing.quantity,
+      location: listing.location,
+      posted_date: listing.posted_date,
+      posted_by: listing.posted_by,
+      status: listing.status,
+      image_storage_ref: listing.image_storage_ref,
+    }));
+
+    const response: EnhancedResponse = {
+      listings: cleanListings,
+      statistics: stats,
+    };
+
+    return NextResponse.json(response, { status: 200 });
   } catch (err) {
     console.error("Database error:", err);
     return NextResponse.json(
@@ -65,7 +130,6 @@ export async function PATCH(request: NextRequest) {
 
     editable.forEach((col) => {
       if (body[col] !== undefined) {
-      
         const colName = col === "type" ? "`type`" : `\`${col}\``;
         setClauses.push(`${colName} = ?`);
         values.push(body[col]);
@@ -99,7 +163,10 @@ export async function PATCH(request: NextRequest) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Error updating listing:", err);
-    return NextResponse.json({ error: "Failed to update listing" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to update listing" },
+      { status: 500 }
+    );
   }
 }
 
@@ -117,7 +184,10 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Check if the listing belongs to the user
-    const [rows] = await pool.query("SELECT seller_id FROM Listing WHERE id = ?", [id]);
+    const [rows] = await pool.query(
+      "SELECT seller_id FROM Listing WHERE id = ?",
+      [id]
+    );
     const result = rows as { seller_id: string }[];
     if (!result.length) {
       return NextResponse.json({ error: "Listing not found" }, { status: 404 });
@@ -130,6 +200,9 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Error deleting listing:", err);
-    return NextResponse.json({ error: "Failed to delete listing" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to delete listing" },
+      { status: 500 }
+    );
   }
 }
