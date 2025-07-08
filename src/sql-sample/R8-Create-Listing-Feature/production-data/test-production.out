@@ -1,0 +1,92 @@
+-- Insert test Listing before Index
+Query OK, 0 rows affected (0.002 sec)
+
+-- Explain Select query before Index
+1 row in set (0.234 sec)
+
+-- Insert test Listing after Index
+Query OK, 0 rows affected (0.830 sec)
+
+-- Explain Select query after Index
+1 row in set (0.010 sec)
+
+Query OK, 0 rows affected (0.008 sec)
+
+mysql> INSERT INTO Listing (
+    ->   seller_id,
+    ->   type,
+    ->   price,
+    ->   title,
+    ->   description,
+    ->   product_condition,
+    ->   quantity,
+    ->   location,
+    ->   posted_by,
+    ->   status,
+    ->   image_storage_ref
+    -> )
+    -> VALUES (
+    ->   'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1',
+    ->   'School Supplies',
+    ->   10,
+    ->   'Pencil Case',
+    ->   'A pristine pencil case.',
+    ->   'like new',
+    ->   1,
+    ->   'MC',
+    ->   'alice',
+    ->   'for sale',
+    ->   'images/school_supplies/pencil_case.jpg'
+    -> );
+Query OK, 1 row affected (0.230 sec)
+
+mysql>
+mysql> -- Analyzing Select query before index creation
+Query OK, 0 rows affected (0.006 sec)
+
+mysql> EXPLAIN ANALYZE
+    -> SELECT *
+    -> FROM Listing
+    -> WHERE seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
+    ->   AND title = 'Pencil Case'
+    ->   AND image_storage_ref = 'images/school_supplies/pencil_case.jpg';
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                       
+                                                                                                                
+                                                                                                                
+                     |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Filter: ((listing.image_storage_ref = 'images/school_supplies/pencil_case.jpg') and (listing.title = 'Pencil Case'))  (cost=0.778 rows=0.28) (actual time=0.168..0.451 rows=1 loops=1)
+    -> Index lookup on Listing using idx_listing_seller_id (seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1')  (cost=0.778 rows=28) (actual time=0.161..0.42 rows=28 loops=1)
+ |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.027 sec)
+
+mysql>
+mysql> -- Adding Index
+Query OK, 0 rows affected (0.004 sec)
+
+mysql> CREATE INDEX idx_listing_seller_title_image
+    -> ON Listing (seller_id, title, image_storage_ref);
+Query OK, 0 rows affected (0.847 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> -- Analyzing Select query after index creation
+Query OK, 0 rows affected (0.004 sec)
+
+mysql> EXPLAIN ANALYZE
+    -> SELECT *
+    -> FROM Listing
+    -> WHERE seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
+    ->   AND title = 'Pencil Case'
+    ->   AND image_storage_ref = 'images/school_supplies/pencil_case.jpg';
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| EXPLAIN                                                                                                       
+                                                                                                                
+                                     |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| -> Index lookup on Listing using idx_listing_seller_title_image (seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', title = 'Pencil Case', image_storage_ref = 'images/school_supplies/pencil_case.jpg')  (cost=0.35 rows=1) (actual time=0.0621..0.0703 rows=1 loops=1)
+ |
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.017 sec)
