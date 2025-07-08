@@ -44,6 +44,8 @@ CREATE TABLE Listing (
 
 CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
 CREATE INDEX idx_listing_id ON Listing(id);
+CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
+CREATE INDEX idx_listing_date ON Listing(posted_date);
 
 CREATE TABLE Admin (
     admin_id VARCHAR(128) PRIMARY KEY,
