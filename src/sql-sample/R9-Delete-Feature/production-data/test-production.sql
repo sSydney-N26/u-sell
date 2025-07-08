@@ -1,0 +1,1 @@
+DELETE FROM Listing WHERE id = 1 AND seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
