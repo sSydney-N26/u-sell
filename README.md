@@ -21,7 +21,7 @@
   <li>Navigate to: </>
   <pre><code>src/app/db </code></pre>
   <li>Make the script executable:</>
-  <pre><code>chmod +x src/app/db/setup-db.sh</code></pre>
+  <pre><code>chmod +x setup-db.sh</code></pre>
   <li>Run the setup script to create the mock database and insert sample data:</li>
   <pre><code>./setup-db.sh</code></pre> or <pre><code> bash setup-db.sh </code></pre>
   <li> By the end, you should see the Database Setup Complete message </li>
