@@ -1,0 +1,9 @@
+-- output for verifying that the listing belongs to the user
++------------------------------+
+| seller_id                    |
++------------------------------+
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 |
++------------------------------+
+
+-- output for editing the listing
+Query OK, 1 row affected (0.005 sec)
