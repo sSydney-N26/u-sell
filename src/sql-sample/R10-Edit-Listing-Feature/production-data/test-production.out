@@ -1,0 +1,9 @@
+-- output for verifying that the listing belongs to the user
++--------------------------------------+
+| seller_id                            |
++--------------------------------------+
+| c7a127cb-47a1-42a1-97f5-9df43a1afc9f |
++--------------------------------------+
+
+-- output for editing the listing
+Query OK, 1 row affected (0.005 sec)
