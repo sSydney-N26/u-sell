@@ -17,6 +17,12 @@ interface EnhancedResponse {
   statistics: ListingStats;
 }
 
+interface MySQLResult {
+  affectedRows: number;
+  insertId: number;
+  warningStatus: number;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -30,7 +36,7 @@ export async function GET(request: NextRequest) {
     }
 
     const [results] = await pool.query(
-      `EXPLAIN
+      `
       SELECT 
         l.id, l.type, l.price, l.title, l.description, l.product_condition,
         l.quantity, l.location, l.posted_date, l.posted_by, l.status,
@@ -183,20 +189,19 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Check if the listing belongs to the user
-    const [rows] = await pool.query(
-      "SELECT seller_id FROM Listing WHERE id = ?",
-      [id]
+    const [result] = await pool.query(
+      "DELETE FROM Listing WHERE id = ? AND seller_id = ?",
+      [id, uid]
     );
-    const result = rows as { seller_id: string }[];
-    if (!result.length) {
-      return NextResponse.json({ error: "Listing not found" }, { status: 404 });
-    }
-    if (result[0].seller_id !== uid) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+
+    // Check if any rows were affected
+    if ((result as MySQLResult).affectedRows === 0) {
+      return NextResponse.json(
+        { error: "Listing not found or unauthorized" },
+        { status: 404 }
+      );
     }
 
-    await pool.query("DELETE FROM Listing WHERE id = ?", [id]);
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Error deleting listing:", err);
