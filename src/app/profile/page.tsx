@@ -26,7 +26,7 @@ interface DatabaseListing {
   location: string;
   posted_date: string;
   posted_by: string;
-  status: string; // "for sale" | "sold"
+  status: string; // "for sale" | "sold" | "removed" | "flagged"
   image_storage_ref: string | null;
 }
 
@@ -34,6 +34,8 @@ interface ListingStats {
   totalListings: number;
   activeListings: number;
   soldListings: number;
+  removedListings: number;
+  flaggedListings: number;
   averagePrice: number;
   minPrice: number;
   maxPrice: number;
@@ -48,7 +50,7 @@ interface EnhancedListingsResponse {
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"active" | "sold">("active");
+  const [activeTab, setActiveTab] = useState<"active" | "sold" | "removed" | "flagged">("active");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -112,6 +114,8 @@ export default function ProfilePage() {
 
   const activeListings = userListings.filter((l) => l.status === "for sale");
   const soldListings = userListings.filter((l) => l.status === "sold");
+  const removedListings = userListings.filter((l) => l.status === "removed");
+  const flaggedListings = userListings.filter((l) => l.status === "flagged");
 
   const openConfirm = (id: number) => {
     setPendingDeleteId(id);
@@ -251,6 +255,18 @@ export default function ProfilePage() {
                 </div>
                 <div className="text-sm text-gray-500">Sold</div>
               </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900">
+                  {listingStats?.removedListings || 0}
+                </div>
+                <div className="text-sm text-gray-500">Removed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900">
+                  {listingStats?.flaggedListings || 0}
+                </div>
+                <div className="text-sm text-gray-500">Flagged</div>
+              </div>
             </div>
           </div>
         </div>
@@ -280,6 +296,26 @@ export default function ProfilePage() {
             }`}
           >
             Sold Items ({listingStats?.soldListings || 0})
+          </button>
+          <button
+            onClick={() => setActiveTab("removed")}
+            className={`px-6 py-3 rounded-lg font-medium ${
+              activeTab === "removed"
+                ? "bg-yellow-400 text-black"
+                : "bg-white text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            Removed ({listingStats?.removedListings || 0})
+          </button>
+          <button
+            onClick={() => setActiveTab("flagged")}
+            className={`px-6 py-3 rounded-lg font-medium ${
+              activeTab === "flagged"
+                ? "bg-yellow-400 text-black"
+                : "bg-white text-gray-600 hover:bg-gray-50"
+            }`}
+          >
+            Flagged ({listingStats?.flaggedListings || 0})
           </button>
         </div>
 
@@ -445,7 +481,10 @@ export default function ProfilePage() {
 
         {}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {(activeTab === "active" ? activeListings : soldListings).map(
+          {(activeTab === "active" ? activeListings :
+            activeTab === "sold" ? soldListings :
+            activeTab === "removed" ? removedListings :
+            flaggedListings).map(
             (listing) => (
               <div
                 key={listing.id}
@@ -471,6 +510,20 @@ export default function ProfilePage() {
                     >
                       {deletingId === listing.id ? "Deleting…" : "Delete"}
                     </button>
+                  </div>
+                )}
+                {activeTab === "removed" && (
+                  <div className="absolute top-2 right-2">
+                    <span className="px-2 py-1 rounded bg-red-100 text-red-800 text-xs font-semibold">
+                      Removed
+                    </span>
+                  </div>
+                )}
+                {activeTab === "flagged" && (
+                  <div className="absolute top-2 right-2">
+                    <span className="px-2 py-1 rounded bg-orange-100 text-orange-800 text-xs font-semibold">
+                      Under Review
+                    </span>
                   </div>
                 )}
               </div>

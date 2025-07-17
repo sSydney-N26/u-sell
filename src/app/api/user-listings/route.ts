@@ -6,6 +6,8 @@ interface ListingStats {
   totalListings: number;
   activeListings: number;
   soldListings: number;
+  removedListings: number;
+  flaggedListings: number;
   averagePrice: number;
   minPrice: number;
   maxPrice: number;
@@ -37,26 +39,30 @@ export async function GET(request: NextRequest) {
 
     const [results] = await pool.query(
       `
-      SELECT 
+      SELECT
         l.id, l.type, l.price, l.title, l.description, l.product_condition,
         l.quantity, l.location, l.posted_date, l.posted_by, l.status,
         l.image_storage_ref,
         (SELECT COUNT(*) FROM Listing WHERE seller_id = ?) as totalListings,
         (SELECT SUM(status = 'for sale') FROM Listing WHERE seller_id = ?) as activeListings,
         (SELECT SUM(status = 'sold') FROM Listing WHERE seller_id = ?) as soldListings,
+        (SELECT SUM(status = 'removed') FROM Listing WHERE seller_id = ?) as removedListings,
+        (SELECT SUM(status = 'flagged') FROM Listing WHERE seller_id = ?) as flaggedListings,
         (SELECT AVG(price) FROM Listing WHERE seller_id = ?) as averagePrice,
         (SELECT MIN(price) FROM Listing WHERE seller_id = ?) as minPrice,
         (SELECT MAX(price) FROM Listing WHERE seller_id = ?) as maxPrice
        FROM Listing l
        WHERE l.seller_id = ?
        ORDER BY l.posted_date DESC`,
-      [uid, uid, uid, uid, uid, uid, uid]
+      [uid, uid, uid, uid, uid, uid, uid, uid, uid]
     );
 
     const listings = results as (UserListing & {
       totalListings: number;
       activeListings: number;
       soldListings: number;
+      removedListings: number;
+      flaggedListings: number;
       averagePrice: string;
       minPrice: string;
       maxPrice: string;
@@ -66,6 +72,8 @@ export async function GET(request: NextRequest) {
       totalListings: listings[0]?.totalListings || 0,
       activeListings: listings[0]?.activeListings || 0,
       soldListings: listings[0]?.soldListings || 0,
+      removedListings: listings[0]?.removedListings || 0,
+      flaggedListings: listings[0]?.flaggedListings || 0,
       averagePrice: parseFloat(listings[0]?.averagePrice || "0"),
       minPrice: parseFloat(listings[0]?.minPrice || "0"),
       maxPrice: parseFloat(listings[0]?.maxPrice || "0"),

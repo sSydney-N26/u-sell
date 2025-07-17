@@ -27,17 +27,18 @@ export async function GET(request : NextRequest) {
         const args : (number|string) [] = [];
 
         const query = `
-        SELECT id, type, price, title, description, 
-                product_condition, 
-                quantity, location, posted_date, 
+        SELECT id, type, price, title, description,
+                product_condition,
+                quantity, location, posted_date,
                 posted_by, status
         FROM Listing
+        WHERE status != 'removed' AND status != 'flagged'
         ${category !== "all" ? 'WHERE type = ?' : ''}
         ORDER BY posted_date ASC LIMIT ? OFFSET ?
         `;
 
         if (category !== "all") {
-            args.push(category)     // Each of the element in arg will replace 
+            args.push(category)     // Each of the element in arg will replace
                                     // the '?' in the query in order
         }
         args.push(itemsPerPage, pageOffset);
@@ -47,6 +48,7 @@ export async function GET(request : NextRequest) {
         const countPageQuery = `
             SELECT COUNT(*) AS totalItems
             FROM Listing
+            WHERE status != 'removed' AND status != 'flagged'
             ${category !== "all" ? 'WHERE type = ?' : ''}
         `;
 
@@ -102,7 +104,7 @@ export async function POST(req: Request) {
     }
 
     const connection = await mysql.createConnection(dbConfig);
-    
+
     await connection.execute(
       `INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,

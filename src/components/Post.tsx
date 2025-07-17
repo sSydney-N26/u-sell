@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ReportButton from "./ReportButton";
 
 export interface PostInfo {
   imageUrl: string | null;
@@ -8,6 +9,8 @@ export interface PostInfo {
   sold: boolean;
   category: string;
   postedBy: string;
+  listingId?: number;
+  onReportSuccess?: () => void;
 }
 
 export default function Post(post: PostInfo) {
@@ -58,6 +61,14 @@ export default function Post(post: PostInfo) {
           Posted by
           <span className="text-sm font-bold"> {post.postedBy} </span>
         </p>
+        {post.listingId && (
+          <div className="mt-2 flex justify-end">
+            <ReportButton
+              listingId={post.listingId}
+              onReportSuccess={post.onReportSuccess}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
