@@ -40,6 +40,12 @@ export default function Navigation() {
             >
               Browse
             </Link>
+            <Link
+              href="/fyp"
+              className="text-gray-700 hover:text-yellow-500 transition-colors"
+            >
+              For You
+            </Link>
 
             {user ? (
               <>
@@ -115,6 +121,13 @@ export default function Navigation() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Browse
+              </Link>
+              <Link
+                href="/fyp"
+                className="text-gray-700 hover:text-yellow-500 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                For You
               </Link>
 
               {user ? (
