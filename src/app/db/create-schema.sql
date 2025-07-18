@@ -1,5 +1,5 @@
 -- Users table
-DROP TABLE IF EXISTS Reports, Listing, Admin, ProductType, ProductCondition, Users;
+DROP TABLE IF EXISTS UserFollowedKeywords, UserFollowedCategories, Reports, Listing, Admin, ProductType, ProductCondition, Users;
 
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY,
@@ -105,3 +105,24 @@ CREATE TABLE Admin (
     admin_id VARCHAR(128) PRIMARY KEY,
     FOREIGN KEY (admin_id) REFERENCES Users(uid)
 );
+
+-- User Followed Categories table
+CREATE TABLE UserFollowedCategories (
+    user_id VARCHAR(128) NOT NULL,
+    category ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') NOT NULL,
+    PRIMARY KEY (user_id, category),
+    FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (category) REFERENCES ProductType(type)
+);
+
+-- User Followed Keywords table
+CREATE TABLE UserFollowedKeywords (
+    user_id VARCHAR(128) NOT NULL,
+    keyword VARCHAR(20) NOT NULL,
+    PRIMARY KEY (user_id, keyword),
+    FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE
+);
+
+-- Indexes for performance on FYP queries
+CREATE INDEX idx_followed_categories_user ON UserFollowedCategories(user_id);
+CREATE INDEX idx_followed_keywords_user ON UserFollowedKeywords(user_id);
