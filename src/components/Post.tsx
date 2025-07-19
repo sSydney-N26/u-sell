@@ -20,6 +20,7 @@ export default function Post(post: PostInfo) {
         <Image
           src={post.imageUrl}
           alt={post.title}
+          fill
           className="w-full h-full border-1 rounded-md object-cover"
         />
       ) : (

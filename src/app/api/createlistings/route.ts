@@ -4,7 +4,7 @@ import mysql from "mysql2/promise";
 import pool from "@/lib/db-config";
 
 interface CountRows extends RowDataPacket {
-    totalRows : number
+    totalItems : number
 }
 
 // We need query to fetch desired products.
@@ -33,7 +33,7 @@ export async function GET(request : NextRequest) {
                 posted_by, status
         FROM Listing
         WHERE status != 'removed' AND status != 'flagged'
-        ${category !== "all" ? 'WHERE type = ?' : ''}
+        ${category !== "all" ? 'AND type = ?' : ''}
         ORDER BY posted_date ASC LIMIT ? OFFSET ?
         `;
 
@@ -46,21 +46,19 @@ export async function GET(request : NextRequest) {
         const [rows] = await pool.query(query, args);
 
         const countPageQuery = `
-            SELECT COUNT(*) AS totalItems
-            FROM Listing
-            WHERE status != 'removed' AND status != 'flagged'
-            ${category !== "all" ? 'WHERE type = ?' : ''}
-        `;
+        SELECT COUNT(*) AS totalItems
+        FROM Listing
+        WHERE status != 'removed'
+        AND status != 'flagged'
+        ${category !== "all" ? 'AND type = ?' : ''}
+      `;
 
-        const countQueryArg : string[] = category !== "all" ? [category] : []
-        const [countResponse] = await pool.query<CountRows[]>(countPageQuery, countQueryArg);
-        const totalRows = countResponse[0].totalItems;
-        const totalPages = Math.ceil((totalRows/itemsPerPage) > 0 ? totalRows/itemsPerPage : 1)
+  const countQueryArgs = category !== "all" ? [category] : [];
+  const [countResponse] = await pool.query<CountRows[]>(countPageQuery, countQueryArgs);
+  const totalRows  = countResponse[0].totalItems;
+  const totalPages = Math.max(1, Math.ceil(totalRows / itemsPerPage));
 
-        return NextResponse.json({
-            listings: rows,
-            totalPages: totalPages
-        })
+  return NextResponse.json({ listings: rows, totalPages });
 
     } catch(error) {
         console.error("Database error for listings: ", error);

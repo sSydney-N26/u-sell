@@ -1,143 +1,145 @@
-//Listing Detail page - full screen version of the listing
-//
+// src/app/listings/[id]/page.tsx
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReportButton from '@/components/ReportButton';
 import UserListing from '@/utils/types/userListing';
 
 export default function ListingDetail() {
   const { id } = useParams();
   const router = useRouter();
-  const [listing, setListing] = useState<UserListing | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
+
+  const [listing, setListing]               = useState<UserListing | null>(null);
+  const [loading, setLoading]               = useState(true);
+  const [error, setError]                   = useState<string | null>(null);
   const [listingRemoved, setListingRemoved] = useState(false);
   const [listingFlagged, setListingFlagged] = useState(false);
 
+  const didLogView = useRef(false);
+
   useEffect(() => {
-    const fetchListing = async () => {
+    if (!id || didLogView.current) return;
+
+    fetch(`/api/listing/${id}/view`, { method: 'POST' })
+      .catch((e) => console.error('Error logging view:', e));
+
+    didLogView.current = true;
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    setError(null);
+
+    (async () => {
       try {
-        const response = await fetch(`/api/listing/${id}`);
-        if (!response.ok) {
-          if (response.status === 404) {
-            setError("Listing not found");
-          } else {
-            setError("Failed to load listing");
-          }
+        const res = await fetch(`/api/listing/${id}`);
+        if (res.status === 404) {
+          setError('Listing not found');
           return;
         }
-        const data = await response.json();
+        if (!res.ok) {
+          throw new Error(`Status ${res.status}`);
+        }
+        const data = (await res.json()) as UserListing;
         setListing(data);
-      } catch {
-        setError("Failed to load listing");
+      } catch (e) {
+        console.error('Error loading listing:', e);
+        setError('Failed to load listing');
       } finally {
         setLoading(false);
       }
-    };
-
-    if (id) {
-      fetchListing();
-    }
+    })();
   }, [id]);
 
   const handleReportSuccess = (response?: { listingFlagged?: boolean; listingRemoved?: boolean }) => {
-    // If listing was flagged, show a message instead of redirecting
-    if (response?.listingFlagged) {
-      setListingFlagged(true);
-    } else if (response?.listingRemoved) {
-      setListingRemoved(true);
-    }
+    if (response?.listingFlagged) setListingFlagged(true);
+    else if (response?.listingRemoved) setListingRemoved(true);
   };
 
   if (listingFlagged) {
     return (
-      <div className="p-8 max-w-2xl mx-auto">
-        <div className="text-center">
-          <p className="text-orange-700 text-lg font-semibold mb-4">This listing has been flagged for admin review due to multiple reports. Thanks for helping us keep U Sell safe!</p>
-          <button
-            className="text-sm text-yellow-500 hover:text-yellow-600 underline"
-            onClick={() => router.push('/listings')}
-          >
-            ← Back to Listings
-          </button>
-        </div>
+      <div className="p-8 max-w-2xl mx-auto text-center">
+        <p className="text-orange-700 font-semibold mb-4">
+          This listing has been flagged for admin review due to multiple reports.
+        </p>
+        <button
+          className="text-sm text-yellow-500 underline"
+          onClick={() => router.push('/listings')}
+        >
+          ← Back to Listings
+        </button>
       </div>
     );
   }
 
   if (listingRemoved) {
     return (
-      <div className="p-8 max-w-2xl mx-auto">
-        <div className="text-center">
-          <p className="text-green-700 text-lg font-semibold mb-4">This listing has been removed due to multiple reports.</p>
-          <button
-            className="text-sm text-yellow-500 hover:text-yellow-600 underline"
-            onClick={() => router.push('/listings')}
-          >
-            ← Back to Listings
-          </button>
-        </div>
+      <div className="p-8 max-w-2xl mx-auto text-center">
+        <p className="text-green-700 font-semibold mb-4">
+          This listing has been removed due to multiple reports.
+        </p>
+        <button
+          className="text-sm text-yellow-500 underline"
+          onClick={() => router.push('/listings')}
+        >
+          ← Back to Listings
+        </button>
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className="p-8 max-w-2xl mx-auto">
-        <div className="text-center">
-          <div className="w-8 h-8 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading listing...</p>
-        </div>
+      <div className="p-8 max-w-2xl mx-auto text-center">
+        <div className="w-8 h-8 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-gray-600">Loading listing…</p>
       </div>
     );
   }
 
-  if (error || !listing) {
+  if (error) {
     return (
-      <div className="p-8 max-w-2xl mx-auto">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error || "Listing not found"}</p>
-          <button
-            className="text-sm text-yellow-500 hover:text-yellow-600 underline"
-            onClick={() => router.push('/listings')}
-          >
-            ← Back to Listings
-          </button>
-        </div>
+      <div className="p-8 max-w-2xl mx-auto text-center">
+        <p className="text-red-600 mb-4">{error}</p>
+        <button
+          className="text-sm text-yellow-500 underline"
+          onClick={() => router.push('/listings')}
+        >
+          ← Back to Listings
+        </button>
       </div>
     );
+  }
+
+  if (!listing) {
+    return null;
   }
 
   return (
     <div className="p-8 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <button
-          className="mb-4 text-sm text-yellow-500 hover:text-yellow-600 underline"
+          className="text-sm text-yellow-500 underline"
           onClick={() => router.push('/listings')}
         >
           ← Back to Listings
         </button>
-        <div className="flex space-x-2">
-          <ReportButton
-            listingId={listing.id}
-            onReportSuccess={handleReportSuccess}
-          />
-        <button
-          className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300"
-          onClick={() => router.push(`/listings/${listing.id}/edit`)}
-        >
-          Edit Listing
-        </button>
-        </div>
+        <ReportButton
+          listingId={listing.id}
+          onReportSuccess={handleReportSuccess}
+        />
       </div>
 
       <h1 className="text-4xl font-bold mb-4">{listing.title}</h1>
       <p className="text-gray-600 mb-2">{listing.description}</p>
       <p className="text-lg font-semibold mb-4">${listing.price}</p>
       <p className="text-sm text-gray-500 mb-2">Category: {listing.type}</p>
-      <p className="text-sm text-gray-500 mb-8">Sold: {listing.status === 'sold' ? 'Yes' : 'No'}</p>
+      <p className="text-sm text-gray-500 mb-8">
+        Viewed {listing.view_count} times
+      </p>
     </div>
   );
 }

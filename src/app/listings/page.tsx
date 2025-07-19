@@ -1,4 +1,6 @@
-//Listings page
+// src/app/listings/page.tsx
+
+
 
 "use client";
 
@@ -10,7 +12,7 @@ import UserListing from "@/utils/types/userListing";
 import { CATEGORIES_MAP } from "@/utils/categories";
 import { ThreeDot } from "react-loading-indicators";
 import Link from "next/link";
-
+const MOST_VIEWED_LABEL = "Top 10 Most Viewed";
 interface ListingResponse {
   listings: UserListing[];
   totalPages: number;
@@ -18,31 +20,22 @@ interface ListingResponse {
 
 export default function Listings() {
   const [currentFilter, setCurrentFilter] = useState("all");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [listings, setListings] = useState<UserListing[]>([]);
-  const [loading, setLoading] = useState(1);
+  const [page, setPage]                   = useState(1);
+  const [totalPages, setTotalPages]       = useState(1);
+  const [listings, setListings]           = useState<UserListing[]>([]);
+  const [loading, setLoading]             = useState(true);
 
   const handleFilterClick = (category: string) => {
-    if (category === "All Listings") {
-      setCurrentFilter("");
-      setPage(1);
-    } else {
-      setCurrentFilter(category);
-      setPage(1);
-    }
+    setCurrentFilter(category === "All Listings" ? "" : category);
+    setPage(1);
   };
 
   const handleClickNext = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
+    if (page < totalPages) setPage(page + 1);
   };
 
   const handleClickPrev = () => {
-    if (page != 1) {
-      setPage(page - 1);
-    }
+    if (page > 1) setPage(page - 1);
   };
 
   useEffect(() => {
@@ -51,8 +44,24 @@ export default function Listings() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const start = Date.now();
+      setLoading(true);
 
+      if (currentFilter === MOST_VIEWED_LABEL) {
+        try {
+          const res = await fetch("/api/listing/most-viewed");
+          if (!res.ok) throw new Error("Failed to fetch most-viewed");
+          const data = (await res.json()) as UserListing[];
+          setListings(data);
+          setTotalPages(1);
+        } catch (err) {
+          console.error("Error fetching most-viewed:", err);
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
+
+      const start = Date.now();
       try {
         const listingResponse = await fetch(
           `/api/createlistings?page=${page}&category=${currentFilter}`,
@@ -61,9 +70,7 @@ export default function Listings() {
         if (!listingResponse.ok) {
           throw new Error("Failed to fetch listings");
         }
-
         const data = (await listingResponse.json()) as ListingResponse;
-
         setTotalPages(data.totalPages);
         setListings(data.listings);
       } catch (err) {
@@ -71,9 +78,10 @@ export default function Listings() {
       } finally {
         const elapsed = Date.now() - start;
         const wait = Math.max(0, 1500 - elapsed);
-        setTimeout(() => setLoading(0), wait);
+        setTimeout(() => setLoading(false), wait);
       }
     };
+
     fetchData();
   }, [page, currentFilter]);
 
@@ -89,57 +97,68 @@ export default function Listings() {
   return (
     <div>
       <Navigation />
+
+      {/* Filter buttons + Top 10 Most Viewed button */}
       <div className="flex p-5 m-5 justify-between">
-        {CATEGORIES_MAP.map((cat, index) => (
+        <FilterButton
+          key="most-viewed"
+          category={MOST_VIEWED_LABEL}
+          handleClick={() => handleFilterClick(MOST_VIEWED_LABEL)}
+        />
+        {CATEGORIES_MAP.map((cat, idx) => (
           <FilterButton
-            key={index}
+            key={idx}
             category={cat.value}
             handleClick={() => handleFilterClick(cat.value)}
           />
         ))}
       </div>
 
+      {/*grid */}
       <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
         {listings.map((l) => (
           <Link href={`/listings/${l.id}`} key={l.id}>
-            <li
-              className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50
-                        shadow-s overflow-hidden hover:shadow-lg transition hover:scale-105"
-            >
+            <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
               <Post
-                imageUrl={l.image_storage_ref}
+                imageUrl={null}
                 title={l.title}
                 description={l.description}
                 price={l.price}
-                sold={l.status == "sold"}
-                category={l.type}
+                sold={l.status === "sold"}
+                category={
+                  currentFilter === MOST_VIEWED_LABEL
+                    ? `Views: ${l.view_count}`
+                    : l.type
+                }
                 postedBy={l.posted_by}
               />
             </li>
           </Link>
         ))}
       </ul>
-      <div className="flex justify-center items-center space-x-5 m-10">
-        <button
-          className="px-5 py-2 w-30 bg-black rounded-xl text-white font-semibold disabled:opacity-60"
-          disabled={page == 1}
-          onClick={() => handleClickPrev()}
-        >
-          Previous
-        </button>
 
-        <span className="whitespace-nowrap">
-          Page {page} of {totalPages}
-        </span>
-
-        <button
-          className="px-5 py-2 w-30 bg-black rounded-xl text-white font-semibold disabled:opacity-60"
-          disabled={page == totalPages}
-          onClick={() => handleClickNext()}
-        >
-          Next
-        </button>
-      </div>
+      {/* Pagination*/}
+      {currentFilter !== "Most Viewed" && (
+        <div className="flex justify-center items-center space-x-5 m-10">
+          <button
+            className="px-5 py-2 w-30 bg-black rounded-xl text-white font-semibold disabled:opacity-60"
+            disabled={page === 1}
+            onClick={handleClickPrev}
+          >
+            Previous
+          </button>
+          <span className="whitespace-nowrap">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            className="px-5 py-2 w-30 bg-black rounded-xl text-white font-semibold disabled:opacity-60"
+            disabled={page === totalPages}
+            onClick={handleClickNext}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

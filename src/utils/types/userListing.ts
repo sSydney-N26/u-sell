@@ -11,4 +11,5 @@ export default interface UserListing {
   posted_by: string;
   status: string;
   image_storage_ref: string | null;
+  view_count?: number;
 }

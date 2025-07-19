@@ -1,5 +1,5 @@
 -- Users table
-DROP TABLE IF EXISTS UserFollowedKeywords, UserFollowedCategories, Reports, Listing, Admin, ProductType, ProductCondition, Users;
+DROP TABLE IF EXISTS UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users;
 
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY,
@@ -35,6 +35,7 @@ CREATE TABLE Listing (
     posted_by VARCHAR(50),
     status ENUM('for sale', 'pending', 'sold', 'removed', 'flagged') DEFAULT 'for sale',
     image_storage_ref VARCHAR(255), -- Firebase Storage reference/ID for the image
+    view_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
     FOREIGN KEY (type) REFERENCES ProductType(type),
     FOREIGN KEY (product_condition) REFERENCES ProductCondition(type),
     FOREIGN KEY (posted_by) REFERENCES Users(username),
@@ -58,6 +59,7 @@ CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
 CREATE INDEX idx_listing_id ON Listing(id);
 CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
 CREATE INDEX idx_listing_date ON Listing(posted_date);
+CREATE INDEX idx_listing_view_count ON Listing(view_count DESC);
 
 -- Trigger to flag listings when they reach 5 distinct reports (for admin review)
 DELIMITER //
@@ -100,6 +102,28 @@ BEGIN
     END IF;
 END//
 DELIMITER ;
+
+CREATE TABLE ListingViews (
+  id         BIGINT AUTO_INCREMENT PRIMARY KEY,
+  listing_id INT       NOT NULL,
+  viewer_id  VARCHAR(128),
+  viewed_at  DATETIME  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (listing_id) REFERENCES Listing(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_lv_listing ON ListingViews(listing_id, viewed_at);
+
+DELIMITER //
+CREATE TRIGGER trigger_after_view_insert
+AFTER INSERT ON ListingViews
+FOR EACH ROW
+BEGIN
+  UPDATE Listing
+     SET view_count = view_count + 1
+   WHERE id = NEW.listing_id;
+END;
+//
+DELIMITER ;
+
 
 CREATE TABLE Admin (
     admin_id VARCHAR(128) PRIMARY KEY,
