@@ -27,7 +27,7 @@ interface DatabaseListing {
   posted_date: string;
   posted_by: string;
   status: string; // "for sale" | "sold" | "removed" | "flagged"
-  image_storage_ref: string | undefined;
+  image_storage_ref: string;
 }
 
 interface ListingStats {

@@ -116,25 +116,31 @@ export default function Listings() {
 
       {/*grid */}
       <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
-        {listings.map((l) => (
-          <Link href={`/listings/${l.id}`} key={l.id}>
-            <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
-              <Post
-                imageUrl={l.image_storage_ref}
-                title={l.title}
-                description={l.description}
-                price={l.price}
-                sold={l.status === "sold"}
-                category={
-                  currentFilter === MOST_VIEWED_LABEL
-                    ? `Views: ${l.view_count}`
-                    : l.type
-                }
-                postedBy={l.posted_by}
-              />
-            </li>
-          </Link>
-        ))}
+        {listings.map((l) => {
+          // Image storage ref is undefined
+          const fallbackImage = `/photos/${l.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+
+          return (
+            <Link href={`/listings/${l.id}`} key={l.id}>
+              <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
+                <Post
+                  imageUrl={l.image_storage_ref || fallbackImage}
+                  title={l.title}
+                  description={l.description}
+                  price={l.price}
+                  sold={l.status === "sold"}
+                  category={
+                    currentFilter === MOST_VIEWED_LABEL
+                      ? `Views: ${l.view_count}`
+                      : l.type
+                  }
+                  postedBy={l.posted_by}
+                />
+              </li>
+            </Link>
+          );
+        })}
+
       </ul>
 
       {/* Pagination*/}
