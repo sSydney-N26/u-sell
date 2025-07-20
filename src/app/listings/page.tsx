@@ -120,7 +120,7 @@ export default function Listings() {
           <Link href={`/listings/${l.id}`} key={l.id}>
             <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
               <Post
-                imageUrl={null}
+                imageUrl={l.image_storage_ref}
                 title={l.title}
                 description={l.description}
                 price={l.price}

@@ -2,7 +2,7 @@ import Image from "next/image";
 import ReportButton from "./ReportButton";
 
 export interface PostInfo {
-  imageUrl: string | null;
+  imageUrl: string;
   title: string;
   description: string;
   price: number;
@@ -18,7 +18,7 @@ export default function Post(post: PostInfo) {
     <div className="w-full relative bg-white">
       {post.imageUrl ? (
         <Image
-          src={post.imageUrl}
+          src={`/${post.imageUrl}`}
           alt={post.title}
           fill
           className="w-full h-full border-1 rounded-md object-cover"

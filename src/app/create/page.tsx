@@ -60,6 +60,20 @@ export default function CreateListingPage() {
     }
   }, [userData]);
 
+    useEffect(() => {
+      const categoryToImage: Record<string, string> = {
+        Electronics: "/photos/electronics.jpg",
+        Furniture: "/photos/furniture.jpeg",
+        Clothing: "/photos/clothing.jpg",
+        Kitchen: "/photos/kitchen.jpg",
+        "School Supplies": "/photos/school.jpg",
+        Misc: "/photos/misc.jpg",
+      };
+
+      setFormData((prev) => ({...prev, image_storage_ref: categoryToImage[prev.type]}));
+  }, [formData.type]);
+
+
     // TODO: Integrate with Firebase image upload in the future
    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -149,7 +163,7 @@ return (
           onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
         />
 
-        <div>
+        {/* <div>
           <label
             htmlFor="file-upload"
             className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded-lg hover:bg-yellow-300"
@@ -166,7 +180,16 @@ return (
               onChange={handleImageUpload}
             />
 
-        </div>
+        </div> */}
+
+        {/* Testing purposes to showcase item */}
+        {formData.image_storage_ref && (
+          <img
+            src={formData.image_storage_ref}
+            alt="Category Image"
+            className="w-full h-48 object-cover rounded-lg shadow-md"
+          />
+        )}
 
         <select
           className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"

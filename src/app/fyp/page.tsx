@@ -375,7 +375,7 @@ export default function FYPPage() {
                       </div>
                     )}
                     <Post
-                      imageUrl={null}
+                      imageUrl={listing.image_storage_ref}
                       title={listing.title}
                       description={listing.description}
                       price={listing.price}

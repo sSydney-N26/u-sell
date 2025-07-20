@@ -10,6 +10,6 @@ export default interface UserListing {
   posted_date: Date;
   posted_by: string;
   status: string;
-  image_storage_ref: string | null;
+  image_storage_ref: string;
   view_count?: number;
 }
