@@ -1,59 +1,85 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
+import { uploadImageToFirebase } from "@/lib/firebase/uploadimage"; // correct path
+
+
 
 export default function CreateListingPage() {
+  const { user, loading } = useAuth();
   const router = useRouter();
+  const [userData, setUserData] = useState<{ uid: string; username: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
 
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!loading && !user) router.push("/auth");
+  }, [loading, user, router]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      const fetchUserData = async () => {
+        try {
+          const response = await fetch(`/api/firebase-user-sync?uid=${user.uid}`);
+          if (!response.ok) throw new Error("Failed to fetch user profile");
+          const data = await response.json();
+          setUserData(data);
+        } catch (err) {
+          console.error("User fetch error:", err);
+        }
+      };
+      fetchUserData();
+    }
+  }, [user?.uid]);
+
+  // Default values
   const [formData, setFormData] = useState({
-    seller_id: 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', // TODO: Alice is the default seller id rn
+    seller_id: "", 
     type: "Electronics", 
     price: 0,
     title: "",
     description: "",
-    product_condition: "like new",  
+    product_condition: "New",  
     quantity: 1,
     location: "",
-    posted_by: "Alice", // TODO: the current default is Alice username
+    posted_by: "", 
     status: "for sale",
     image_storage_ref: "",
   });
 
+    useEffect(() => {
+    if (userData) {
+      setFormData((prev) => ({
+        ...prev,
+        seller_id: userData.uid,
+        posted_by: userData.username,
+      }));
+    }
+  }, [userData]);
+
     // TODO: Integrate with Firebase image upload in the future
-    // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const file = e.target.files?.[0];
+   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return alert("No file selected.");
 
-    //   if (!file) {
-    //     console.warn("No file selected.");
-    //     return;
-    //   }
-
-    //   console.log("File received:", file);
-    //   console.log("File type:", file.type);
-    //   console.log("File size (bytes):", file.size);
-
-    //   setIsImageUploading(true);
-
-    //   try {
-    //     const blob = file.slice(); // This is redundant in browsers but shown for debug
-    //     console.log("Blob created from file:", blob);
-
-        
-    //     const url = await uploadImageToFirebase(blob as File); // ensure blob is a File-like object
-    //     setFormData((prev) => ({ ...prev, image_storage_ref: url }));
-
-    //     console.log("Image successfully uploaded to Firebase.");
-    //     console.log("Download URL:", url);
-    //   } catch (err) {
-    //     console.error("Image upload failed:", err);
-    //     alert("Image upload failed. See console for details.");
-    //   } finally {
-    //     setIsImageUploading(false);
-    //     console.log("Upload process complete.");
-    //   }
-    // };
+    setIsImageUploading(true);
+    try {
+      const url = await uploadImageToFirebase(file);
+      setFormData((prev) => ({
+        ...prev,
+        image_storage_ref: url,
+      }));
+      console.log("Image uploaded:", url);
+    } catch (err) {
+      console.error("Upload failed:", err);
+      alert("Failed to upload image.");
+    } finally {
+      setIsImageUploading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(formData.price)) {
@@ -90,7 +116,6 @@ return (
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         />
 
-      {/* TODO: 'Received NaN for the `value` attribute. If this is expected, cast the value to a string.' Need to fix */}
         <input
           placeholder="Price"
           type="number"
@@ -133,23 +158,14 @@ return (
               ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
               : "Upload Image"}
           </label>
-
           <input
-            id="file-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) {
-                alert("No file selected.");
-                return;
-              }
-              // Just show filename for now
-              setFormData({ ...formData, image_storage_ref: `images/${Date.now()}-${file.name}` });
-              console.log("File selected:", file.name);
-            }}
-          />
+              id="file-upload"
+              type="file" 
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+
         </div>
 
         <select
