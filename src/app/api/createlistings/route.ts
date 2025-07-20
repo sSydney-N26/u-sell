@@ -93,7 +93,7 @@ export async function POST(req: Request) {
       location,
       posted_by,
       status = "for sale",
-      image_storage_ref = null, // TODO
+      image_storage_ref, 
     } = body;
 
     if (!type || price < 0 || !title || !description || !product_condition || !location || !posted_by) {

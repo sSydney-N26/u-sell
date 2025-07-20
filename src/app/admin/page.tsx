@@ -15,7 +15,7 @@ interface FlaggedListing {
   posted_date: string;
   posted_by: string;
   status: string;
-  image_storage_ref: string | null;
+  image_storage_ref: string;
   seller_id: string;
   seller_username: string;
   seller_email: string;

@@ -27,7 +27,7 @@ interface DatabaseListing {
   posted_date: string;
   posted_by: string;
   status: string; // "for sale" | "sold" | "removed" | "flagged"
-  image_storage_ref: string | null;
+  image_storage_ref: string;
 }
 
 interface ListingStats {
@@ -103,7 +103,7 @@ export default function ProfilePage() {
   }, [user?.uid]);
 
   const convert = (l: DatabaseListing): PostInfo => ({
-    imageUrl: null,
+    imageUrl: l.image_storage_ref,
     title: l.title,
     description: l.description,
     price: l.price,
