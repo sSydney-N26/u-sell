@@ -28,6 +28,7 @@ interface DatabaseListing {
   posted_by: string;
   status: string; // "for sale" | "sold" | "removed" | "flagged"
   image_storage_ref: string;
+  is_bundle: boolean;
 }
 
 interface ListingStats {
@@ -50,10 +51,14 @@ interface EnhancedListingsResponse {
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  
+  const [bundleListings, setBundleListings] = useState<DatabaseListing[]>([]);
+
   const [activeTab, setActiveTab] = useState<"active" | "sold" | "removed" | "flagged">("active");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
+  
   const [userListings, setUserListings] = useState<DatabaseListing[]>([]);
   const [listingStats, setListingStats] = useState<ListingStats | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -67,6 +72,26 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!loading && !user) router.push("/auth");
   }, [loading, user, router]);
+
+  useEffect(() => {
+    if (!user?.uid) return;
+    const fetchBundleListings = async () => {
+      try {
+        const res = await fetch(`/api/user-listings?uid=${user.uid}&bundle=true`);
+        if (!res.ok) throw new Error("Failed to fetch bundles");
+
+        const data = await res.json();
+
+        setBundleListings(data?.listings ?? []); // fallback to empty array
+      } catch (err) {
+        console.error("Error fetching bundle listings:", err);
+        setBundleListings([]); // fallback on error
+      }
+    };
+
+
+    fetchBundleListings();
+  }, [user?.uid]);
 
   // Fetch user data and listings
   useEffect(() => {
@@ -108,10 +133,11 @@ export default function ProfilePage() {
     description: l.description,
     price: l.price,
     sold: l.status === "sold",
-    category: l.type,
+    category: l.is_bundle ? "Group Bundle" : l.type,
     postedBy: userData?.username ?? "Unknown",
   });
 
+  const backToSchoolBundle = userListings.filter((l) => l.status === "for sale" && (l.type === "Electronics" || l.type === "School Supplies"));
   const activeListings = userListings.filter((l) => l.status === "for sale");
   const soldListings = userListings.filter((l) => l.status === "sold");
   const removedListings = userListings.filter((l) => l.status === "removed");
@@ -475,6 +501,25 @@ export default function ProfilePage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {bundleListings.length > 0 && (
+          <div className="bg-white border border-yellow-300 rounded-lg shadow-md mb-8 p-6">
+            <h2 className="text-2xl font-bold text-yellow-700 mb-4">🎒 Back to School Bundle</h2>
+            <p className="text-sm text-gray-600 mb-6">
+              Curated picks from your Electronics and School Supplies listings
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {bundleListings.map((listing) => (
+                <div
+                  key={listing.id}
+                  className="bg-white rounded-lg shadow-sm overflow-hidden relative hover:shadow-md transition-shadow"
+                >
+                  <Post {...{ ...convert(listing), category: "Group Bundle" }} />
+                </div>
+              ))}
             </div>
           </div>
         )}

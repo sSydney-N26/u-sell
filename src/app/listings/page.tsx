@@ -19,6 +19,7 @@ interface ListingResponse {
 }
 
 export default function Listings() {
+  const [bundleMode, setBundleMode]       = useState(false);
   const [currentFilter, setCurrentFilter] = useState("all");
   const [page, setPage]                   = useState(1);
   const [totalPages, setTotalPages]       = useState(1);
