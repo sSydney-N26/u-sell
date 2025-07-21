@@ -161,3 +161,28 @@ CREATE INDEX idx_followed_categories_user ON UserFollowedCategories(user_id);
 CREATE INDEX idx_followed_keywords_user ON UserFollowedKeywords(user_id);
 CREATE INDEX idx_followed_users_user ON UserFollowedUsers(user_id);
 CREATE INDEX idx_followed_users_followee ON UserFollowedUsers(user_id);
+
+-- Create view for Bundle Feature
+CREATE OR REPLACE VIEW BackToSchoolBundleView AS
+SELECT *
+FROM (
+    SELECT
+        l.id,
+        l.seller_id,
+        l.type,
+        l.price,
+        l.title,
+        l.description,
+        l.product_condition,
+        l.quantity,
+        l.location,
+        l.posted_date,
+        l.posted_by,
+        l.status,
+        l.image_storage_ref,
+        ROW_NUMBER() OVER (PARTITION BY l.seller_id ORDER BY l.posted_date DESC) AS row_num
+    FROM Listing l
+    WHERE l.status = 'for sale'
+      AND l.type IN ('Electronics', 'School Supplies')
+) AS ranked
+WHERE ranked.row_num <= 5;
