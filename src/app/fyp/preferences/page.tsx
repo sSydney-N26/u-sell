@@ -5,6 +5,8 @@ import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import Link from "next/link";
+import { FollowRows } from "@/app/api/user-following/route";
+import { FollowSuggestion } from "@/app/api/user-following/route";
 
 interface UserPreferences {
   followedCategories: string[];
@@ -26,6 +28,12 @@ export default function PreferencesPage() {
     followedKeywords: [],
   });
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+
+  const [followedUsers, setFollowedUsers] = useState<FollowRows[]>([]);
+  const [suggestedFollows, setSuggestedFollows] = useState<FollowSuggestion[]>(
+    []
+  );
+  const [currentFollowPage, setCurrentFollowPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -57,10 +65,12 @@ export default function PreferencesPage() {
         setLoading(true);
 
         // Fetch user preferences and available categories in parallel
-        const [preferencesResponse, categoriesResponse] = await Promise.all([
-          fetch(`/api/user-preferences?uid=${user.uid}`),
-          fetch("/api/categories"),
-        ]);
+        const [preferencesResponse, categoriesResponse, followingResponse] =
+          await Promise.all([
+            fetch(`/api/user-preferences?uid=${user.uid}`),
+            fetch("/api/categories"),
+            fetch(`/api/user-following?uid=${user.uid}`),
+          ]);
 
         if (preferencesResponse.ok) {
           const preferencesData = await preferencesResponse.json();
@@ -70,6 +80,13 @@ export default function PreferencesPage() {
         if (categoriesResponse.ok) {
           const categoriesData = await categoriesResponse.json();
           setAvailableCategories(categoriesData.categories);
+        }
+
+        if (followingResponse.ok) {
+          const followingData = await followingResponse.json();
+          console.log(followingData);
+          setFollowedUsers(followingData.followedUsers);
+          setSuggestedFollows(followingData.allSuggestions);
         }
       } catch (err) {
         setError("Failed to load preferences");
@@ -212,6 +229,62 @@ export default function PreferencesPage() {
     }
   };
 
+  const followUser = async (followee: string) => {
+    if (!user) return;
+
+    try {
+      const response = await fetch("/api/user-following", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: user.uid,
+          followee_id: followee,
+        }),
+      });
+
+      if (response.ok) {
+        const follow = suggestedFollows.find((user) => user.uid === followee);
+        if (follow) {
+          setFollowedUsers((prev) => [follow, ...prev]);
+        }
+        setSuggestedFollows((prev) =>
+          prev.filter((user) => user.uid != followee)
+        );
+        showSuccess(`Now follows user`);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to follow user");
+      }
+    } catch (error) {
+      setError("Failed to follow user");
+      console.error("Error following user:", error);
+    }
+  };
+
+  const unfollowUser = async (
+    followee_id: string,
+    followee_username: string
+  ) => {
+    if (!user) return;
+
+    try {
+      const response = await fetch(
+        `/api/user-following?uid=${user.uid}&followee_id=${followee_id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        setFollowedUsers((prev) => prev.filter((u) => u.uid != followee_id));
+        showSuccess(`Succesfully Unfollowed User ${followee_username}`);
+      }
+    } catch (error) {
+      setError("Failed to Follow User");
+      console.error("Error Unfollowing User: ", error);
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -227,6 +300,13 @@ export default function PreferencesPage() {
 
   const unfollowedCategories = availableCategories.filter(
     (category) => !preferences.followedCategories.includes(category)
+  );
+
+  const itemsLimit = 4;
+  const followingTotalPage = Math.ceil(followedUsers.length / itemsLimit);
+  const currentPage = followedUsers.slice(
+    (currentFollowPage - 1) * itemsLimit,
+    currentFollowPage * itemsLimit
   );
 
   return (
@@ -405,6 +485,103 @@ export default function PreferencesPage() {
                   No keywords followed yet
                 </p>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Users Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 my-6 p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            Following
+          </h2>
+
+          {/* Follow New Users */}
+          <div className="mb-6">
+            <h3 className="font-medium text-gray-700 mb-4">
+              Currently Following {followedUsers.length} Users
+            </h3>
+            {followedUsers.length > 0 ? (
+              <div className="space-y-2">
+                {currentPage.map((user) => (
+                  <div
+                    key={user.uid}
+                    className="flex items-center justify-between bg-yellow-50 border border-yellow-200 rounded-md px-3 py-2"
+                  >
+                    <div className="space-y-3">
+                      <p className="text-gray-900 font-semibold text-lg">
+                        {" "}
+                        {user.username}{" "}
+                      </p>
+                      <p className="text-gray-600 text-sm"> {user.email} </p>
+                      <p className="text-gray-600 text-sm">
+                        {user.program} - Year {user.year}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => unfollowUser(user.uid, user.username)}
+                      className="text-red-600 hover:text-red-800 text-sm font-medium"
+                    >
+                      Unfollow
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No Users Followed Yet</p>
+            )}
+          </div>
+
+          {followingTotalPage > 1 && (
+            <div className="flex justify-between my-6">
+              <button
+                className="px-4 py-2 bg-yellow-500 rounded-md"
+                onClick={() => setCurrentFollowPage((p) => Math.max(1, p - 1))}
+                disabled={currentFollowPage === 1}
+              >
+                Previous
+              </button>
+              <button
+                className="px-4 py-2 bg-yellow-500 rounded-md"
+                onClick={() =>
+                  setCurrentFollowPage((p) =>
+                    Math.min(followingTotalPage, p + 1)
+                  )
+                }
+                disabled={currentFollowPage === followingTotalPage}
+              >
+                Next
+              </button>
+            </div>
+          )}
+
+          {/* Suggested Users to Follow */}
+          <div>
+            <h3 className="font-medium text-gray-700 my-5">
+              Suggested Users to Follow
+            </h3>
+            <div className="space-y-2">
+              {suggestedFollows.map((user) => (
+                <div
+                  key={user.username}
+                  className="flex items-center justify-between bg-yellow-50  border border-gray-200 rounded-md px-3 py-2"
+                >
+                  <div className="space-y-3">
+                    <p className="text-gray-900 font-semibold text-lg">
+                      {user.username}
+                    </p>
+                    <p className="text-gray-600 text-sm"> {user.email} </p>
+                    <p className="text-gray-600 text-sm">
+                      {user.program} - Year {user.year}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => followUser(user.uid)}
+                    className="bg-yellow-400 text-black px-3 py-1 rounded text-sm font-medium hover:bg-yellow-300 transition-colors"
+                  >
+                    Follow
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>

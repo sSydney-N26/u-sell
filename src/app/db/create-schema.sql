@@ -1,5 +1,5 @@
 -- Users table
-DROP TABLE IF EXISTS UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users;
+DROP TABLE IF EXISTS UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users;
 
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY,
@@ -147,6 +147,17 @@ CREATE TABLE UserFollowedKeywords (
     FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE
 );
 
+-- Users Followed Users table
+CREATE TABLE UserFollowedUsers (
+    user_id VARCHAR(128) NOT NULL,
+    followee_id VARCHAR(128) NOT NULL,
+    PRIMARY KEY (user_id, followee_id),
+    FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (followee_id) REFERENCES Users(uid) ON DELETE CASCADE
+);
+
 -- Indexes for performance on FYP queries
 CREATE INDEX idx_followed_categories_user ON UserFollowedCategories(user_id);
 CREATE INDEX idx_followed_keywords_user ON UserFollowedKeywords(user_id);
+CREATE INDEX idx_followed_users_user ON UserFollowedUsers(user_id);
+CREATE INDEX idx_followed_users_followee ON UserFollowedUsers(user_id);

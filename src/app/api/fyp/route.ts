@@ -6,8 +6,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const uid = searchParams.get("uid");
-    const limit = parseInt(searchParams.get("limit") || "20");
-    const offset = parseInt(searchParams.get("offset") || "0");
 
     if (!uid) {
       return NextResponse.json(
@@ -22,9 +20,11 @@ export async function GET(request: NextRequest) {
         l.id, l.seller_id, l.type, l.price, l.title, l.description, 
         l.product_condition, l.quantity, l.location, l.posted_date, 
         l.posted_by, l.status, l.image_storage_ref,
-        CASE 
+        CASE
+          WHEN l.seller_id IN (SELECT followee_id FROM UserFollowedUsers WHERE user_id = ?)
+          THEN 'user'
           WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?) 
-            AND EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ? 
+            AND EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ?
               AND (LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')))
           THEN 'both'
           WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?)
@@ -51,53 +51,19 @@ export async function GET(request: NextRequest) {
                 LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') 
                 OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')
               )
+          ) OR l.seller_id IN (
+              SELECT followee_id FROM UserFollowedUsers WHERE user_id = ? 
           )
         )
       ORDER BY l.posted_date DESC
-      LIMIT ? OFFSET ?
       `,
-      [uid, uid, uid, uid, uid, uid, limit, offset]
+      [uid, uid, uid, uid, uid, uid, uid, uid]
     );
 
     const listings = results as UserListing[];
 
-    const [countResults] = await pool.query(
-      `
-      SELECT COUNT(DISTINCT l.id) as total
-      FROM Listing l
-      WHERE l.seller_id != ? 
-        AND l.status = 'for sale'
-        AND (
-          l.type IN (
-            SELECT category 
-            FROM UserFollowedCategories 
-            WHERE user_id = ?
-          )
-          OR 
-          EXISTS (
-            SELECT 1 
-            FROM UserFollowedKeywords uk 
-            WHERE uk.user_id = ? 
-              AND (
-                LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') 
-                OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')
-              )
-          )
-        )
-      `,
-      [uid, uid, uid]
-    );
-
-    const totalCount = (countResults as { total: number }[])[0]?.total || 0;
-
     return NextResponse.json({
-      listings,
-      pagination: {
-        total: totalCount,
-        limit,
-        offset,
-        hasMore: offset + limit < totalCount,
-      },
+      listings
     });
   } catch (error) {
     console.error("Error fetching FYP listings:", error);
