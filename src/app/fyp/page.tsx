@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
@@ -8,19 +8,14 @@ import Post from "@/components/Post";
 import UserListing from "@/utils/types/userListing";
 
 interface FYPListing extends UserListing {
-  match_type: "category" | "keyword" | "both";
+  match_type: "category" | "keyword" | "both" | "user";
 }
 import Link from "next/link";
 import { ThreeDot } from "react-loading-indicators";
+import { FollowRows } from "../api/user-following/route";
 
 interface FYPResponse {
   listings: FYPListing[];
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    hasMore: boolean;
-  };
 }
 
 interface UserPreferences {
@@ -32,68 +27,99 @@ export default function FYPPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
-  const [listings, setListings] = useState<FYPListing[]>([]);
   const [preferences, setPreferences] = useState<UserPreferences>({
     followedCategories: [],
     followedKeywords: [],
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
 
   // Filter and sort states
+  const [followedUsers, setFollowedUsers] = useState<FollowRows[]>([]);
   const [allListings, setAllListings] = useState<FYPListing[]>([]);
-  const [filteredListings, setFilteredListings] = useState<FYPListing[]>([]);
-  const [filterType, setFilterType] = useState<"all" | "category" | "keyword">(
-    "all"
-  );
+
+  const [filterType, setFilterType] = useState<
+    "all" | "category" | "keyword" | "user"
+  >("all");
   const [sortBy, setSortBy] = useState<
     "newest" | "oldest" | "price_low" | "price_high"
   >("newest");
 
-  // Apply filters and sorting
-  const applyFiltersAndSort = (listingsToFilter: FYPListing[]) => {
-    let filtered = [...listingsToFilter];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [itemsShowing, setItemsShowing] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
 
-    // Apply filter
-    if (filterType !== "all") {
-      filtered = filtered.filter(
-        (listing) =>
-          listing.match_type === filterType || listing.match_type === "both"
-      );
-    }
-
-    // Apply sort
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "oldest":
-          return (
-            new Date(a.posted_date).getTime() -
-            new Date(b.posted_date).getTime()
-          );
-        case "price_low":
-          return a.price - b.price;
-        case "price_high":
-          return b.price - a.price;
-        case "newest":
-        default:
-          return (
-            new Date(b.posted_date).getTime() -
-            new Date(a.posted_date).getTime()
-          );
-      }
-    });
-
-    return filtered;
-  };
-
-  // Update filtered listings when filter/sort changes
+  // Fetch FYP listings
   useEffect(() => {
-    const filtered = applyFiltersAndSort(allListings);
-    setFilteredListings(filtered);
-  }, [filterType, sortBy, allListings]);
+    const fetchListings = async () => {
+      if (!user) return;
+
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/fyp?uid=${user.uid}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch personalized listings");
+        }
+        const data: FYPResponse = await response.json();
+        setAllListings(data.listings);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, [user]); // Refetch when preferences change
+
+  // Apply filters and sorting
+  const applyFiltersAndSort = useCallback(
+    (listingsToFilter: FYPListing[]) => {
+      let filtered = [...listingsToFilter];
+
+      // Apply filter
+      if (filterType !== "all") {
+        if (filterType === "user") {
+          filtered = filtered.filter(
+            (listing) => listing.match_type === "user"
+          );
+        }
+        filtered = filtered.filter(
+          (listing) =>
+            listing.match_type === filterType || listing.match_type === "both"
+        );
+      }
+
+      // Apply sort
+      filtered.sort((a, b) => {
+        switch (sortBy) {
+          case "oldest":
+            return (
+              new Date(a.posted_date).getTime() -
+              new Date(b.posted_date).getTime()
+            );
+          case "price_low":
+            return a.price - b.price;
+          case "price_high":
+            return b.price - a.price;
+          case "newest":
+          default:
+            return (
+              new Date(b.posted_date).getTime() -
+              new Date(a.posted_date).getTime()
+            );
+        }
+      });
+
+      return filtered;
+    },
+    [filterType, sortBy]
+  );
+
+  const filteredListings = useMemo(
+    () => applyFiltersAndSort(allListings),
+    [allListings, applyFiltersAndSort]
+  );
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -121,56 +147,42 @@ export default function FYPPage() {
     fetchPreferences();
   }, [user]);
 
-  // Fetch FYP listings
   useEffect(() => {
-    const fetchListings = async () => {
+    setItemsShowing(20);
+  }, [filteredListings]);
+
+  // Fetch user following
+  useEffect(() => {
+    const fetchFollowUsers = async () => {
       if (!user) return;
 
       try {
-        setLoading(true);
-        const response = await fetch(
-          `/api/fyp?uid=${user.uid}&limit=20&offset=0`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch personalized listings");
+        const response = await fetch(`/api/user-following?uid=${user.uid}`);
+        if (response.ok) {
+          const data = await response.json();
+          setFollowedUsers(data.followedUsers);
         }
-
-        const data: FYPResponse = await response.json();
-        setAllListings(data.listings);
-        setListings(data.listings);
-        setHasMore(data.pagination.hasMore);
-        setPage(1);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-      } finally {
-        setLoading(false);
+        console.error("Error fetching preferences:", err);
       }
     };
 
-    fetchListings();
-  }, [user, preferences]); // Refetch when preferences change
+    fetchFollowUsers();
+  }, [user]);
 
+  const currDisplayListings = useMemo(
+    () => filteredListings.slice(0, itemsShowing),
+    [filteredListings, itemsShowing]
+  );
+
+  const hasMore = itemsShowing < filteredListings.length;
   // Load more listings
   const loadMoreListings = async () => {
     if (!user || !hasMore || loadingMore) return;
 
     try {
       setLoadingMore(true);
-      const response = await fetch(
-        `/api/fyp?uid=${user.uid}&limit=20&offset=${page * 20}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to load more listings");
-      }
-
-      const data: FYPResponse = await response.json();
-      const newAllListings = [...allListings, ...data.listings];
-      setAllListings(newAllListings);
-      setListings((prev) => [...prev, ...data.listings]);
-      setHasMore(data.pagination.hasMore);
-      setPage((prev) => prev + 1);
+      setItemsShowing((prev) => Math.min(prev + 20, filteredListings.length));
     } catch (err) {
       console.error("Error loading more listings:", err);
     } finally {
@@ -202,7 +214,10 @@ export default function FYPPage() {
 
   const hasPreferences =
     preferences.followedCategories.length > 0 ||
-    preferences.followedKeywords.length > 0;
+    preferences.followedKeywords.length > 0 ||
+    followedUsers.length > 0;
+
+  console.log(filteredListings);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -268,6 +283,24 @@ export default function FYPPage() {
                   </div>
                 </div>
               )}
+
+              {followedUsers.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">
+                    Followed Users
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {followedUsers.map((user) => (
+                      <span
+                        key={user.uid}
+                        className="px-3 py-1 bg-pink-100 text-gray-700 text-sm rounded-full"
+                      >
+                        {user.username}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -304,7 +337,7 @@ export default function FYPPage() {
                   value={filterType}
                   onChange={(e) =>
                     setFilterType(
-                      e.target.value as "all" | "category" | "keyword"
+                      e.target.value as "all" | "category" | "keyword" | "user"
                     )
                   }
                   className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -312,6 +345,7 @@ export default function FYPPage() {
                   <option value="all">All Matches</option>
                   <option value="category">Category Matches</option>
                   <option value="keyword">Keyword Matches</option>
+                  <option value="user">User/Seller Matches</option>
                 </select>
               </div>
 
@@ -340,18 +374,18 @@ export default function FYPPage() {
               </div>
 
               <div className="text-sm text-gray-500 ml-auto">
-                Showing {filteredListings.length} of {allListings.length}{" "}
-                listings
+                Showing {currDisplayListings.length} of{" "}
+                {filteredListings.length} listings
               </div>
             </div>
           </div>
         )}
 
         {/* Listings Grid */}
-        {(hasPreferences ? filteredListings : listings).length > 0 ? (
+        {currDisplayListings.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {(hasPreferences ? filteredListings : listings).map((listing) => (
+              {currDisplayListings.map((listing) => (
                 <Link href={`/listings/${listing.id}`} key={listing.id}>
                   <div className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105 relative">
                     {/* Match Type Badge */}
@@ -369,7 +403,12 @@ export default function FYPPage() {
                         )}
                         {listing.match_type === "both" && (
                           <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">
-                            ⭐ Both
+                            ⭐ Both Categories & Keyword
+                          </span>
+                        )}
+                        {listing.match_type === "user" && (
+                          <span className="bg-pink-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">
+                            👩🏻‍🦰 User
                           </span>
                         )}
                       </div>
@@ -405,17 +444,17 @@ export default function FYPPage() {
           <div className="text-center py-12">
             <div className="text-4xl mb-4">🔍</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {allListings.length > 0
+              {filteredListings.length === 0
                 ? "No listings match your current filters"
                 : "No listings match your preferences yet"}
             </h3>
             <p className="text-gray-600 mb-6">
-              {allListings.length > 0
+              {filteredListings.length === 0
                 ? "Try adjusting your filter and sort options above, or update your preferences"
                 : "Try adjusting your followed categories or keywords, or check back later for new listings"}
             </p>
             <div className="flex gap-3 justify-center">
-              {allListings.length > 0 && (
+              {filteredListings.length === 0 && (
                 <button
                   onClick={() => {
                     setFilterType("all");
