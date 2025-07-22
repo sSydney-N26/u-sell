@@ -119,7 +119,7 @@ export default function Listings() {
   return (
     <div>
       <Navigation />
-      {/* Filter buttons + Top 10 Most Viewed button */}
+      {/* Filter buttons + Top 10 Most Viewed button + Bundle button*/}
       <div className="flex p-5 m-5 justify-between flex-wrap gap-4">
         <FilterButton
           key="most-viewed"

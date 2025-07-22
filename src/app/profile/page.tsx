@@ -507,9 +507,9 @@ export default function ProfilePage() {
 
         {bundleListings.length > 0 && (
           <div className="bg-white border border-yellow-300 rounded-lg shadow-md mb-8 p-6">
-            <h2 className="text-2xl font-bold text-yellow-700 mb-4">🎒 Back to School Bundle</h2>
+            <h2 className="text-2xl font-bold text-yellow-700 mb-4">Back to School Bundle</h2>
             <p className="text-sm text-gray-600 mb-6">
-              Curated picks from your Electronics and School Supplies listings
+              Crafted picks from your Electronics and School Supplies listings created by UW students
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {bundleListings.map((listing) => (

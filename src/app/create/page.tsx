@@ -63,10 +63,10 @@ export default function CreateListingPage() {
     useEffect(() => {
       const categoryToImage: Record<string, string> = {
         Electronics: "/photos/electronics.jpg",
-        Furniture: "/photos/furniture.jpeg",
+        Furniture: "/photos/furniture.jpg",
         Clothing: "/photos/clothing.jpg",
         Kitchen: "/photos/kitchen.jpg",
-        "School Supplies": "/photos/school.jpg",
+        "School Supplies": "/photos/schoolsupplies.jpg",
         Misc: "/photos/misc.jpg",
       };
 
@@ -114,134 +114,133 @@ export default function CreateListingPage() {
   };
 
 return (
-  <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-white flex items-center justify-center px-4">
-    <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-lg">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900">Create New Listing</h2>
-        <p className="text-sm text-gray-600">Fill out the details below</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-white flex items-center justify-center px-4">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-2xl shadow-lg">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900">Create New Listing</h2>
+          <p className="text-sm text-gray-600">Fill out the details below</p>
+        </div>
 
 
-      <div className="space-y-4">
-        <input
-          placeholder="Title"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-        />
-
-        <input
-          placeholder="Price"
-          type="number"
-          min="0.01"
-          step="0.01"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
-        />
-
-        <textarea
-          placeholder="Description"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        />
-
-        <input
-          placeholder="Location"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.location}
-          onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-        />
-
-        <input
-          placeholder="Quantity"
-          type="number"
-          min="1"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.quantity}
-          onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
-        />
-
-        {/* <div>
-          <label
-            htmlFor="file-upload"
-            className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded-lg hover:bg-yellow-300"
-          >
-            {formData.image_storage_ref
-              ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
-              : "Upload Image"}
-          </label>
+        <div className="space-y-4">
           <input
-              id="file-upload"
-              type="file" 
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageUpload}
-            />
-
-        </div> */}
-
-        {/* Testing purposes to showcase item */}
-        {formData.image_storage_ref && (
-          <img
-            src={formData.image_storage_ref}
-            alt="Category Image"
-            className="w-full h-48 object-cover rounded-lg shadow-md"
+            placeholder="Title"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           />
-        )}
 
-        <select
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.type}
-          onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-        >
-          <option value="Electronics">Electronics</option>
-          <option value="Furniture">Furniture</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Kitchen">Kitchen</option>
-          <option value="School Supplies">School Supplies</option>
-          <option value="Misc">Misc</option>
-        </select>
+          <input
+            placeholder="Price"
+            type="number"
+            min="0.01"
+            step="0.01"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.price}
+            onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
+          />
 
-        <select
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.product_condition}
-          onChange={(e) => setFormData({ ...formData, product_condition: e.target.value })}
-        >
-          <option value="new">New</option>
-          <option value="like new">Like New</option>
-          <option value="gently used">Gently Used</option>
-          <option value="fair">Fair</option>
-          <option value="poor">Poor</option>
-        </select>
+          <textarea
+            placeholder="Description"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          />
 
-        <select
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-          value={formData.status}
-          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-        >
-          <option value="for sale">For Sale</option>
-          <option value="pending">Pending</option>
-          <option value="sold">Sold</option>
-        </select>
+          <input
+            placeholder="Location"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.location}
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+          />
 
-        <button
-          className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
-          onClick={handleSubmit}
-        >
-          Submit Listing
-        </button>
+          <input
+            placeholder="Quantity"
+            type="number"
+            min="1"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.quantity}
+            onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
+          />
 
-        <button
-          onClick={() => router.push("/")}
-          className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-        >
-          Cancel
-        </button>
+          {/* <div>
+            <label
+              htmlFor="file-upload"
+              className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded-lg hover:bg-yellow-300"
+            >
+              {formData.image_storage_ref
+                ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
+                : "Upload Image"}
+            </label>
+            <input
+                id="file-upload"
+                type="file" 
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+
+          </div> */}
+
+          {/* Testing purposes to showcase item */}
+          {formData.image_storage_ref && (
+            <img
+              src={formData.image_storage_ref}
+              alt="Category Image"
+              className="w-full h-48 object-cover rounded-lg shadow-md"
+            />
+          )}
+
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.type}
+            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+          >
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="School Supplies">School Supplies</option>
+            <option value="Misc">Misc</option>
+          </select>
+
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.product_condition}
+            onChange={(e) => setFormData({ ...formData, product_condition: e.target.value })}
+          >
+            <option value="new">New</option>
+            <option value="like new">Like New</option>
+            <option value="gently used">Gently Used</option>
+            <option value="fair">Fair</option>
+            <option value="poor">Poor</option>
+          </select>
+
+          <select
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+            value={formData.status}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+          >
+            <option value="for sale">For Sale</option>
+            <option value="pending">Pending</option>
+            <option value="sold">Sold</option>
+          </select>
+
+          <button
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+            onClick={handleSubmit}
+          >
+            Submit Listing
+          </button>
+
+          <button
+            onClick={() => router.push("/")}
+            className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
-
+  );
 }
