@@ -13,18 +13,22 @@ import { CATEGORIES_MAP } from "@/utils/categories";
 import { ThreeDot } from "react-loading-indicators";
 import Link from "next/link";
 const MOST_VIEWED_LABEL = "Top 10 Most Viewed";
+const BUNDLE_LABEL = "Seller Bundles"
+
 interface ListingResponse {
   listings: UserListing[];
   totalPages: number;
 }
 
 export default function Listings() {
-  const [bundleMode, setBundleMode]       = useState(false);
+  const [expandedSellerId, setExpandedSellerId] = useState<string | null>(null);
+  const [sellerBundles, setSellerBundles] = useState<{ [sellerId: string]: UserListing[] }>({});
   const [currentFilter, setCurrentFilter] = useState("all");
   const [page, setPage]                   = useState(1);
   const [totalPages, setTotalPages]       = useState(1);
   const [listings, setListings]           = useState<UserListing[]>([]);
   const [loading, setLoading]             = useState(true);
+  
 
   const handleFilterClick = (category: string) => {
     setCurrentFilter(category === "All Listings" ? "" : category);
@@ -61,6 +65,38 @@ export default function Listings() {
         }
         return;
       }
+
+      if (currentFilter === BUNDLE_LABEL) {
+        try {
+          const res = await fetch("/api/listing/bundles");
+          if (!res.ok) throw new Error("Failed to fetch seller bundles");
+
+          const { bundles } = await res.json();
+
+          // Group listings by seller_id
+          const grouped: { [sellerId: string]: UserListing[] } = {};
+          for (const item of bundles) {
+            if (!grouped[item.seller_id]) {
+              grouped[item.seller_id] = [];
+            }
+            if (grouped[item.seller_id].length < 5) {
+              grouped[item.seller_id].push(item);
+            }
+          }
+
+          setSellerBundles(grouped);
+          setListings([]); // we ignore 'listings' in the bundle case
+
+
+
+        } catch (err) {
+          console.error("Error fetching seller bundles", err);
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
+
 
       const start = Date.now();
       try {
@@ -106,6 +142,11 @@ export default function Listings() {
           category={MOST_VIEWED_LABEL}
           handleClick={() => handleFilterClick(MOST_VIEWED_LABEL)}
         />
+        <FilterButton
+          key="bundle-label"  
+          category={BUNDLE_LABEL}
+          handleClick={() => handleFilterClick(BUNDLE_LABEL)}
+        />
         {CATEGORIES_MAP.map((cat, idx) => (
           <FilterButton
             key={idx}
@@ -115,34 +156,81 @@ export default function Listings() {
         ))}
       </div>
 
-      {/*grid */}
-      <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
-        {listings.map((l) => {
-          // Image storage ref is undefined
-          const fallbackImage = `/photos/${l.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+      {currentFilter === BUNDLE_LABEL ? (
+        <ul className="space-y-10 mx-10 my-10">
+          {Object.entries(sellerBundles).slice(0, 5).map(([sellerId, bundle]) => {
+            const isExpanded = expandedSellerId === sellerId;
+            return (
+              <li key={sellerId}>
+                {/* Seller Card */}
+                <button
+                  onClick={() => setExpandedSellerId(isExpanded ? null : sellerId)}
+                  className="w-full text-left p-5 border border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 transition"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-bold text-gray-800">
+                      Seller: {bundle[0]?.posted_by || "Unknown"}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {isExpanded ? "Hide Bundle ▲" : "Show Bundle ▼"}
+                    </span>
+                  </div>
+                </button>
 
-          return (
-            <Link href={`/listings/${l.id}`} key={l.id}>
-              <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
-                <Post
-                  imageUrl={l.image_storage_ref || fallbackImage}
-                  title={l.title}
-                  description={l.description}
-                  price={l.price}
-                  sold={l.status === "sold"}
-                  category={
-                    currentFilter === MOST_VIEWED_LABEL
-                      ? `Views: ${l.view_count}`
-                      : l.type
-                  }
-                  postedBy={l.posted_by}
-                />
+                {/* Listings inside the bundle */}
+                {isExpanded && (
+                  <ul className="grid grid-cols-3 gap-5 mt-5">
+                    {bundle.map((listing) => {
+                      const fallbackImage = `/photos/${listing.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+                      return (
+                        <Link href={`/listings/${listing.id}`} key={listing.id}>
+                          <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
+                            <Post
+                              imageUrl={listing.image_storage_ref || fallbackImage}
+                              title={listing.title}
+                              description={listing.description}
+                              price={listing.price}
+                              sold={listing.status === "sold"}
+                              category={listing.type}
+                              postedBy={listing.posted_by}
+                            />
+                          </li>
+                        </Link>
+                      );
+                    })}
+                  </ul>
+                )}
               </li>
-            </Link>
-          );
-        })}
+            );
+          })}
+          </ul>
+        ) : (
+          <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
+            {listings.map((l) => {
+              const fallbackImage = `/photos/${l.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+              return (
+                <Link href={`/listings/${l.id}`} key={l.id}>
+                  <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
+                    <Post
+                      imageUrl={l.image_storage_ref || fallbackImage}
+                      title={l.title}
+                      description={l.description}
+                      price={l.price}
+                      sold={l.status === "sold"}
+                      category={
+                        currentFilter === MOST_VIEWED_LABEL
+                          ? `Views: ${l.view_count}`
+                          : l.type
+                      }
+                      postedBy={l.posted_by}
+                    />
+                  </li>
+                </Link>
+              );
+            })}
+          </ul>
+        )}
 
-      </ul>
 
       {/* Pagination*/}
       {currentFilter !== "Most Viewed" && (
