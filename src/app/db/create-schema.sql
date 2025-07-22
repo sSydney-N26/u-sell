@@ -164,25 +164,18 @@ CREATE INDEX idx_followed_users_followee ON UserFollowedUsers(user_id);
 
 -- Create view for Bundle Feature
 CREATE OR REPLACE VIEW BackToSchoolBundleView AS
-SELECT *
-FROM (
-    SELECT
-        l.id,
-        l.seller_id,
-        l.type,
-        l.price,
-        l.title,
-        l.description,
-        l.product_condition,
-        l.quantity,
-        l.location,
-        l.posted_date,
-        l.posted_by,
-        l.status,
-        l.image_storage_ref,
-        ROW_NUMBER() OVER (PARTITION BY l.seller_id ORDER BY l.posted_date DESC) AS row_num
-    FROM Listing l
-    WHERE l.status = 'for sale'
-      AND l.type IN ('Electronics', 'School Supplies')
-) AS ranked
-WHERE ranked.row_num <= 5;
+SELECT l.*
+FROM Listing l
+JOIN (
+    SELECT e.seller_id
+    FROM Listing e
+    JOIN Listing s
+      ON e.seller_id = s.seller_id
+    WHERE e.status = 'for sale' AND e.type = 'Electronics'
+      AND s.status = 'for sale' AND s.type = 'School Supplies'
+    GROUP BY e.seller_id
+) AS eligible_sellers
+  ON l.seller_id = eligible_sellers.seller_id
+WHERE l.status = 'for sale'
+  AND l.type IN ('Electronics', 'School Supplies')
+ORDER BY l.seller_id, l.posted_date DESC;
