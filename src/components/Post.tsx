@@ -2,7 +2,7 @@ import Image from "next/image";
 import ReportButton from "./ReportButton";
 
 export interface PostInfo {
-  imageUrl: string;
+  imageUrl: string | null;
   title: string;
   description: string;
   price: number;
@@ -15,47 +15,56 @@ export interface PostInfo {
 
 export default function Post(post: PostInfo) {
   return (
-    <div className="w-full w-100 h-[300px] relative bg-white border rounded-md overflow-hidden">
-      {/* Background image */}
-      {post.imageUrl && (
+    <div className="w-full relative bg-white">
+      {post.imageUrl ? (
         <Image
           src={post.imageUrl}
           alt={post.title}
-          fill
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-20"
+          layout="responsive"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="w-full h-auto object-cover"
         />
+      ) : (
+        <div className="w-full h-48 bg-gray-200 border-2 rounded-md flex items-center justify-center">
+          <div className="text-center text-gray-500">
+            <div className="text-4xl mb-2">📦</div>
+            <p className="text-sm">No Image Available</p>
+          </div>
+        </div>
       )}
-      <div className="relative z-10 flex flex-col p-5 justify-between">
-        {post.sold && (
+      {post.sold && (
         <span
           className="
             rotate-45 absolute top-8 right-3 px-2 text-white
             bg-red-700 rounded-md font-bold"
         >
-            SOLD
-          </span>
-        )}
+          SOLD
+        </span>
+      )}
+      <div className="flex flex-col p-5 justify-between">
         <div>
           <h3 className="font-bold text-gray-900 text-2xl text-center py-5">
             {post.title}
           </h3>
-          <p className="text-sm text-gray-800 font-light">{post.description}</p>
+          <p className="text-sm text-gray-500 font-light">{post.description}</p>
         </div>
-
         <div className="mt-5 flex items-center justify-between">
-          <span className="font-bold text-green-950 text-xl mb-5 p-4 bg-white/70 rounded-md">
+          <span className="font-bold text-green-950 text-xl mb-5 p-4">
             ${post.price}
           </span>
-          <span className="bg-amber-300 uppercase text-sm text-gray-900 rounded-2xl font-bold mb-5 p-4 shadow">
+          <span
+            className="shadow-s shadow-amber-50 bg-amber-300
+            uppercase text-sm text-gray-900 rounded-2xl font-bold mb-5 p-4"
+          >
             {post.category}
           </span>
         </div>
-
         <p className="mt-2 text-gray-400 text-xs">
           Posted by
           <span className="text-sm font-bold"> {post.postedBy} </span>
         </p>
-
         {post.listingId && (
           <div className="mt-2 flex justify-end">
             <ReportButton
@@ -68,4 +77,3 @@ export default function Post(post: PostInfo) {
     </div>
   );
 }
-

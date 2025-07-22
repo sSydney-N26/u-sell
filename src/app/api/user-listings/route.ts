@@ -29,6 +29,22 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const uid = searchParams.get("uid");
+    const isBundle = searchParams.get("bundle");
+
+    if (isBundle === "true") {
+      const [bundleResults] = await pool.query(
+        `
+        SELECT * FROM BackToSchoolBundleView
+        WHERE seller_id = ?
+        ORDER BY posted_date DESC
+        `,
+        [uid]
+      );
+
+      const bundleListings = bundleResults as UserListing[];
+      return NextResponse.json({ listings: bundleListings }, { status: 200 });
+    }
+        
 
     if (!uid) {
       return NextResponse.json(
