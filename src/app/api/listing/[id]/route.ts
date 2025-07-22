@@ -21,7 +21,7 @@ export async function GET(
       `SELECT
         l.id, l.type, l.price, l.title, l.description, l.product_condition,
         l.quantity, l.location, l.posted_date, l.posted_by, l.status, l.image_storage_ref,
-        t.tag_id, t.tag_name
+        l.view_count, t.tag_id, t.tag_name
        FROM Listing l
        LEFT JOIN ListingTags lt ON l.id = lt.listing_id
        LEFT JOIN Tags t ON lt.tag_id = t.tag_id
@@ -53,6 +53,7 @@ export async function GET(
       posted_by: results[0].posted_by,
       status: results[0].status,
       image_storage_ref: results[0].image_storage_ref,
+      view_count: results[0].view_count,
       tags: [] as { tag_id: number; tag_name: string }[]
     };
 

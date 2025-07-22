@@ -2512,6 +2512,33 @@ INSERT INTO Listing (seller_id, type, price, title, description, product_conditi
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Clothing', 30.0, 'Dress - Clothing', 'Perfect for formal events. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'alice', 'for sale', '/photos/clothing.jpg');
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Electronics', 120.0, 'Mouse - Electronics', 'Gaming mouse. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'alice', 'for sale', '/photos/electronics.jpg');
 
+
+
+-- ListingView
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES
+  (1589, NULL, '2025-07-22 18:35:51'),
+  (1589, NULL, '2025-07-22 18:36:08'),
+  (   7, NULL, '2025-07-22 18:36:15'),
+  (  14, NULL, '2025-07-22 18:36:21'),
+  (  14, NULL, '2025-07-22 18:36:28'),
+  (  14, NULL, '2025-07-22 18:36:37'),
+  (   9, NULL, '2025-07-22 18:36:42'),
+  (  11, NULL, '2025-07-22 18:36:45'),
+  (  10, NULL, '2025-07-22 18:36:50'),
+  (   2, NULL, '2025-07-22 18:36:54'),
+  (  14, NULL, '2025-07-22 18:36:58'),
+  (   8, NULL, '2025-07-22 18:37:11'),
+  (  14, NULL, '2025-07-22 18:38:42'),
+  (  14, NULL, '2025-07-22 18:42:03'),
+  (   2, NULL, '2025-07-22 18:42:06'),
+  (   6, NULL, '2025-07-22 18:42:11'),
+  (   3, NULL, '2025-07-22 18:42:17'),
+  (   3, NULL, '2025-07-22 18:42:26'),
+  (   3, NULL, '2025-07-22 18:42:36'),
+  (   3, NULL, '2025-07-22 18:42:46'),
+  ( 121, NULL, '2025-07-22 18:43:15');
+
+
 -- Seed initial tags for testing
 INSERT IGNORE INTO Tags (tag_name) VALUES
 ('iphone'),
