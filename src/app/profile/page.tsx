@@ -15,6 +15,11 @@ interface UserData {
   created_at: string;
 }
 
+interface Tag {
+  tag_id: number;
+  tag_name: string;
+}
+
 interface DatabaseListing {
   id: number;
   type: string;
@@ -29,6 +34,7 @@ interface DatabaseListing {
   status: string; // "for sale" | "sold" | "removed" | "flagged"
   image_storage_ref: string;
   is_bundle: boolean;
+  tags?: Tag[];
 }
 
 interface ListingStats {
@@ -51,14 +57,14 @@ interface EnhancedListingsResponse {
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
-  
+
   const [bundleListings, setBundleListings] = useState<DatabaseListing[]>([]);
 
   const [activeTab, setActiveTab] = useState<"active" | "sold" | "removed" | "flagged">("active");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
-  
+
   const [userListings, setUserListings] = useState<DatabaseListing[]>([]);
   const [listingStats, setListingStats] = useState<ListingStats | null>(null);
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -67,6 +73,8 @@ export default function ProfilePage() {
   const [editingListing, setEditingListing] = useState<DatabaseListing | null>(
     null
   );
+  const [availableTags, setAvailableTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -94,6 +102,22 @@ export default function ProfilePage() {
   }, [user?.uid]);
 
   // Fetch user data and listings
+  // Fetch available tags
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await fetch("/api/tags");
+        if (response.ok) {
+          const data = await response.json();
+          setAvailableTags(data.tags || []);
+        }
+      } catch (err) {
+        console.error("Error fetching tags:", err);
+      }
+    };
+    fetchTags();
+  }, []);
+
   useEffect(() => {
     if (!user?.uid) return;
     const fetchData = async () => {
@@ -170,9 +194,40 @@ export default function ProfilePage() {
     }
   };
 
-  const openEdit = (listing: DatabaseListing) =>
+  const openEdit = async (listing: DatabaseListing) => {
     setEditingListing({ ...listing });
-  const closeEdit = () => setEditingListing(null);
+
+    // Fetch current tags for this listing
+    try {
+      const response = await fetch(`/api/listing/${listing.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        const currentTags = data.tags || [];
+        setSelectedTags(currentTags.map((tag: Tag) => tag.tag_id));
+      }
+    } catch (err) {
+      console.error("Error fetching listing tags:", err);
+      setSelectedTags([]);
+    }
+  };
+  const closeEdit = () => {
+    setEditingListing(null);
+    setSelectedTags([]);
+  };
+
+  const handleTagToggle = (tagId: number) => {
+    setSelectedTags(prev => {
+      if (prev.includes(tagId)) {
+        return prev.filter(id => id !== tagId);
+      } else {
+        if (prev.length >= 5) {
+          alert("Maximum 5 tags allowed");
+          return prev;
+        }
+        return [...prev, tagId];
+      }
+    });
+  };
   const confirmEdit = async () => {
     if (!editingListing || !user?.uid) return;
     const {
@@ -200,6 +255,7 @@ export default function ProfilePage() {
           quantity,
           location,
           status,
+          tags: selectedTags,
         }),
       });
       if (!res.ok) throw new Error();
@@ -518,6 +574,14 @@ export default function ProfilePage() {
                   className="bg-white rounded-lg shadow-sm overflow-hidden relative hover:shadow-md transition-shadow"
                 >
                   <Post {...{ ...convert(listing), category: "Group Bundle" }} />
+                  <div className="absolute top-2 right-2">
+                    <button
+                      onClick={() => router.push(`/listings/${listing.id}`)}
+                      className="px-2 py-1 rounded bg-green-500 text-white text-xs font-semibold shadow hover:bg-green-600"
+                    >
+                      View
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -539,6 +603,12 @@ export default function ProfilePage() {
                 {activeTab === "active" && (
                   <div className="absolute top-2 right-2 flex space-x-1">
                     <button
+                      onClick={() => router.push(`/listings/${listing.id}`)}
+                      className="px-2 py-1 rounded bg-green-500 text-white text-xs font-semibold shadow hover:bg-green-600"
+                    >
+                      View
+                    </button>
+                    <button
                       onClick={() => openEdit(listing)}
                       className="px-2 py-1 rounded bg-blue-500 text-white text-xs font-semibold shadow hover:bg-blue-600"
                     >
@@ -557,15 +627,40 @@ export default function ProfilePage() {
                     </button>
                   </div>
                 )}
+                {activeTab === "sold" && (
+                  <div className="absolute top-2 right-2 flex space-x-1">
+                    <button
+                      onClick={() => router.push(`/listings/${listing.id}`)}
+                      className="px-2 py-1 rounded bg-green-500 text-white text-xs font-semibold shadow hover:bg-green-600"
+                    >
+                      View
+                    </button>
+                    <span className="px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-semibold">
+                      Sold
+                    </span>
+                  </div>
+                )}
                 {activeTab === "removed" && (
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2 flex space-x-1">
+                    <button
+                      onClick={() => router.push(`/listings/${listing.id}`)}
+                      className="px-2 py-1 rounded bg-green-500 text-white text-xs font-semibold shadow hover:bg-green-600"
+                    >
+                      View
+                    </button>
                     <span className="px-2 py-1 rounded bg-red-100 text-red-800 text-xs font-semibold">
                       Removed
                     </span>
                   </div>
                 )}
                 {activeTab === "flagged" && (
-                  <div className="absolute top-2 right-2">
+                  <div className="absolute top-2 right-2 flex space-x-1">
+                    <button
+                      onClick={() => router.push(`/listings/${listing.id}`)}
+                      className="px-2 py-1 rounded bg-green-500 text-white text-xs font-semibold shadow hover:bg-green-600"
+                    >
+                      View
+                    </button>
                     <span className="px-2 py-1 rounded bg-orange-100 text-orange-800 text-xs font-semibold">
                       Under Review
                     </span>
@@ -713,6 +808,32 @@ export default function ProfilePage() {
                 <option value="for sale">For Sale</option>
                 <option value="sold">Sold</option>
               </select>
+            </div>
+
+            {/* Tags Selection */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Tags (max 5) - {selectedTags.length}/5
+              </label>
+              <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+                {availableTags.map((tag) => (
+                  <button
+                    key={tag.tag_id}
+                    type="button"
+                    onClick={() => handleTagToggle(tag.tag_id)}
+                    className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                      selectedTags.includes(tag.tag_id)
+                        ? 'bg-yellow-400 text-black border-yellow-500'
+                        : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
+                    }`}
+                  >
+                    {tag.tag_name}
+                  </button>
+                ))}
+              </div>
+              {availableTags.length === 0 && (
+                <p className="text-sm text-gray-500">No tags available</p>
+              )}
             </div>
 
             <div className="flex justify-end gap-4 pt-4">

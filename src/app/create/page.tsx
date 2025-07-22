@@ -5,7 +5,10 @@ import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
 import { uploadImageToFirebase } from "@/lib/firebase/uploadimage"; // correct path
 
-
+interface Tag {
+  tag_id: number;
+  tag_name: string;
+}
 
 export default function CreateListingPage() {
   const { user, loading } = useAuth();
@@ -13,6 +16,8 @@ export default function CreateListingPage() {
   const [userData, setUserData] = useState<{ uid: string; username: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isImageUploading, setIsImageUploading] = useState(false);
+  const [availableTags, setAvailableTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   // Redirect to auth if not logged in
   useEffect(() => {
@@ -35,17 +40,33 @@ export default function CreateListingPage() {
     }
   }, [user?.uid]);
 
+  // Fetch available tags
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await fetch("/api/tags");
+        if (response.ok) {
+          const data = await response.json();
+          setAvailableTags(data.tags || []);
+        }
+      } catch (err) {
+        console.error("Error fetching tags:", err);
+      }
+    };
+    fetchTags();
+  }, []);
+
   // Default values
   const [formData, setFormData] = useState({
-    seller_id: "", 
-    type: "Electronics", 
+    seller_id: "",
+    type: "Electronics",
     price: 0,
     title: "",
     description: "",
-    product_condition: "New",  
+    product_condition: "New",
     quantity: 1,
     location: "",
-    posted_by: "", 
+    posted_by: "",
     status: "for sale",
     image_storage_ref: "",
   });
@@ -95,6 +116,20 @@ export default function CreateListingPage() {
     }
   };
 
+  const handleTagToggle = (tagId: number) => {
+    setSelectedTags(prev => {
+      if (prev.includes(tagId)) {
+        return prev.filter(id => id !== tagId);
+      } else {
+        if (prev.length >= 5) {
+          alert("Maximum 5 tags allowed");
+          return prev;
+        }
+        return [...prev, tagId];
+      }
+    });
+  };
+
   const handleSubmit = async () => {
     if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(formData.price)) {
         alert("Please fill out all required fields.");
@@ -102,10 +137,13 @@ export default function CreateListingPage() {
     }
 
     const res = await fetch("/api/createlistings", {
-        
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        ...formData,
+        tags: selectedTags
+      }),
     });
 
     const result = await res.json();
@@ -154,31 +192,57 @@ return (
             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           />
 
-          <input
-            placeholder="Quantity"
-            type="number"
-            min="1"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-            value={formData.quantity}
-            onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
-          />
+        <input
+          placeholder="Quantity"
+          type="number"
+          min="1"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+          value={formData.quantity}
+          onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
+        />
 
-          {/* <div>
-            <label
-              htmlFor="file-upload"
-              className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded-lg hover:bg-yellow-300"
-            >
-              {formData.image_storage_ref
-                ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
-                : "Upload Image"}
-            </label>
-            <input
-                id="file-upload"
-                type="file" 
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageUpload}
-              />
+        {/* Tags Selection */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Tags (max 5) - {selectedTags.length}/5
+          </label>
+          <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+            {availableTags.map((tag) => (
+                                <button
+                    key={tag.tag_id}
+                    type="button"
+                    onClick={() => handleTagToggle(tag.tag_id)}
+                    className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                      selectedTags.includes(tag.tag_id)
+                        ? 'bg-yellow-400 text-black border-yellow-500'
+                        : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
+                    }`}
+                  >
+                    {tag.tag_name}
+                  </button>
+            ))}
+          </div>
+          {availableTags.length === 0 && (
+            <p className="text-sm text-gray-500">No tags available</p>
+          )}
+        </div>
+
+        {/* <div>
+          <label
+            htmlFor="file-upload"
+            className="block w-full text-center cursor-pointer bg-yellow-400 text-black font-medium py-2 px-4 rounded-lg hover:bg-yellow-300"
+          >
+            {formData.image_storage_ref
+              ? `Selected: ${formData.image_storage_ref.split('/').pop()}`
+              : "Upload Image"}
+          </label>
+          <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
 
           </div> */}
 

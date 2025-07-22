@@ -1,12 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/firebase/AuthContext";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { user, logout } = useAuth();
+
+  // Check if user is admin
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      if (user?.uid) {
+        try {
+          const response = await fetch(`/api/admin/check-status?uid=${user.uid}`);
+          if (response.ok) {
+            const data = await response.json();
+            setIsAdmin(data.isAdmin);
+          }
+        } catch (error) {
+          console.error("Error checking admin status:", error);
+          setIsAdmin(false);
+        }
+      } else {
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, [user?.uid]);
 
   const handleLogout = async () => {
     try {
@@ -49,6 +72,14 @@ export default function Navigation() {
 
             {user ? (
               <>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="text-gray-700 hover:text-yellow-500 transition-colors font-medium"
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
                 <Link
                   href="/profile"
                   className="text-gray-700 hover:text-yellow-500 transition-colors"
@@ -132,6 +163,15 @@ export default function Navigation() {
 
               {user ? (
                 <>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="text-gray-700 hover:text-yellow-500 transition-colors font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Admin Dashboard
+                    </Link>
+                  )}
                   <Link
                     href="/profile"
                     className="text-gray-700 hover:text-yellow-500 transition-colors"

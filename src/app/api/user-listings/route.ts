@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
       const bundleListings = bundleResults as UserListing[];
       return NextResponse.json({ listings: bundleListings }, { status: 200 });
     }
-        
+
 
     if (!uid) {
       return NextResponse.json(
@@ -156,7 +156,7 @@ export async function PATCH(request: NextRequest) {
     ] as const satisfies readonly (keyof UserListing)[];
 
     const setClauses: string[] = [];
-    const values: any[] = [];
+    const values: (string | number)[] = [];
 
     editable.forEach((col) => {
       if (body[col] !== undefined) {
@@ -189,6 +189,57 @@ export async function PATCH(request: NextRequest) {
       `UPDATE Listing SET ${setClauses.join(", ")} WHERE id = ?`,
       [...values, id]
     );
+
+    // Handle tag updates if provided
+    if (body.tags !== undefined) {
+      const tags = Array.isArray(body.tags) ? body.tags : [];
+
+      // Validate tags (max 5 tags)
+      if (tags.length > 5) {
+        return NextResponse.json(
+          { error: "Maximum 5 tags allowed" },
+          { status: 400 }
+        );
+      }
+
+      // Start transaction for tag operations
+      const connection = await pool.getConnection();
+      try {
+        await connection.beginTransaction();
+
+        // Remove all existing tags for this listing
+        await connection.query(
+          "DELETE FROM ListingTags WHERE listing_id = ?",
+          [id]
+        );
+
+        // Add new tags if provided
+        if (tags.length > 0) {
+          for (const tagId of tags) {
+            // Verify tag exists
+            const [tagCheck] = await connection.query(
+              "SELECT tag_id FROM Tags WHERE tag_id = ?",
+              [tagId]
+            );
+
+            if ((tagCheck as { tag_id: number }[]).length > 0) {
+              // Insert tag association
+              await connection.query(
+                "INSERT IGNORE INTO ListingTags (listing_id, tag_id) VALUES (?, ?)",
+                [id, tagId]
+              );
+            }
+          }
+        }
+
+        await connection.commit();
+      } catch (error) {
+        await connection.rollback();
+        throw error;
+      } finally {
+        connection.release();
+      }
+    }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {

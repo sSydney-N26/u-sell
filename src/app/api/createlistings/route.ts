@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import type { RowDataPacket } from 'mysql2';
+import type { RowDataPacket, ResultSetHeader } from 'mysql2';
 import mysql from "mysql2/promise";
 import pool from "@/lib/db-config";
 
@@ -93,7 +93,8 @@ export async function POST(req: Request) {
       location,
       posted_by,
       status = "for sale",
-      image_storage_ref, 
+      image_storage_ref,
+      tags = [], // New field for tags
     } = body;
 
     if (!type || price < 0 || !title || !description || !product_condition || !location || !posted_by) {
@@ -101,17 +102,54 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    // Validate tags (max 5 tags)
+    if (tags && tags.length > 5) {
+      return NextResponse.json({ error: "Maximum 5 tags allowed" }, { status: 400 });
+    }
+
     const connection = await mysql.createConnection(dbConfig);
 
-    await connection.execute(
-      `INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref]
-    );
+    // Start transaction
+    await connection.beginTransaction();
 
-    await connection.end();
+    try {
+      // Insert the listing
+      const [result] = await connection.execute(
+        `INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref]
+      );
 
-    return NextResponse.json({ success: true, message: "Listing created" });
+      const listingId = (result as ResultSetHeader).insertId;
+
+      // Add tags if provided
+      if (tags && tags.length > 0) {
+        for (const tagId of tags) {
+          // Verify tag exists
+          const [tagCheck] = await connection.execute(
+            "SELECT tag_id FROM Tags WHERE tag_id = ?",
+            [tagId]
+          );
+
+          if ((tagCheck as RowDataPacket[]).length > 0) {
+            // Insert tag association
+            await connection.execute(
+              "INSERT IGNORE INTO ListingTags (listing_id, tag_id) VALUES (?, ?)",
+              [listingId, tagId]
+            );
+          }
+        }
+      }
+
+      await connection.commit();
+      await connection.end();
+
+      return NextResponse.json({ success: true, message: "Listing created" });
+    } catch (error) {
+      await connection.rollback();
+      await connection.end();
+      throw error;
+    }
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: "Failed to create listing" }, { status: 500 });

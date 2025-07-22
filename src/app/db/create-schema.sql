@@ -1,5 +1,5 @@
 -- Users table
-DROP TABLE IF EXISTS UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users;
+DROP TABLE IF EXISTS UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users, ListingTags, Tags;
 
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY,
@@ -43,6 +43,23 @@ CREATE TABLE Listing (
     PRIMARY KEY (id)
 );
 
+-- Tags table for storing approved tags
+CREATE TABLE Tags (
+    tag_id INT AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(50) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ListingTags table for many-to-many relationship between listings and tags
+CREATE TABLE ListingTags (
+    listing_id INT,
+    tag_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (listing_id) REFERENCES Listing(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES Tags(tag_id) ON DELETE CASCADE,
+    PRIMARY KEY (listing_id, tag_id)
+);
+
 -- Reports table for tracking listing reports
 CREATE TABLE Reports (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,6 +77,9 @@ CREATE INDEX idx_listing_id ON Listing(id);
 CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
 CREATE INDEX idx_listing_date ON Listing(posted_date);
 CREATE INDEX idx_listing_view_count ON Listing(view_count DESC);
+CREATE INDEX idx_tags_name ON Tags(tag_name);
+CREATE INDEX idx_listing_tags_listing ON ListingTags(listing_id);
+CREATE INDEX idx_listing_tags_tag ON ListingTags(tag_id);
 
 -- Trigger to flag listings when they reach 5 distinct reports (for admin review)
 DELIMITER //

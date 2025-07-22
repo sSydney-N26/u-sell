@@ -6,14 +6,22 @@ import { useState, useEffect, useRef } from 'react';
 import ReportButton from '@/components/ReportButton';
 import UserListing from '@/utils/types/userListing';
 
+interface Tag {
+  tag_id: number;
+  tag_name: string;
+}
+
+interface ListingWithTags extends UserListing {
+  tags?: Tag[];
+}
+
 export default function ListingDetail() {
   const { id } = useParams();
   const router = useRouter();
 
-
-  const [listing, setListing]               = useState<UserListing | null>(null);
-  const [loading, setLoading]               = useState(true);
-  const [error, setError]                   = useState<string | null>(null);
+  const [listing, setListing] = useState<ListingWithTags | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [listingRemoved, setListingRemoved] = useState(false);
   const [listingFlagged, setListingFlagged] = useState(false);
 
@@ -43,7 +51,7 @@ export default function ListingDetail() {
         if (!res.ok) {
           throw new Error(`Status ${res.status}`);
         }
-        const data = (await res.json()) as UserListing;
+        const data = (await res.json()) as ListingWithTags;
         setListing(data);
       } catch (e) {
         console.error('Error loading listing:', e);
@@ -137,6 +145,24 @@ export default function ListingDetail() {
       <p className="text-gray-600 mb-2">{listing.description}</p>
       <p className="text-lg font-semibold mb-4">${listing.price}</p>
       <p className="text-sm text-gray-500 mb-2">Category: {listing.type}</p>
+
+      {/* Tags Display */}
+      {listing.tags && listing.tags.length > 0 && (
+        <div className="mb-4">
+          <p className="text-sm text-gray-500 mb-2">Tags:</p>
+          <div className="flex flex-wrap gap-2">
+            {listing.tags.map((tag) => (
+              <span
+                key={tag.tag_id}
+                className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full border border-yellow-200"
+              >
+                {tag.tag_name}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       <p className="text-sm text-gray-500 mb-8">
         Viewed {listing.view_count} times
       </p>

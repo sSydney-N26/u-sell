@@ -1,10 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db-config";
+import { requireAdmin } from "@/lib/admin-auth";
 
 export async function GET(request: NextRequest) {
   try {
-    // TODO: Add admin authentication check here
-    // For now, we'll allow access to see flagged listings
+    // Get user ID from query params or headers
+    const userId = request.nextUrl.searchParams.get('uid') ||
+                   request.headers.get('x-user-id');
+
+    // Check admin access
+    const { isAdmin, error } = await requireAdmin(userId);
+    if (!isAdmin) {
+      return NextResponse.json(
+        { error: error || "Admin access required" },
+        { status: 403 }
+      );
+    }
 
     const [results] = await pool.query(
       `SELECT
@@ -33,6 +44,19 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
+    // Get user ID from query params or headers
+    const userId = request.nextUrl.searchParams.get('uid') ||
+                   request.headers.get('x-user-id');
+
+    // Check admin access
+    const { isAdmin, error } = await requireAdmin(userId);
+    if (!isAdmin) {
+      return NextResponse.json(
+        { error: error || "Admin access required" },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const { listingId, action } = body; // action: 'approve' or 'remove'
 

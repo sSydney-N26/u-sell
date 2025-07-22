@@ -2511,3 +2511,26 @@ INSERT INTO Listing (seller_id, type, price, title, description, product_conditi
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Kitchen', 35.0, 'Mixing Bowls - Kitchen', 'Stainless steel construction. Perfect for university students.', 'new', 1, 'Village 2', 'alice', 'for sale', '/photos/kitchen.jpg');
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Clothing', 30.0, 'Dress - Clothing', 'Perfect for formal events. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'alice', 'for sale', '/photos/clothing.jpg');
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Electronics', 120.0, 'Mouse - Electronics', 'Gaming mouse. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'alice', 'for sale', '/photos/electronics.jpg');
+
+-- Seed initial tags for testing
+INSERT IGNORE INTO Tags (tag_name) VALUES
+('iphone'),
+('laptop'),
+('textbook'),
+('chair'),
+('desk'),
+('calculator'),
+('binder'),
+('notebook'),
+('charger'),
+('headphones'),
+('tablet'),
+('monitor'),
+('keyboard'),
+('mouse'),
+('printer'),
+('camera'),
+('speaker'),
+('microphone'),
+('lamp'),
+('shelf');
