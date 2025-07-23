@@ -85,9 +85,10 @@ export async function GET(request: NextRequest) {
                     FROM UserFollowedUsers
                     WHERE user_id = ?
                 )
+                AND u.uid != ?
                 LIMIT 10;
             `,
-            [uid, uid]
+            [uid, uid, uid]
             );
 
             if (results.length === 0) {
