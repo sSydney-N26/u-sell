@@ -35,14 +35,12 @@ export async function GET(request: NextRequest) {
       WHERE l.seller_id != ? 
         AND l.status = 'for sale'
         AND (
-          -- Match followed categories
           l.type IN (
             SELECT category 
             FROM UserFollowedCategories 
             WHERE user_id = ?
           )
           OR 
-          -- Match followed keywords in title or description (case-insensitive)
           EXISTS (
             SELECT 1 
             FROM UserFollowedKeywords uk 
@@ -63,7 +61,7 @@ export async function GET(request: NextRequest) {
     const listings = results as UserListing[];
 
     return NextResponse.json({
-      listings
+      listings,
     });
   } catch (error) {
     console.error("Error fetching FYP listings:", error);
