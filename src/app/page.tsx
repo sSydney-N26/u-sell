@@ -32,12 +32,14 @@ export default function HomePage() {
                   Create Listing
                 </button>
               </Link>
-              <button
-                className="px-8 py-3 border border-black text-base font-medium rounded-md text-black hover:bg-black hover:text-yellow-400 md:py-4 md:text-lg md:px-10"
-                style={{ borderColor: "#000000", color: "#000000" }}
-              >
-                Browse Listings
-              </button>
+              <Link href="/listings">
+                <button
+                  className="px-8 py-3 border border-black text-base font-medium rounded-md text-black hover:bg-black hover:text-white md:py-4 md:text-lg md:px-10"
+                  style={{ borderColor: "#000000", color: "#000000" }}
+                >
+                  Browse Listings
+                </button>
+              </Link>
             </div>
           </div>
         </div>
