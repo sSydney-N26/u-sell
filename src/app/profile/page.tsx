@@ -578,7 +578,7 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {bundleListings.length > 0 && (
+        {bundleListings.length > 0 && activeTab === "active" && (
           <div className="bg-white border border-yellow-300 rounded-lg shadow-md mb-8 p-6">
             <h2 className="text-2xl font-bold text-yellow-700 mb-4">Back to School Bundle</h2>
             <p className="text-sm text-gray-600 mb-6">

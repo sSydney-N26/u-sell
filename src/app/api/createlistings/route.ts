@@ -81,7 +81,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log("Received body:", body);
 
-    // TODO: In future, integrate with firebase so we can set 'posted_by' to be the username of the firebase user
     const {
       seller_id,
       type,

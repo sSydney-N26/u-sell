@@ -60,7 +60,7 @@ export default function CreateListingPage() {
   const [formData, setFormData] = useState({
     seller_id: "",
     type: "Electronics",
-    price: 0,
+    price: "",
     title: "",
     description: "",
     product_condition: "New",
@@ -95,26 +95,26 @@ export default function CreateListingPage() {
   }, [formData.type]);
 
 
-    // TODO: Integrate with Firebase image upload in the future
-   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return alert("No file selected.");
+  //   // TODO: Integrate with Firebase image upload in the future
+  //  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return alert("No file selected.");
 
-    setIsImageUploading(true);
-    try {
-      const url = await uploadImageToFirebase(file);
-      setFormData((prev) => ({
-        ...prev,
-        image_storage_ref: url,
-      }));
-      console.log("Image uploaded:", url);
-    } catch (err) {
-      console.error("Upload failed:", err);
-      alert("Failed to upload image.");
-    } finally {
-      setIsImageUploading(false);
-    }
-  };
+  //   setIsImageUploading(true);
+  //   try {
+  //     const url = await uploadImageToFirebase(file);
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       image_storage_ref: url,
+  //     }));
+  //     console.log("Image uploaded:", url);
+  //   } catch (err) {
+  //     console.error("Upload failed:", err);
+  //     alert("Failed to upload image.");
+  //   } finally {
+  //     setIsImageUploading(false);
+  //   }
+  // };
 
   const handleTagToggle = (tagId: number) => {
     setSelectedTags(prev => {
@@ -131,7 +131,9 @@ export default function CreateListingPage() {
   };
 
   const handleSubmit = async () => {
-    if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(formData.price)) {
+    const priceNumber = parseFloat(formData.price || "0");
+
+    if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(priceNumber )) {
         alert("Please fill out all required fields.");
         return;
     }
@@ -168,15 +170,15 @@ return (
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           />
 
-          <input
-            placeholder="Price"
-            type="number"
-            min="0.01"
-            step="0.01"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
-            value={formData.price}
-            onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
-          />
+            <input
+              placeholder="Price"
+              type="number"
+              min="0.01"
+              step="0.01"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
+              value={formData.price}
+              onChange={(e) => setFormData({ ...formData, price: e.target.value })}            
+              />
 
           <textarea
             placeholder="Description"
