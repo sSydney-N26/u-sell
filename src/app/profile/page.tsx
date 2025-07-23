@@ -85,21 +85,38 @@ export default function ProfilePage() {
     if (!user?.uid) return;
     const fetchBundleListings = async () => {
       try {
-        const res = await fetch(`/api/user-listings?uid=${user.uid}&bundle=true`);
+        const res = await fetch(`/api/listing/bundles?page=1`);
         if (!res.ok) throw new Error("Failed to fetch bundles");
-
         const data = await res.json();
 
-        setBundleListings(data?.listings ?? []); // fallback to empty array
+        // Convert into DatabaseListing format
+        const items: DatabaseListing[] = (data?.bundles ?? []).map((row: any) => ({
+          id: row.id,
+          type: row.type,
+          price: row.price,
+          title: row.title,
+          description: row.description,
+          product_condition: row.product_condition,
+          quantity: row.quantity,
+          location: row.location,
+          posted_date: row.posted_date,
+          posted_by: row.seller_id,
+          status: row.status,
+          image_storage_ref: row.image_storage_ref,
+          is_bundle: true,
+          tags: row.tags ?? [],
+        }));
+
+        setBundleListings(items);
       } catch (err) {
         console.error("Error fetching bundle listings:", err);
-        setBundleListings([]); // fallback on error
+        setBundleListings([]);
       }
     };
 
-
     fetchBundleListings();
   }, [user?.uid]);
+
 
   // Fetch user data and listings
   // Fetch available tags
