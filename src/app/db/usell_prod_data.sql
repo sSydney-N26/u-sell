@@ -2572,3 +2572,78 @@ INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
 -- Admin user for testing
 INSERT INTO Users (uid, username, email, program, year) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2', 'admin5', 'admin5@test.com', 'Computer Science', 4);
 INSERT INTO Admin (admin_id) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2');
+
+-- Tag combinations for listings 4-20 using seeded tags (with variety: 1-5 tags per listing)
+-- Listing 4: Cooling Fan - Electronics (2 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (4, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (4, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+
+-- Listing 5: Hard Drive - Electronics (3 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (5, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (5, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (5, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
+
+-- Listing 6: Primary Storage - Misc (1 tag)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (6, (SELECT tag_id FROM Tags WHERE tag_name = 'notebook'));
+
+-- Listing 7: File Folder for Electrical Engineering - School Supplies (2 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (7, (SELECT tag_id FROM Tags WHERE tag_name = 'binder'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (7, (SELECT tag_id FROM Tags WHERE tag_name = 'textbook'));
+
+-- Listing 8: Graphics Card - Electronics (4 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (8, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (8, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (8, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (8, (SELECT tag_id FROM Tags WHERE tag_name = 'mouse'));
+
+-- Listing 9: Coat Rack - Furniture (1 tag)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (9, (SELECT tag_id FROM Tags WHERE tag_name = 'shelf'));
+
+-- Listing 10: Wall Shelf - Furniture (2 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (10, (SELECT tag_id FROM Tags WHERE tag_name = 'shelf'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (10, (SELECT tag_id FROM Tags WHERE tag_name = 'lamp'));
+
+-- Listing 11: Coffee Table - Furniture (3 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (11, (SELECT tag_id FROM Tags WHERE tag_name = 'desk'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (11, (SELECT tag_id FROM Tags WHERE tag_name = 'chair'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (11, (SELECT tag_id FROM Tags WHERE tag_name = 'shelf'));
+
+-- Listing 12: Slow Cooker - Kitchen (1 tag)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (12, (SELECT tag_id FROM Tags WHERE tag_name = 'lamp'));
+
+-- Listing 13: Wall Shelf - Furniture (2 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (13, (SELECT tag_id FROM Tags WHERE tag_name = 'shelf'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (13, (SELECT tag_id FROM Tags WHERE tag_name = 'lamp'));
+
+-- Listing 14: Fitness Tracker - Electronics (3 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tags WHERE tag_name = 'tablet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tags WHERE tag_name = 'headphones'));
+
+-- Listing 15: MacBook Air 2019 - Electronics (5 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'mouse'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+
+-- Listing 16: Calculus Textbook - School Supplies (2 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (16, (SELECT tag_id FROM Tags WHERE tag_name = 'textbook'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (16, (SELECT tag_id FROM Tags WHERE tag_name = 'calculator'));
+
+-- Listing 17: Study Desk - Furniture (4 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (17, (SELECT tag_id FROM Tags WHERE tag_name = 'desk'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (17, (SELECT tag_id FROM Tags WHERE tag_name = 'chair'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (17, (SELECT tag_id FROM Tags WHERE tag_name = 'lamp'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (17, (SELECT tag_id FROM Tags WHERE tag_name = 'shelf'));
+
+-- Listing 18: Coffee Maker - Kitchen (1 tag)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (18, (SELECT tag_id FROM Tags WHERE tag_name = 'lamp'));
+
+-- Listing 19: Winter Jacket - Clothing (1 tag)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (19, (SELECT tag_id FROM Tags WHERE tag_name = 'notebook'));
+
+-- Listing 20: Wireless Headphones - Electronics (3 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'headphones'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'microphone'));
