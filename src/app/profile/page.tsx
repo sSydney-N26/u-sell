@@ -31,7 +31,7 @@ interface DatabaseListing {
   location: string;
   posted_date: string;
   posted_by: string;
-  status: string; // "for sale" | "sold" | "removed" | "flagged"
+  status: string;
   image_storage_ref: string;
   is_bundle: boolean;
   tags?: Tag[];
@@ -118,8 +118,6 @@ export default function ProfilePage() {
   }, [user?.uid]);
 
 
-  // Fetch user data and listings
-  // Fetch available tags
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -142,14 +140,12 @@ export default function ProfilePage() {
         setIsLoading(true);
         setError(null);
 
-        // Fetch user data
         const userProfile = await fetch(
           `/api/firebase-user-sync?uid=${user.uid}`
         );
         if (!userProfile.ok) throw new Error("Failed to fetch user");
         setUserData(await userProfile.json());
 
-        // Fetch user listings with statistics
         const listingsResponse = await fetch(
           `/api/user-listings?uid=${user.uid}`
         );
@@ -214,7 +210,6 @@ export default function ProfilePage() {
   const openEdit = async (listing: DatabaseListing) => {
     setEditingListing({ ...listing });
 
-    // Fetch current tags for this listing
     try {
       const response = await fetch(`/api/listing/${listing.id}`);
       if (response.ok) {
@@ -715,161 +710,208 @@ export default function ProfilePage() {
 
       {}
       {editingListing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full space-y-4">
-            <h2 className="text-xl font-bold">Edit Listing</h2>
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full space-y-4">
+      <h2 className="text-xl font-bold">Edit Listing</h2>
 
-            <input
-              value={editingListing.title}
-              onChange={(e) =>
-                setEditingListing({ ...editingListing, title: e.target.value })
-              }
-              placeholder="Title"
-              className="w-full border rounded px-3 py-2"
-            />
-            <textarea
-              value={editingListing.description}
-              onChange={(e) =>
-                setEditingListing({
-                  ...editingListing,
-                  description: e.target.value,
-                })
-              }
-              placeholder="Description"
-              className="w-full border rounded px-3 py-2"
-            />
+      {/* Title */}
+      <label htmlFor="edit-title" className="block text-sm font-medium text-black">
+        Title
+      </label>
+      <input
+        id="edit-title"
+        value={editingListing.title}
+        onChange={(e) =>
+          setEditingListing({ ...editingListing, title: e.target.value })
+        }
+        placeholder="Title"
+        className="w-full border rounded px-3 py-2"
+      />
 
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="number"
-                value={editingListing.price}
-                onChange={(e) =>
-                  setEditingListing({
-                    ...editingListing,
-                    price: parseFloat(e.target.value) || 0,
-                  })
-                }
-                placeholder="Price"
-                className="border rounded px-3 py-2"
-              />
-              <select
-                value={editingListing.product_condition}
-                onChange={(e) =>
-                  setEditingListing({
-                    ...editingListing,
-                    product_condition: e.target.value,
-                  })
-                }
-                className="border rounded px-3 py-2"
-              >
-                <option value="new">new</option>
-                <option value="like new">like new</option>
-                <option value="gently used">gently used</option>
-                <option value="fair">fair</option>
-                <option value="poor">poor</option>
-              </select>
-            </div>
+      {/* Description */}
+      <label htmlFor="edit-description" className="block text-sm font-medium text-black">
+        Description
+      </label>
+      <textarea
+        id="edit-description"
+        value={editingListing.description}
+        onChange={(e) =>
+          setEditingListing({
+            ...editingListing,
+            description: e.target.value,
+          })
+        }
+        placeholder="Description"
+        className="w-full border rounded px-3 py-2"
+      />
 
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="number"
-                value={editingListing.quantity}
-                onChange={(e) =>
-                  setEditingListing({
-                    ...editingListing,
-                    quantity: parseInt(e.target.value) || 0,
-                  })
-                }
-                placeholder="Quantity"
-                className="border rounded px-3 py-2"
-              />
-              <input
-                value={editingListing.location}
-                onChange={(e) =>
-                  setEditingListing({
-                    ...editingListing,
-                    location: e.target.value,
-                  })
-                }
-                placeholder="Location"
-                className="border rounded px-3 py-2"
-              />
-            </div>
-
-            {}
-            <div className="grid grid-cols-2 gap-4">
-              <select
-                value={editingListing.type}
-                onChange={(e) =>
-                  setEditingListing({ ...editingListing, type: e.target.value })
-                }
-                className="border rounded px-3 py-2"
-              >
-                <option value="School Supplies">School Supplies</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Kitchen">Kitchen</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Misc">Misc</option>
-              </select>
-              <select
-                value={editingListing.status}
-                onChange={(e) =>
-                  setEditingListing({
-                    ...editingListing,
-                    status: e.target.value,
-                  })
-                }
-                className="border rounded px-3 py-2"
-              >
-                <option value="for sale">For Sale</option>
-                <option value="sold">Sold</option>
-              </select>
-            </div>
-
-            {/* Tags Selection */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
-                Tags (max 5) - {selectedTags.length}/5
-              </label>
-              <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
-                {availableTags.map((tag) => (
-                  <button
-                    key={tag.tag_id}
-                    type="button"
-                    onClick={() => handleTagToggle(tag.tag_id)}
-                    className={`px-3 py-1 text-xs rounded-full border transition-colors ${
-                      selectedTags.includes(tag.tag_id)
-                        ? 'bg-yellow-400 text-black border-yellow-500'
-                        : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
-                    }`}
-                  >
-                    {tag.tag_name}
-                  </button>
-                ))}
-              </div>
-              {availableTags.length === 0 && (
-                <p className="text-sm text-gray-500">No tags available</p>
-              )}
-            </div>
-
-            <div className="flex justify-end gap-4 pt-4">
-              <button
-                onClick={closeEdit}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmEdit}
-                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded"
-              >
-                Save Changes
-              </button>
-            </div>
-          </div>
+      {/* Price & Condition */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="edit-price" className="block text-sm font-medium text-black">
+            Price
+          </label>
+          <input
+            id="edit-price"
+            type="number"
+            value={editingListing.price}
+            onChange={(e) =>
+              setEditingListing({
+                ...editingListing,
+                price: parseFloat(e.target.value) || 0,
+              })
+            }
+            placeholder="Price"
+            className="w-full border rounded px-3 py-2"
+          />
         </div>
-      )}
+        <div>
+          <label htmlFor="edit-condition" className="block text-sm font-medium text-black">
+            Condition
+          </label>
+          <select
+            id="edit-condition"
+            value={editingListing.product_condition}
+            onChange={(e) =>
+              setEditingListing({
+                ...editingListing,
+                product_condition: e.target.value,
+              })
+            }
+            className="w-full border rounded px-3 py-2"
+          >
+            <option value="new">new</option>
+            <option value="like new">like new</option>
+            <option value="gently used">gently used</option>
+            <option value="fair">fair</option>
+            <option value="poor">poor</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Quantity & Location */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="edit-quantity" className="block text-sm font-medium text-black">
+            Quantity
+          </label>
+          <input
+            id="edit-quantity"
+            type="number"
+            value={editingListing.quantity}
+            onChange={(e) =>
+              setEditingListing({
+                ...editingListing,
+                quantity: parseInt(e.target.value) || 0,
+              })
+            }
+            placeholder="Quantity"
+            className="w-full border rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="edit-location" className="block text-sm font-medium text-black">
+            Location
+          </label>
+          <input
+            id="edit-location"
+            value={editingListing.location}
+            onChange={(e) =>
+              setEditingListing({
+                ...editingListing,
+                location: e.target.value,
+              })
+            }
+            placeholder="Location"
+            className="w-full border rounded px-3 py-2"
+          />
+        </div>
+      </div>
+
+      {/* Category & Status */}
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="edit-type" className="block text-sm font-medium text-black">
+            Category
+          </label>
+          <select
+            id="edit-type"
+            value={editingListing.type}
+            onChange={(e) =>
+              setEditingListing({ ...editingListing, type: e.target.value })
+            }
+            className="w-full border rounded px-3 py-2"
+          >
+            <option value="School Supplies">School Supplies</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Misc">Misc</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="edit-status" className="block text-sm font-medium text-black">
+            Status
+          </label>
+          <select
+            id="edit-status"
+            value={editingListing.status}
+            onChange={(e) =>
+              setEditingListing({
+                ...editingListing,
+                status: e.target.value,
+              })
+            }
+            className="w-full border rounded px-3 py-2"
+          >
+            <option value="for sale">For Sale</option>
+            <option value="sold">Sold</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Tags */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-black">
+          Tags (max 5) — {selectedTags.length}/5
+        </label>
+        <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
+          {availableTags.map((tag) => (
+            <button
+              key={tag.tag_id}
+              type="button"
+              onClick={() => handleTagToggle(tag.tag_id)}
+              className={`px-3 py-1 text-xs rounded-full border transition-colors ${
+                selectedTags.includes(tag.tag_id)
+                  ? 'bg-yellow-400 text-black border-yellow-500'
+                  : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'
+              }`}
+            >
+              {tag.tag_name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex justify-end gap-4 pt-4">
+        <button
+          onClick={closeEdit}
+          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={confirmEdit}
+          className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
