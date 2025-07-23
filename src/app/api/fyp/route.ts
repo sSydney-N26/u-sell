@@ -26,10 +26,27 @@ export async function GET(request: NextRequest) {
           WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?) 
             AND EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ?
               AND (LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')))
-          THEN 'both'
+            AND EXISTS (SELECT 1 FROM ListingTags lt JOIN UserFollowedTags ut ON lt.tag_id = ut.tag_id WHERE lt.listing_id = l.id AND ut.user_id = ?)
+          THEN 'all'
+          WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?) 
+            AND EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ?
+              AND (LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')))
+          THEN 'category_keyword'
+          WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?)
+            AND EXISTS (SELECT 1 FROM ListingTags lt JOIN UserFollowedTags ut ON lt.tag_id = ut.tag_id WHERE lt.listing_id = l.id AND ut.user_id = ?)
+          THEN 'category_tag'
+          WHEN EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ?
+              AND (LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')))
+            AND EXISTS (SELECT 1 FROM ListingTags lt JOIN UserFollowedTags ut ON lt.tag_id = ut.tag_id WHERE lt.listing_id = l.id AND ut.user_id = ?)
+          THEN 'keyword_tag'
           WHEN l.type IN (SELECT category FROM UserFollowedCategories WHERE user_id = ?)
           THEN 'category'
-          ELSE 'keyword'
+          WHEN EXISTS (SELECT 1 FROM UserFollowedKeywords uk WHERE uk.user_id = ?
+              AND (LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')))
+          THEN 'keyword'
+          WHEN EXISTS (SELECT 1 FROM ListingTags lt JOIN UserFollowedTags ut ON lt.tag_id = ut.tag_id WHERE lt.listing_id = l.id AND ut.user_id = ?)
+          THEN 'tag'
+          ELSE 'other'
         END as match_type
       FROM Listing l
       WHERE l.seller_id != ? 
@@ -49,13 +66,40 @@ export async function GET(request: NextRequest) {
                 LOWER(l.title) LIKE CONCAT('%', uk.keyword, '%') 
                 OR LOWER(l.description) LIKE CONCAT('%', uk.keyword, '%')
               )
-          ) OR l.seller_id IN (
+          )
+          OR EXISTS (
+            SELECT 1 
+            FROM ListingTags lt 
+            JOIN UserFollowedTags ut ON lt.tag_id = ut.tag_id 
+            WHERE lt.listing_id = l.id AND ut.user_id = ?
+          )
+          OR l.seller_id IN (
               SELECT followee_id FROM UserFollowedUsers WHERE user_id = ? 
           )
         )
       ORDER BY l.posted_date DESC
       `,
-      [uid, uid, uid, uid, uid, uid, uid, uid]
+      [
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+        uid,
+      ]
     );
 
     const listings = results as UserListing[];

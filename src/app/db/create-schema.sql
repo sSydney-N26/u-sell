@@ -1,5 +1,5 @@
--- Users table
-DROP TABLE IF EXISTS UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users, ListingTags, Tags;
+-- Users table  
+DROP TABLE IF EXISTS Notifications, UserFollowedTags, UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users, ListingTags, Tags;
 
 CREATE TABLE Users (
     uid VARCHAR(128) PRIMARY KEY,
@@ -72,6 +72,8 @@ CREATE TABLE Reports (
     FOREIGN KEY (reporter_id) REFERENCES Users(uid)
 );
 
+
+
 CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
 CREATE INDEX idx_listing_id ON Listing(id);
 CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
@@ -142,6 +144,62 @@ BEGIN
    WHERE id = NEW.listing_id;
 END;
 //
+
+-- Trigger to create notifications when new listings match user preferences
+CREATE TRIGGER create_listing_notifications
+AFTER INSERT ON Listing
+FOR EACH ROW
+BEGIN
+    -- Notify users who follow this category
+    INSERT INTO Notifications (user_id, listing_id, message)
+    SELECT 
+        ufc.user_id,
+        NEW.id,
+        CONCAT('New listing in ', NEW.type, ': ', NEW.title)
+    FROM UserFollowedCategories ufc
+    WHERE ufc.category = NEW.type
+      AND NEW.seller_id != ufc.user_id; -- Don't notify the seller
+
+    -- Notify users who follow keywords that appear in title or description
+    INSERT INTO Notifications (user_id, listing_id, message)
+    SELECT 
+        ufk.user_id,
+        NEW.id,
+        CONCAT('New listing matches "', ufk.keyword, '": ', NEW.title)
+    FROM UserFollowedKeywords ufk
+    WHERE (LOWER(NEW.title) LIKE CONCAT('%', ufk.keyword, '%') 
+           OR LOWER(NEW.description) LIKE CONCAT('%', ufk.keyword, '%'))
+      AND NEW.seller_id != ufk.user_id; -- Don't notify the seller
+
+    -- Notify users who follow this seller
+    INSERT INTO Notifications (user_id, listing_id, message)
+    SELECT 
+        ufu.user_id,
+        NEW.id,
+        CONCAT('New listing from ', NEW.posted_by, ': ', NEW.title)
+    FROM UserFollowedUsers ufu
+    WHERE ufu.followee_id = NEW.seller_id;
+END;
+//
+
+-- Trigger to create notifications when tags are added to listings
+CREATE TRIGGER create_tag_notifications
+AFTER INSERT ON ListingTags
+FOR EACH ROW
+BEGIN
+    -- Notify users who follow this specific tag
+    INSERT INTO Notifications (user_id, listing_id, message)
+    SELECT 
+        uft.user_id,
+        NEW.listing_id,
+        CONCAT('New listing with "', t.tag_name, '" tag: ', l.title)
+    FROM UserFollowedTags uft
+    JOIN Tags t ON uft.tag_id = t.tag_id
+    JOIN Listing l ON NEW.listing_id = l.id
+    WHERE uft.tag_id = NEW.tag_id
+      AND l.seller_id != uft.user_id; -- Don't notify the seller
+END;
+//
 DELIMITER ;
 
 
@@ -174,6 +232,27 @@ CREATE TABLE UserFollowedUsers (
     PRIMARY KEY (user_id, followee_id),
     FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
     FOREIGN KEY (followee_id) REFERENCES Users(uid) ON DELETE CASCADE
+);
+
+-- User Followed Tags table
+CREATE TABLE UserFollowedTags (
+    user_id VARCHAR(128) NOT NULL,
+    tag_id INT NOT NULL,
+    PRIMARY KEY (user_id, tag_id),
+    FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES Tags(tag_id) ON DELETE CASCADE
+);
+
+-- Notifications table
+CREATE TABLE Notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(128) NOT NULL,
+    listing_id INT NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (listing_id) REFERENCES Listing(id) ON DELETE CASCADE
 );
 
 -- Indexes for performance on FYP queries

@@ -4,6 +4,7 @@ import pool from "@/lib/db-config";
 interface UserPreferences {
   followedCategories: string[];
   followedKeywords: string[];
+  followedTags: { tag_id: number; tag_name: string }[];
 }
 
 export async function GET(request: NextRequest) {
@@ -20,29 +21,45 @@ export async function GET(request: NextRequest) {
 
     const [results] = await pool.query(
       `
-      SELECT 'category' as type, category as value 
+      SELECT 'category' as type, category as value, NULL as tag_id, NULL as tag_name
       FROM UserFollowedCategories 
       WHERE user_id = ?
       UNION ALL
-      SELECT 'keyword' as type, keyword as value 
+      SELECT 'keyword' as type, keyword as value, NULL as tag_id, NULL as tag_name
       FROM UserFollowedKeywords 
       WHERE user_id = ?
-      ORDER BY type, value
+      UNION ALL
+      SELECT 'tag' as type, NULL as value, t.tag_id, t.tag_name
+      FROM UserFollowedTags ut
+      JOIN Tags t ON ut.tag_id = t.tag_id
+      WHERE ut.user_id = ?
+      ORDER BY type, value, tag_name
       `,
-      [uid, uid]
+      [uid, uid, uid]
     );
 
     const preferences: UserPreferences = {
       followedCategories: [],
       followedKeywords: [],
+      followedTags: [],
     };
 
-    const rows = results as { type: string; value: string }[];
+    const rows = results as {
+      type: string;
+      value: string | null;
+      tag_id: number | null;
+      tag_name: string | null;
+    }[];
     rows.forEach((row) => {
-      if (row.type === "category") {
+      if (row.type === "category" && row.value) {
         preferences.followedCategories.push(row.value);
-      } else if (row.type === "keyword") {
+      } else if (row.type === "keyword" && row.value) {
         preferences.followedKeywords.push(row.value);
+      } else if (row.type === "tag" && row.tag_id && row.tag_name) {
+        preferences.followedTags.push({
+          tag_id: row.tag_id,
+          tag_name: row.tag_name,
+        });
       }
     });
 
@@ -67,15 +84,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (type !== "category" && type !== "keyword") {
+    if (type !== "category" && type !== "keyword" && type !== "tag") {
       return NextResponse.json(
-        { error: "Type must be 'category' or 'keyword'" },
+        { error: "Type must be 'category', 'keyword', or 'tag'" },
         { status: 400 }
       );
     }
 
     let query: string;
-    let params: string[];
+    let params: (string | number)[];
 
     if (type === "category") {
       query = `
@@ -85,7 +102,7 @@ export async function POST(request: NextRequest) {
         AND NOT EXISTS (SELECT 1 FROM UserFollowedCategories WHERE user_id = ? AND category = ?)
       `;
       params = [uid, value, value, uid, value];
-    } else {
+    } else if (type === "keyword") {
       const keyword = value.toLowerCase().trim();
       if (keyword.length > 20) {
         return NextResponse.json(
@@ -100,6 +117,23 @@ export async function POST(request: NextRequest) {
         WHERE NOT EXISTS (SELECT 1 FROM UserFollowedKeywords WHERE user_id = ? AND keyword = ?)
       `;
       params = [uid, keyword, uid, keyword];
+    } else {
+      // type === "tag"
+      const tagId = parseInt(value.toString(), 10);
+      if (isNaN(tagId)) {
+        return NextResponse.json(
+          { error: "Tag ID must be a valid number" },
+          { status: 400 }
+        );
+      }
+
+      query = `
+        INSERT INTO UserFollowedTags (user_id, tag_id)
+        SELECT ?, ?
+        WHERE EXISTS (SELECT 1 FROM Tags WHERE tag_id = ?)
+        AND NOT EXISTS (SELECT 1 FROM UserFollowedTags WHERE user_id = ? AND tag_id = ?)
+      `;
+      params = [uid, tagId, tagId, uid, tagId];
     }
 
     const [result] = await pool.query(query, params);
@@ -111,7 +145,9 @@ export async function POST(request: NextRequest) {
           error:
             type === "category"
               ? "Category already followed or invalid"
-              : "Keyword already followed",
+              : type === "keyword"
+              ? "Keyword already followed"
+              : "Tag already followed or invalid",
         },
         { status: 409 }
       );
@@ -144,25 +180,36 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    if (type !== "category" && type !== "keyword") {
+    if (type !== "category" && type !== "keyword" && type !== "tag") {
       return NextResponse.json(
-        { error: "Type must be 'category' or 'keyword'" },
+        { error: "Type must be 'category', 'keyword', or 'tag'" },
         { status: 400 }
       );
     }
 
     let query: string;
-    let params: string[];
+    let params: (string | number)[];
 
     if (type === "category") {
       query =
         "DELETE FROM UserFollowedCategories WHERE user_id = ? AND category = ?";
       params = [uid, value];
-    } else {
+    } else if (type === "keyword") {
       const keyword = value.toLowerCase().trim();
       query =
         "DELETE FROM UserFollowedKeywords WHERE user_id = ? AND keyword = ?";
       params = [uid, keyword];
+    } else {
+      // type === "tag"
+      const tagId = parseInt(value, 10);
+      if (isNaN(tagId)) {
+        return NextResponse.json(
+          { error: "Tag ID must be a valid number" },
+          { status: 400 }
+        );
+      }
+      query = "DELETE FROM UserFollowedTags WHERE user_id = ? AND tag_id = ?";
+      params = [uid, tagId];
     }
 
     const [result] = await pool.query(query, params);

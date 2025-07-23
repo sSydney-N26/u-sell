@@ -1,18 +1,30 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
 import Navigation from "@/components/Navigation";
 import Post from "@/components/Post";
-import UserListing from "@/utils/types/userListing";
-
-interface FYPListing extends UserListing {
-  match_type: "category" | "keyword" | "both" | "user";
-}
 import Link from "next/link";
 import { ThreeDot } from "react-loading-indicators";
-import { FollowRows } from "../api/user-following/route";
+import { FollowRows } from "@/app/api/user-following/route";
+
+interface FYPListing {
+  id: number;
+  seller_id: string;
+  type: string;
+  price: number;
+  title: string;
+  description: string;
+  product_condition: string;
+  quantity: number;
+  location: string;
+  posted_date: string;
+  posted_by: string;
+  status: string;
+  image_storage_ref: string;
+  match_type: string;
+}
 
 interface FYPResponse {
   listings: FYPListing[];
@@ -21,6 +33,7 @@ interface FYPResponse {
 interface UserPreferences {
   followedCategories: string[];
   followedKeywords: string[];
+  followedTags: { tag_id: number; tag_name: string }[];
 }
 
 export default function FYPPage() {
@@ -30,6 +43,7 @@ export default function FYPPage() {
   const [preferences, setPreferences] = useState<UserPreferences>({
     followedCategories: [],
     followedKeywords: [],
+    followedTags: [],
   });
 
   // Filter and sort states
@@ -37,7 +51,7 @@ export default function FYPPage() {
   const [allListings, setAllListings] = useState<FYPListing[]>([]);
 
   const [filterType, setFilterType] = useState<
-    "all" | "category" | "keyword" | "user"
+    "all" | "category" | "keyword" | "tag" | "user"
   >("all");
   const [sortBy, setSortBy] = useState<
     "newest" | "oldest" | "price_low" | "price_high"
@@ -70,7 +84,7 @@ export default function FYPPage() {
     };
 
     fetchListings();
-  }, [user]); // Refetch when preferences change
+  }, [user]);
 
   // Apply filters and sorting
   const applyFiltersAndSort = useCallback(
@@ -83,11 +97,24 @@ export default function FYPPage() {
           filtered = filtered.filter(
             (listing) => listing.match_type === "user"
           );
+        } else if (filterType === "tag") {
+          filtered = filtered.filter(
+            (listing) =>
+              listing.match_type === "tag" ||
+              listing.match_type === "category_tag" ||
+              listing.match_type === "keyword_tag" ||
+              listing.match_type === "all"
+          );
+        } else {
+          filtered = filtered.filter(
+            (listing) =>
+              listing.match_type === filterType ||
+              listing.match_type === "category_keyword" ||
+              listing.match_type === "category_tag" ||
+              listing.match_type === "keyword_tag" ||
+              listing.match_type === "all"
+          );
         }
-        filtered = filtered.filter(
-          (listing) =>
-            listing.match_type === filterType || listing.match_type === "both"
-        );
       }
 
       // Apply sort
@@ -215,6 +242,7 @@ export default function FYPPage() {
   const hasPreferences =
     preferences.followedCategories.length > 0 ||
     preferences.followedKeywords.length > 0 ||
+    preferences.followedTags.length > 0 ||
     followedUsers.length > 0;
 
   console.log(filteredListings);
@@ -225,29 +253,30 @@ export default function FYPPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">For You</h1>
-          <p className="text-gray-600 mt-2">
-            Personalized listings based on your interests
-          </p>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">For You</h1>
+            <p className="text-gray-600 mt-2">
+              Personalized listings based on your preferences
+            </p>
+          </div>
+
+          <Link
+            href="/fyp/preferences"
+            className="bg-yellow-400 text-black px-6 py-3 rounded-md hover:bg-yellow-300 transition-colors font-medium"
+          >
+            Manage Preferences
+          </Link>
         </div>
 
-        {/* Preferences Summary */}
+        {/* Current Preferences Display */}
         {hasPreferences && (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Your Interests
-              </h3>
-              <Link
-                href="/fyp/preferences"
-                className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-300 transition-colors font-medium text-sm"
-              >
-                ⚙️ Manage Preferences
-              </Link>
-            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Your Current Preferences
+            </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {preferences.followedCategories.length > 0 && (
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">
@@ -284,6 +313,24 @@ export default function FYPPage() {
                 </div>
               )}
 
+              {preferences.followedTags.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-gray-700 mb-2">
+                    Followed Tags
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {preferences.followedTags.map((tag) => (
+                      <span
+                        key={tag.tag_id}
+                        className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full"
+                      >
+                        {tag.tag_name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {followedUsers.length > 0 && (
                 <div>
                   <h4 className="font-medium text-gray-700 mb-2">
@@ -313,8 +360,8 @@ export default function FYPPage() {
               Set up your preferences to get personalized recommendations
             </h3>
             <p className="text-gray-600 mb-6">
-              Follow categories and keywords to see listings that match your
-              interests
+              Follow categories, keywords, tags, and users to see listings that
+              match your interests
             </p>
             <Link
               href="/fyp/preferences"
@@ -326,93 +373,67 @@ export default function FYPPage() {
         )}
 
         {/* Filter and Sort Controls */}
-        {hasPreferences && allListings.length > 0 && (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              <div className="flex items-center gap-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Filter by:
-                </label>
-                <select
-                  value={filterType}
-                  onChange={(e) =>
-                    setFilterType(
-                      e.target.value as "all" | "category" | "keyword" | "user"
-                    )
-                  }
-                  className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Filter Controls */}
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm font-medium text-gray-700 self-center">
+                Filter:
+              </span>
+              {["all", "category", "keyword", "tag", "user"].map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setFilterType(filter as typeof filterType)}
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                    filterType === filter
+                      ? "bg-yellow-400 text-black"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
                 >
-                  <option value="all">All Matches</option>
-                  <option value="category">Category Matches</option>
-                  <option value="keyword">Keyword Matches</option>
-                  <option value="user">User/Seller Matches</option>
-                </select>
-              </div>
+                  {filter === "all"
+                    ? "All"
+                    : filter.charAt(0).toUpperCase() + filter.slice(1)}
+                </button>
+              ))}
+            </div>
 
-              <div className="flex items-center gap-2">
-                <label className="text-sm font-medium text-gray-700">
-                  Sort by:
-                </label>
-                <select
-                  value={sortBy}
-                  onChange={(e) =>
-                    setSortBy(
-                      e.target.value as
-                        | "newest"
-                        | "oldest"
-                        | "price_low"
-                        | "price_high"
-                    )
-                  }
-                  className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                >
-                  <option value="newest">Newest First</option>
-                  <option value="oldest">Oldest First</option>
-                  <option value="price_low">Price: Low to High</option>
-                  <option value="price_high">Price: High to Low</option>
-                </select>
-              </div>
-
-              <div className="text-sm text-gray-500 ml-auto">
-                Showing {currDisplayListings.length} of{" "}
-                {filteredListings.length} listings
-              </div>
+            {/* Sort Controls */}
+            <div className="flex flex-wrap gap-2">
+              <span className="text-sm font-medium text-gray-700 self-center">
+                Sort:
+              </span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="price_low">Price: Low to High</option>
+                <option value="price_high">Price: High to Low</option>
+              </select>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* Results Summary */}
+        <div className="mb-6">
+          <p className="text-gray-600">
+            Showing {currDisplayListings.length} of {filteredListings.length}{" "}
+            personalized listings
+            {filterType !== "all" && (
+              <span className="font-medium"> filtered by {filterType}</span>
+            )}
+          </p>
+        </div>
 
         {/* Listings Grid */}
         {currDisplayListings.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
               {currDisplayListings.map((listing) => (
                 <Link href={`/listings/${listing.id}`} key={listing.id}>
-                  <div className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105 relative">
-                    {/* Match Type Badge */}
-                    {"match_type" in listing && (
-                      <div className="absolute top-2 left-2 z-10">
-                        {listing.match_type === "category" && (
-                          <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                            📂 Category
-                          </span>
-                        )}
-                        {listing.match_type === "keyword" && (
-                          <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
-                            🔍 Keyword
-                          </span>
-                        )}
-                        {listing.match_type === "both" && (
-                          <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">
-                            ⭐ Both Categories & Keyword
-                          </span>
-                        )}
-                        {listing.match_type === "user" && (
-                          <span className="bg-pink-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">
-                            👩🏻‍🦰 User
-                          </span>
-                        )}
-                      </div>
-                    )}
+                  <div className="relative rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105 cursor-pointer">
                     <Post
                       imageUrl={listing.image_storage_ref}
                       title={listing.title}
@@ -421,7 +442,43 @@ export default function FYPPage() {
                       sold={listing.status === "sold"}
                       category={listing.type}
                       postedBy={listing.posted_by}
+                      listingId={listing.id}
                     />
+                    {/* Match Type Badge */}
+                    <div className="absolute top-2 right-2 z-10">
+                      <span
+                        className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          listing.match_type === "user"
+                            ? "bg-pink-100 text-pink-800"
+                            : listing.match_type === "category"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : listing.match_type === "keyword"
+                            ? "bg-blue-100 text-blue-800"
+                            : listing.match_type === "tag"
+                            ? "bg-green-100 text-green-800"
+                            : listing.match_type === "all"
+                            ? "bg-purple-100 text-purple-800"
+                            : listing.match_type === "category_keyword"
+                            ? "bg-orange-100 text-orange-800"
+                            : listing.match_type === "category_tag"
+                            ? "bg-teal-100 text-teal-800"
+                            : listing.match_type === "keyword_tag"
+                            ? "bg-indigo-100 text-indigo-800"
+                            : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
+                        {listing.match_type === "all"
+                          ? "Perfect Match"
+                          : listing.match_type === "category_keyword"
+                          ? "Category + Keyword"
+                          : listing.match_type === "category_tag"
+                          ? "Category + Tag"
+                          : listing.match_type === "keyword_tag"
+                          ? "Keyword + Tag"
+                          : listing.match_type.charAt(0).toUpperCase() +
+                            listing.match_type.slice(1)}
+                      </span>
+                    </div>
                   </div>
                 </Link>
               ))}
@@ -433,47 +490,31 @@ export default function FYPPage() {
                 <button
                   onClick={loadMoreListings}
                   disabled={loadingMore}
-                  className="bg-black text-white px-8 py-3 rounded-md hover:bg-gray-800 transition-colors font-medium disabled:opacity-60"
+                  className="bg-yellow-400 text-black px-8 py-3 rounded-md hover:bg-yellow-300 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loadingMore ? "Loading..." : "Load More"}
                 </button>
               </div>
             )}
           </>
-        ) : hasPreferences ? (
+        ) : (
           <div className="text-center py-12">
-            <div className="text-4xl mb-4">🔍</div>
+            <div className="text-4xl mb-4">📭</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              {filteredListings.length === 0
-                ? "No listings match your current filters"
-                : "No listings match your preferences yet"}
+              No matching listings found
             </h3>
             <p className="text-gray-600 mb-6">
-              {filteredListings.length === 0
-                ? "Try adjusting your filter and sort options above, or update your preferences"
-                : "Try adjusting your followed categories or keywords, or check back later for new listings"}
-            </p>
-            <div className="flex gap-3 justify-center">
-              {filteredListings.length === 0 && (
-                <button
-                  onClick={() => {
-                    setFilterType("all");
-                    setSortBy("newest");
-                  }}
-                  className="bg-gray-600 text-white px-6 py-3 rounded-md hover:bg-gray-700 transition-colors font-medium"
-                >
-                  Clear Filters
-                </button>
-              )}
+              Try adjusting your filters or{" "}
               <Link
                 href="/fyp/preferences"
-                className="bg-yellow-400 text-black px-6 py-3 rounded-md hover:bg-yellow-300 transition-colors font-medium inline-block"
+                className="text-yellow-600 hover:text-yellow-500 font-medium"
               >
-                Update Preferences
-              </Link>
-            </div>
+                updating your preferences
+              </Link>{" "}
+              to see more listings.
+            </p>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
