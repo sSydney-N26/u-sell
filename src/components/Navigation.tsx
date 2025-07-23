@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/firebase/AuthContext";
+import Notifications from "./Notifications";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +15,9 @@ export default function Navigation() {
     const checkAdminStatus = async () => {
       if (user?.uid) {
         try {
-          const response = await fetch(`/api/admin/check-status?uid=${user.uid}`);
+          const response = await fetch(
+            `/api/admin/check-status?uid=${user.uid}`
+          );
           if (response.ok) {
             const data = await response.json();
             setIsAdmin(data.isAdmin);
@@ -86,6 +89,7 @@ export default function Navigation() {
                 >
                   My Profile
                 </Link>
+                <Notifications />
                 <button
                   onClick={handleLogout}
                   className="text-gray-700 hover:text-yellow-500 transition-colors"

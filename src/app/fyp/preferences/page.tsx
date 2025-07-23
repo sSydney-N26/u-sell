@@ -8,15 +8,22 @@ import Link from "next/link";
 import { FollowRows } from "@/app/api/user-following/route";
 import { FollowSuggestion } from "@/app/api/user-following/route";
 
+interface Tag {
+  tag_id: number;
+  tag_name: string;
+}
+
 interface UserPreferences {
   followedCategories: string[];
   followedKeywords: string[];
+  followedTags: { tag_id: number; tag_name: string }[];
 }
 
 interface ConfirmDialog {
   isOpen: boolean;
-  type: "category" | "keyword";
+  type: "category" | "keyword" | "tag";
   value: string;
+  tagId?: number;
 }
 
 export default function PreferencesPage() {
@@ -26,8 +33,10 @@ export default function PreferencesPage() {
   const [preferences, setPreferences] = useState<UserPreferences>({
     followedCategories: [],
     followedKeywords: [],
+    followedTags: [],
   });
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [availableTags, setAvailableTags] = useState<Tag[]>([]);
 
   const [followedUsers, setFollowedUsers] = useState<FollowRows[]>([]);
   const [suggestedFollows, setSuggestedFollows] = useState<FollowSuggestion[]>(
@@ -64,13 +73,18 @@ export default function PreferencesPage() {
       try {
         setLoading(true);
 
-        // Fetch user preferences and available categories in parallel
-        const [preferencesResponse, categoriesResponse, followingResponse] =
-          await Promise.all([
-            fetch(`/api/user-preferences?uid=${user.uid}`),
-            fetch("/api/categories"),
-            fetch(`/api/user-following?uid=${user.uid}`),
-          ]);
+        // Fetch user preferences, available categories, tags, and following in parallel
+        const [
+          preferencesResponse,
+          categoriesResponse,
+          tagsResponse,
+          followingResponse,
+        ] = await Promise.all([
+          fetch(`/api/user-preferences?uid=${user.uid}`),
+          fetch("/api/categories"),
+          fetch("/api/tags"),
+          fetch(`/api/user-following?uid=${user.uid}`),
+        ]);
 
         if (preferencesResponse.ok) {
           const preferencesData = await preferencesResponse.json();
@@ -80,6 +94,11 @@ export default function PreferencesPage() {
         if (categoriesResponse.ok) {
           const categoriesData = await categoriesResponse.json();
           setAvailableCategories(categoriesData.categories);
+        }
+
+        if (tagsResponse.ok) {
+          const tagsData = await tagsResponse.json();
+          setAvailableTags(tagsData.tags || []);
         }
 
         if (followingResponse.ok) {
@@ -176,9 +195,44 @@ export default function PreferencesPage() {
     }
   };
 
+  // Add tag
+  const addTag = async (tag: Tag) => {
+    if (!user) return;
+
+    try {
+      const response = await fetch("/api/user-preferences", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: user.uid,
+          type: "tag",
+          value: tag.tag_id,
+        }),
+      });
+
+      if (response.ok) {
+        setPreferences((prev) => ({
+          ...prev,
+          followedTags: [...prev.followedTags, tag],
+        }));
+        showSuccess(`Following "${tag.tag_name}"`);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to follow tag");
+      }
+    } catch (err) {
+      setError("Failed to follow tag");
+      console.error("Error adding tag:", err);
+    }
+  };
+
   // Open confirmation dialog
-  const openConfirmDialog = (type: "category" | "keyword", value: string) => {
-    setConfirmDialog({ isOpen: true, type, value });
+  const openConfirmDialog = (
+    type: "category" | "keyword" | "tag",
+    value: string,
+    tagId?: number
+  ) => {
+    setConfirmDialog({ isOpen: true, type, value, tagId });
   };
 
   // Close confirmation dialog
@@ -190,13 +244,14 @@ export default function PreferencesPage() {
   const confirmUnfollow = async () => {
     if (!user) return;
 
-    const { type, value } = confirmDialog;
+    const { type, value, tagId } = confirmDialog;
 
     try {
+      const valueToDelete = type === "tag" ? tagId?.toString() : value;
       const response = await fetch(
         `/api/user-preferences?uid=${
           user.uid
-        }&type=${type}&value=${encodeURIComponent(value)}`,
+        }&type=${type}&value=${encodeURIComponent(valueToDelete || "")}`,
         { method: "DELETE" }
       );
 
@@ -208,11 +263,18 @@ export default function PreferencesPage() {
               (cat) => cat !== value
             ),
           }));
-        } else {
+        } else if (type === "keyword") {
           setPreferences((prev) => ({
             ...prev,
             followedKeywords: prev.followedKeywords.filter(
               (keyword) => keyword !== value
+            ),
+          }));
+        } else if (type === "tag") {
+          setPreferences((prev) => ({
+            ...prev,
+            followedTags: prev.followedTags.filter(
+              (tag) => tag.tag_id !== tagId
             ),
           }));
         }
@@ -289,7 +351,7 @@ export default function PreferencesPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <Navigation />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
             <p className="text-gray-600">Loading preferences...</p>
           </div>
@@ -300,6 +362,13 @@ export default function PreferencesPage() {
 
   const unfollowedCategories = availableCategories.filter(
     (category) => !preferences.followedCategories.includes(category)
+  );
+
+  const unfollowedTags = availableTags.filter(
+    (tag) =>
+      !preferences.followedTags.some(
+        (followedTag) => followedTag.tag_id === tag.tag_id
+      )
   );
 
   const itemsLimit = 4;
@@ -313,14 +382,14 @@ export default function PreferencesPage() {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Preferences</h1>
             <p className="text-gray-600 mt-2">
-              Manage your followed categories and keywords for personalized
-              recommendations
+              Manage your followed categories, keywords, and tags for
+              personalized recommendations
             </p>
           </div>
 
@@ -351,7 +420,7 @@ export default function PreferencesPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Categories Section */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -487,6 +556,69 @@ export default function PreferencesPage() {
               )}
             </div>
           </div>
+
+          {/* Tags Section */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Tags</h2>
+
+            {/* Followed Tags */}
+            <div className="mb-6">
+              <h3 className="font-medium text-gray-700 mb-3">
+                Currently Following ({preferences.followedTags.length})
+              </h3>
+              {preferences.followedTags.length > 0 ? (
+                <div className="space-y-2">
+                  {preferences.followedTags.map((tag) => (
+                    <div
+                      key={tag.tag_id}
+                      className="flex items-center justify-between bg-green-50 border border-green-200 rounded-md px-3 py-2"
+                    >
+                      <span className="text-green-800 font-medium">
+                        {tag.tag_name}
+                      </span>
+                      <button
+                        onClick={() =>
+                          openConfirmDialog("tag", tag.tag_name, tag.tag_id)
+                        }
+                        className="text-red-600 hover:text-red-800 text-sm font-medium"
+                      >
+                        Unfollow
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No tags followed yet</p>
+              )}
+            </div>
+
+            {/* Available Tags */}
+            <div>
+              <h3 className="font-medium text-gray-700 mb-3">Available Tags</h3>
+              {unfollowedTags.length > 0 ? (
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  {unfollowedTags.map((tag) => (
+                    <div
+                      key={tag.tag_id}
+                      className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-md px-3 py-2"
+                    >
+                      <span className="text-gray-700">{tag.tag_name}</span>
+                      <button
+                        onClick={() => addTag(tag)}
+                        className="bg-yellow-400 text-black px-3 py-1 rounded text-sm font-medium hover:bg-yellow-300 transition-colors"
+                      >
+                        Follow
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">
+                  All tags are being followed
+                </p>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Users Section */}
@@ -531,30 +663,35 @@ export default function PreferencesPage() {
             )}
           </div>
 
+          {/* Pagination for followed users */}
           {followingTotalPage > 1 && (
-            <div className="flex justify-between my-6">
+            <div className="flex items-center justify-center space-x-2 mb-6">
               <button
-                className="px-4 py-2 bg-yellow-500 rounded-md"
-                onClick={() => setCurrentFollowPage((p) => Math.max(1, p - 1))}
+                onClick={() =>
+                  setCurrentFollowPage((prev) => Math.max(prev - 1, 1))
+                }
                 disabled={currentFollowPage === 1}
+                className="px-3 py-1 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
+              <span className="text-sm text-gray-600">
+                Page {currentFollowPage} of {followingTotalPage}
+              </span>
               <button
-                className="px-4 py-2 bg-yellow-500 rounded-md"
                 onClick={() =>
-                  setCurrentFollowPage((p) =>
-                    Math.min(followingTotalPage, p + 1)
+                  setCurrentFollowPage((prev) =>
+                    Math.min(prev + 1, followingTotalPage)
                   )
                 }
                 disabled={currentFollowPage === followingTotalPage}
+                className="px-3 py-1 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>
             </div>
           )}
 
-          {/* Suggested Users to Follow */}
           <div>
             <h3 className="font-medium text-gray-700 my-5">
               Suggested Users to Follow
@@ -590,19 +727,18 @@ export default function PreferencesPage() {
       {/* Confirmation Dialog */}
       {confirmDialog.isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Confirm Unfollow
             </h3>
             <p className="text-gray-600 mb-6">
               Are you sure you want to unfollow &quot;{confirmDialog.value}
-              &quot;? You will no longer see listings related to this{" "}
-              {confirmDialog.type}.
+              &quot;?
             </p>
             <div className="flex gap-3 justify-end">
               <button
                 onClick={closeConfirmDialog}
-                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
