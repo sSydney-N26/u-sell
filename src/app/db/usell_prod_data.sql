@@ -2561,3 +2561,14 @@ INSERT IGNORE INTO Tags (tag_name) VALUES
 ('microphone'),
 ('lamp'),
 ('shelf');
+
+-- Reports for listing_id 2 (for testing reporting functionality)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+(2, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content that violates community guidelines.'),
+(2, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This appears to be a spam listing with misleading information.'),
+(2, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'The item description seems fake and the price is suspiciously low.'),
+(2, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'The content in this listing is offensive and inappropriate for our community.');
+
+-- Admin user for testing
+INSERT INTO Users (uid, username, email, program, year) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2', 'admin5', 'admin5@test.com', 'Computer Science', 4);
+INSERT INTO Admin (admin_id) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2');
