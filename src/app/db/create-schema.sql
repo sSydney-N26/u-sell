@@ -258,8 +258,6 @@ CREATE TABLE Notifications (
 -- Indexes for performance on FYP queries
 CREATE INDEX idx_followed_categories_user ON UserFollowedCategories(user_id);
 CREATE INDEX idx_followed_keywords_user ON UserFollowedKeywords(user_id);
-CREATE INDEX idx_followed_users_user ON UserFollowedUsers(user_id);
-CREATE INDEX idx_followed_users_followee ON UserFollowedUsers(user_id);
 
 -- Create view for Bundle Feature
 CREATE OR REPLACE VIEW BackToSchoolBundleView AS
