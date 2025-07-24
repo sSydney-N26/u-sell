@@ -64,7 +64,7 @@ export default function CreateListingPage() {
     title: "",
     description: "",
     product_condition: "New",
-    quantity: 1,
+    quantity: "",
     location: "",
     posted_by: "",
     status: "for sale",
@@ -132,8 +132,9 @@ export default function CreateListingPage() {
 
   const handleSubmit = async () => {
     const priceNumber = parseFloat(formData.price || "0");
+    const quantity = parseFloat(formData.quantity || "1");
 
-    if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(priceNumber )) {
+    if (!formData.title || !formData.description || !formData.location || !formData.posted_by || !formData.product_condition || !formData.type || isNaN(priceNumber ) || isNaN(quantity) ) {
         alert("Please fill out all required fields.");
         return;
     }
@@ -200,7 +201,7 @@ return (
           min="1"
           className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-black"
           value={formData.quantity}
-          onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) })}
+          onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
         />
 
         {/* Tags Selection */}
