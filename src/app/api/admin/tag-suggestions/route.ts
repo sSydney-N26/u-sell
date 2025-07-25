@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
         (SELECT COUNT(*) FROM Listing l2 WHERE LOWER(l2.title) LIKE CONCAT('%', word, '%')) as total_listings
       FROM words
       WHERE word NOT IN (SELECT tag_name FROM Tags)
+        AND word NOT IN (SELECT LOWER(type) FROM ProductType)
       ORDER BY frequency DESC, total_listings DESC
       LIMIT 20
     `;

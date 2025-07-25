@@ -1,4 +1,4 @@
--- Users table  
+-- Users table
 DROP TABLE IF EXISTS Notifications, UserFollowedTags, UserFollowedUsers, UserFollowedKeywords, UserFollowedCategories, Reports, ListingViews, Listing, Admin, ProductType, ProductCondition, Users, ListingTags, Tags;
 
 CREATE TABLE Users (
@@ -103,26 +103,6 @@ BEGIN
         WHERE id = NEW.listing_id AND status = 'for sale';
     END IF;
 END//
-
--- Trigger to restore listing status if reports are deleted and count drops below 5
-CREATE TRIGGER check_report_count_after_delete
-AFTER DELETE ON Reports
-FOR EACH ROW
-BEGIN
-    DECLARE report_count INT;
-
-    -- Count distinct reporters for this listing
-    SELECT COUNT(DISTINCT reporter_id) INTO report_count
-    FROM Reports
-    WHERE listing_id = OLD.listing_id;
-
-    -- If we've dropped below 5 reports, restore the listing to 'for sale' status
-    IF report_count < 5 THEN
-        UPDATE Listing
-        SET status = 'for sale'
-        WHERE id = OLD.listing_id AND status = 'flagged';
-    END IF;
-END//
 DELIMITER ;
 
 CREATE TABLE ListingViews (
@@ -152,7 +132,7 @@ FOR EACH ROW
 BEGIN
     -- Notify users who follow this category
     INSERT INTO Notifications (user_id, listing_id, message)
-    SELECT 
+    SELECT
         ufc.user_id,
         NEW.id,
         CONCAT('New listing in ', NEW.type, ': ', NEW.title)
@@ -162,18 +142,18 @@ BEGIN
 
     -- Notify users who follow keywords that appear in title or description
     INSERT INTO Notifications (user_id, listing_id, message)
-    SELECT 
+    SELECT
         ufk.user_id,
         NEW.id,
         CONCAT('New listing matches "', ufk.keyword, '": ', NEW.title)
     FROM UserFollowedKeywords ufk
-    WHERE (LOWER(NEW.title) LIKE CONCAT('%', ufk.keyword, '%') 
+    WHERE (LOWER(NEW.title) LIKE CONCAT('%', ufk.keyword, '%')
            OR LOWER(NEW.description) LIKE CONCAT('%', ufk.keyword, '%'))
       AND NEW.seller_id != ufk.user_id; -- Don't notify the seller
 
     -- Notify users who follow this seller
     INSERT INTO Notifications (user_id, listing_id, message)
-    SELECT 
+    SELECT
         ufu.user_id,
         NEW.id,
         CONCAT('New listing from ', NEW.posted_by, ': ', NEW.title)
@@ -189,7 +169,7 @@ FOR EACH ROW
 BEGIN
     -- Notify users who follow this specific tag
     INSERT INTO Notifications (user_id, listing_id, message)
-    SELECT 
+    SELECT
         uft.user_id,
         NEW.listing_id,
         CONCAT('New listing with "', t.tag_name, '" tag: ', l.title)
