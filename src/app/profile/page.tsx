@@ -5,6 +5,7 @@ import Post, { PostInfo } from "@/components/Post";
 import Navigation from "@/components/Navigation";
 import { useAuth } from "@/lib/firebase/AuthContext";
 import { useRouter } from "next/navigation";
+import { CATEGORIES } from "@/utils/categories";
 
 interface UserData {
   uid: string;
@@ -837,17 +838,12 @@ export default function ProfilePage() {
           <select
             id="edit-type"
             value={editingListing.type}
-            onChange={(e) =>
-              setEditingListing({ ...editingListing, type: e.target.value })
-            }
+            onChange={(e) => setEditingListing({ ...editingListing, type: e.target.value })}
             className="w-full border rounded px-3 py-2"
           >
-            <option value="School Supplies">School Supplies</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Kitchen">Kitchen</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Misc">Misc</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </div>
         <div>

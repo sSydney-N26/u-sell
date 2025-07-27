@@ -89,6 +89,12 @@ export default function CreateListingPage() {
         Kitchen: "/photos/kitchen.jpg",
         "School Supplies": "/photos/schoolsupplies.jpg",
         Misc: "/photos/misc.jpg",
+        Toys: "/photos/toys.jpg",
+        Health: "/photos/health.jpg",
+        Beauty: "/photos/beauty.jpg",
+        "Video Games": "/photos/videogames.jpg",
+        Sports: "/photos/sports.jpg",
+        Arts: "/photos/arts.jpg",
       };
 
       setFormData((prev) => ({...prev, image_storage_ref: categoryToImage[prev.type]}));
@@ -269,6 +275,12 @@ return (
             <option value="Kitchen">Kitchen</option>
             <option value="School Supplies">School Supplies</option>
             <option value="Misc">Misc</option>
+            <option value="Toys">Toys</option>
+            <option value="Health">Health</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Video Games">Video Games</option>
+            <option value="Sports">Sports</option>
+            <option value="Arts">Arts</option>
           </select>
 
           <select

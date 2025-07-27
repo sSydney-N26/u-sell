@@ -5,6 +5,12 @@ INSERT INTO ProductType (type) VALUES ('Kitchen');
 INSERT INTO ProductType (type) VALUES ('Electronics');
 INSERT INTO ProductType (type) VALUES ('Clothing');
 INSERT INTO ProductType (type) VALUES ('Misc');
+INSERT INTO ProductType (type) VALUES ('Toys');
+INSERT INTO ProductType (type) VALUES ('Health');
+INSERT INTO ProductType (type) VALUES ('Beauty');
+INSERT INTO ProductType (type) VALUES ('Video Games');
+INSERT INTO ProductType (type) VALUES ('Sports');
+INSERT INTO ProductType (type) VALUES ('Arts');
 
 -- Product Conditions
 INSERT INTO ProductCondition (type) VALUES ('new');
@@ -2512,6 +2518,30 @@ INSERT INTO Listing (seller_id, type, price, title, description, product_conditi
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Clothing', 30.0, 'Dress - Clothing', 'Perfect for formal events. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'alice', 'for sale', '/photos/clothing.jpg');
 INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Electronics', 120.0, 'Mouse - Electronics', 'Gaming mouse. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'alice', 'for sale', '/photos/electronics.jpg');
 
+-- New category listing
+-- Toys
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Toys', 15.99, 'LEGO Classic Bricks Set - Toys', 'A box of colorful LEGO bricks for creative play.', 'gently used', 1, 'UWaterloo Dana Porter Library', 'alice', 'for sale', '/photos/toys.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'Toys', 8.50, 'Plush Teddy Bear - Toys', 'Soft and cuddly teddy bear, perfect for kids.', 'like new', 1, 'Columbia Lake Village', 'johnsonjoshua', 'for sale', '/photos/toys.jpg');
+
+-- Health
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'Health', 12.00, 'Yoga Mat - Health', 'Non-slip yoga mat, lightly used.', 'gently used', 1, 'Waterloo Park', 'garzaanthony', 'for sale', '/photos/health.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'Health', 5.00, 'Reusable Water Bottle - Health', 'Eco-friendly water bottle, BPA-free.', 'new', 1, 'Village 2', 'jennifermiles', 'for sale', '/photos/health.jpg');
+
+-- Beauty
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', 'Beauty', 10.00, 'Makeup Brush Set - Beauty', 'Set of 5 makeup brushes, barely used.', 'like new', 1, 'Downtown Waterloo', 'blakeerik', 'for sale', '/photos/beauty.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'Beauty', 7.50, 'Facial Cleanser - Beauty', 'Gentle foaming facial cleanser, unopened.', 'new', 1, 'Off-campus housing near University', 'curtis61', 'for sale', '/photos/beauty.jpg');
+
+-- Video Games
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'Video Games', 25.00, 'Nintendo Switch Game: Mario Kart 8 - Video Games', 'Mario Kart 8 Deluxe, great condition.', 'like new', 1, 'UWaterloo Student Centre', 'yherrera', 'for sale', '/photos/videogames.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', 'Video Games', 18.00, 'PlayStation Controller - Video Games', 'DualShock 4 wireless controller, works perfectly.', 'gently used', 1, 'Student Housing Complex', 'barbara10', 'for sale', '/photos/videogames.jpg');
+
+-- Sports
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('b1863163-0cb4-49f3-abbc-053c304480b3', 'Sports', 20.00, 'Basketball - Sports', 'Official size basketball, barely used.', 'like new', 1, 'Waterloo Park', 'jamesshawn', 'for sale', '/photos/sports.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('951529af-3f3b-4b9d-965e-28b2dbb6e7b7', 'Sports', 30.00, 'Tennis Racket - Sports', 'Lightweight tennis racket, good grip.', 'gently used', 1, 'UWaterloo Campus', 'jacqueline19', 'for sale', '/photos/sports.jpg');
+
+-- Arts
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('c7a127cb-47a1-42a1-97f5-9df43a1afc9f', 'Arts', 14.00, 'Acrylic Paint Set - Arts', '12-color acrylic paint set, unopened.', 'new', 1, 'UWaterloo Campus', 'onelson', 'for sale', '/photos/arts.jpg');
+INSERT INTO Listing (seller_id, type, price, title, description, product_condition, quantity, location, posted_by, status, image_storage_ref) VALUES ('e90b6823-ce68-460b-8066-8c1e3022ed7d', 'Arts', 9.00, 'Sketchbook - Arts', 'Hardcover sketchbook, 100 pages, unused.', 'new', 1, 'Village 2', 'lydiatrujillo', 'for sale', '/photos/arts.jpg');
 
 
 -- ListingView

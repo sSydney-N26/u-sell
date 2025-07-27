@@ -12,7 +12,7 @@ CREATE TABLE Users (
 
 -- Product Types table
 CREATE TABLE ProductType (
-    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') PRIMARY KEY
+    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc', 'Toys', 'Health', 'Beauty', 'Video Games', 'Sports', 'Arts') PRIMARY KEY
 );
 
 -- Product Conditions table
@@ -24,7 +24,7 @@ CREATE TABLE ProductCondition (
 CREATE TABLE Listing (
     id INT AUTO_INCREMENT,
     seller_id VARCHAR(128),
-    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc'),
+    type ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc', 'Toys', 'Health', 'Beauty', 'Video Games', 'Sports', 'Arts'),
     price FLOAT NOT NULL,
     title VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
@@ -191,7 +191,7 @@ CREATE TABLE Admin (
 -- User Followed Categories table
 CREATE TABLE UserFollowedCategories (
     user_id VARCHAR(128) NOT NULL,
-    category ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc') NOT NULL,
+    category ENUM('School Supplies', 'Furniture', 'Kitchen', 'Electronics', 'Clothing', 'Misc', 'Toys', 'Health', 'Beauty', 'Video Games', 'Sports', 'Arts') NOT NULL,
     PRIMARY KEY (user_id, category),
     FOREIGN KEY (user_id) REFERENCES Users(uid) ON DELETE CASCADE,
     FOREIGN KEY (category) REFERENCES ProductType(type)
