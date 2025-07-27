@@ -23,7 +23,7 @@ VALUES (
   'MC',
   'Alice',
   'for sale',
-  'images/school_supplies/bag.jpg'
+  '/photos/schoolsupplies.jpg'
 );
 
 -- Verify the listing was created
@@ -31,4 +31,4 @@ SELECT *
 FROM Listing
 WHERE seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
   AND title = 'Computer Bag'
-  AND image_storage_ref = 'images/school_supplies/bag.jpg';
+  AND image_storage_ref = '/photos/schoolsupplies.jpg';

@@ -23,7 +23,7 @@ VALUES (
   'MC',
   'alice',
   'for sale',
-  'images/school_supplies/pencil_case.jpg'
+  '/photos/schoolsupplies.jpg'
 );
 
 -- Analyzing Select query before index creation
@@ -32,7 +32,7 @@ SELECT *
 FROM Listing
 WHERE seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
   AND title = 'Pencil Case'
-  AND image_storage_ref = 'images/school_supplies/pencil_case.jpg';
+  AND image_storage_ref = '/photos/schoolsupplies.jpg';
 
 -- Adding Index
 CREATE INDEX idx_listing_seller_title_image
@@ -44,4 +44,4 @@ SELECT *
 FROM Listing
 WHERE seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'
   AND title = 'Pencil Case'
-  AND image_storage_ref = 'images/school_supplies/pencil_case.jpg';
+  AND image_storage_ref = '/photos/schoolsupplies.jpg';

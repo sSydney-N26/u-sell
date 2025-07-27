@@ -1,0 +1,11 @@
++------------------------------+-----------------+-------------------------------------+-------+---------------------+----------+
+| seller_id                    | type            | title                          
+     | price | posted_date         | status   |
++------------------------------+-----------------+-------------------------------------+-------+---------------------+----------+
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | School Supplies | Calculus Textbook - School Supplies |    45 | 2025-07-27 14:04:44 | for sale |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | Electronics     | Wireless Headphones - Electronics   |   150 | 2025-07-27 14:04:44 | for sale |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | School Supplies | Notebook Set - School Supplies      |    25 | 2025-07-27 14:04:44 | for sale |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | Electronics     | Monitor - Electronics          
+     |   200 | 2025-07-27 14:04:44 | for sale |
+| x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 | School Supplies | Pen Set - School Supplies           |    15 | 2025-07-27 14:04:44 | for sale |
++------------------------------+-----------------+-------------------------------------+-------+---------------------+----------+

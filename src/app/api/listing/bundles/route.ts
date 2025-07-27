@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         FROM BackToSchoolBundleView
         WHERE seller_id IN (?)
         ORDER BY seller_id, posted_date DESC
-      `,
+        `,
       [paginatedSellerIds]
     );
 
