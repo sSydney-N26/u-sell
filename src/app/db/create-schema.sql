@@ -255,5 +255,4 @@ JOIN (
   ON l.seller_id = eligible_sellers.seller_id
 WHERE l.status = 'for sale'
   AND l.type IN ('Electronics', 'School Supplies')
-ORDER BY l.seller_id, l.posted_date DESC
-LIMIT 5;
+ORDER BY l.seller_id, l.posted_date DESC;

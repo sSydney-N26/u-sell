@@ -32,13 +32,15 @@ export async function GET(request: NextRequest) {
     const isBundle = searchParams.get("bundle");
 
     if (isBundle === "true") {
+      const limit = 5; // Default to 3 items per seller
       const [bundleResults] = await pool.query(
         `
         SELECT * FROM BackToSchoolBundleView
         WHERE seller_id = ?
         ORDER BY posted_date DESC
+        LIMIT ?
         `,
-        [uid]
+        [uid, limit]
       );
 
       const bundleListings = bundleResults as UserListing[];

@@ -86,12 +86,12 @@ export default function ProfilePage() {
     if (!user?.uid) return;
     const fetchBundleListings = async () => {
       try {
-        const res = await fetch(`/api/listing/bundles?page=1`);
+        const res = await fetch(`/api/user-listings?uid=${user.uid}&bundle=true`);
         if (!res.ok) throw new Error("Failed to fetch bundles");
         const data = await res.json();
 
         // Convert into DatabaseListing format
-        const items: DatabaseListing[] = (data?.bundles ?? []).map((row: any) => ({
+        const items: DatabaseListing[] = (data?.listings ?? []).map((row: any) => ({
           id: row.id,
           type: row.type,
           price: row.price,
@@ -101,7 +101,7 @@ export default function ProfilePage() {
           quantity: row.quantity,
           location: row.location,
           posted_date: row.posted_date,
-          posted_by: row.seller_id,
+          posted_by: row.posted_by,
           status: row.status,
           image_storage_ref: row.image_storage_ref,
           is_bundle: true,
