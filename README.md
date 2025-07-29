@@ -16,11 +16,11 @@
   <li>If the server is running, it will respond with: <code>mysqld is alive</code></li>
 </ul>
 
-<h2>1.3 Setup Mock Database and Schema</h2>
+<h2>1.3 Setup Mock/Production Database and Schema</h2>
 <ul>
   <li>Navigate to: </>
   <pre><code>src/app/db </code></pre>
-  <li>Make the script executable:</>
+  <li>Make the script executable (if you're trying to load production data, put setup-db.sh and if you're loading mock data, put setup-db-mock.sh):</>
   <pre><code>chmod +x setup-db.sh</code></pre>
   <li>Run the setup script to create the mock database and insert sample data:</li>
   <pre><code>./setup-db.sh</code></pre> or <pre><code> bash setup-db.sh </code></pre>
@@ -88,4 +88,39 @@ npm install mysql2
 <h2>2.6 Test the App</h2>
 <ul>
   <li>Open a browser and go to: <a href="http://localhost:3000">http://localhost:3000</a></li>
+</ul>
+
+<hr>
+<h1>3. Features</h1>
+
+<h2>3.1 Basic Features</h2>
+<ul>
+  <li><strong>R6 - User's Profile</strong> Users can view and manage their personal information and listings</li>
+  <li><strong>Listing Management:</strong>
+    <ul>
+      <li> R7 - Browse Listings + category Filtering to browse listing by categories (Electronics, School Supplies, etc.). Click on listing for a detailed view </li>
+      <li> R8 - Create new listings with title, description, price, condition, etc. </li>
+      <li> R9 - Delete Listing</li>
+      <li> R10 - Edit Existing Listings Details</li>
+    </ul>
+  </li>
+</ul>
+
+<h2>3.2 Advanced Features </h2>
+<ul>
+  <li><strong> R11 - Report Listing: </strong> if there are 5 reports, listing gets temporarily removed for admin to review under Admin Dashboard</li>
+  <li><strong> R12 - Top 10 Viewed Listings:</strong> View the top 10 viewed listings in the Browse tab
+  <li><strong> R13 - Seller Bundles:</strong> Group listings from the same seller, particularly useful for back-to-school items</li>
+  <li><strong> R14 - For You Page (FYP) - Following Friends of Friends:</strong> Listings are suggested on FYP based on user's following</li>
+  <li><strong> R15 - For You Page (FYP) - Following Catgories and Keywords:</strong> Listings are suggested on FYP based on user's followed categories and keywords</li>
+</ul>
+
+<h2>3.3 Bonus Features </h2>
+<ul>
+  <li><strong>Personalized Feed:</strong> Customized listing recommendations based on user preferences</li>
+  <li><strong>Preference Management:</strong>
+    <ul>
+      <li><strong>R16 - Tagging Recommendation:</strong> Add and browse listings using tags for better categorization</li>
+      <li><strong>R17 - Notification System:</strong> Get notified about relevant listings and activities</li>
+    </ul>
 </ul>
