@@ -198,7 +198,7 @@ def generate_realistic_listing(user, product_type):
     status = random.choices(list(status_weights.keys()), weights=list(status_weights.values()))[0]
 
     # mocking image reference
-    image_ref = f"images/{product_type.lower().replace(' ', '_')}/{fake.word()}.jpg"
+    image_ref = f"/photos/{product_type.lower().replace(' ', '')}.jpg"
 
     return (uid, username, product_type, price, title, desc, condition, quantity, location, status, image_ref)
 
@@ -270,32 +270,32 @@ while len(listings) < NUM_LISTINGS:
 
 # add alice's specific listings
 alice_listings = [
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 299.99, 'MacBook Air 2019 - Electronics', 'Great condition, barely used. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'for sale', 'images/electronics/macbook.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 45.00, 'Calculus Textbook - School Supplies', 'Used for one term, some highlights. Perfect for university students.', 'gently used', 1, 'UWaterloo Dana Porter Library', 'for sale', 'images/school_supplies/calculus.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 120.00, 'Study Desk - Furniture', 'Perfect for student housing. Condition: like new. Perfect for university students.', 'like new', 1, 'Student Housing Complex', 'for sale', 'images/furniture/desk.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 75.00, 'Coffee Maker - Kitchen', 'Still works perfectly, just upgraded. Perfect for university students.', 'gently used', 1, 'Village 1', 'for sale', 'images/kitchen/coffee.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 35.00, 'Winter Jacket - Clothing', 'Barely worn. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', 'images/clothing/jacket.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 150.00, 'Wireless Headphones - Electronics', 'Great for studying. Perfect for university students.', 'fair', 1, 'UWaterloo SLC', 'for sale', 'images/electronics/headphones.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 25.00, 'Notebook Set - School Supplies', 'Complete set with extras. Perfect for university students.', 'new', 1, 'UWaterloo Campus', 'for sale', 'images/school_supplies/notebooks.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 80.00, 'Bookshelf - Furniture', 'Space-saving design. Perfect for university students.', 'fair', 1, 'Off-campus housing near University', 'for sale', 'images/furniture/bookshelf.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 45.00, 'Blender - Kitchen', 'Perfect for smoothies. Perfect for university students.', 'gently used', 1, 'Village 2', 'for sale', 'images/kitchen/blender.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 20.00, 'T-shirt Bundle - Clothing', '5 t-shirts in good condition. Perfect for university students.', 'fair', 1, 'Waterloo Park', 'for sale', 'images/clothing/tshirts.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 200.00, 'Monitor - Electronics', '24-inch monitor. Perfect for university students.', 'like new', 1, 'Columbia Lake Village', 'for sale', 'images/electronics/monitor.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 15.00, 'Pen Set - School Supplies', 'Professional quality materials. Perfect for university students.', 'new', 1, 'UWaterloo Student Centre', 'for sale', 'images/school_supplies/pens.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 60.00, 'Chair - Furniture', 'Comfortable and ergonomic. Perfect for university students.', 'gently used', 1, 'Student Housing Complex', 'for sale', 'images/furniture/chair.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 30.00, 'Toaster - Kitchen', 'Perfect for small kitchens. Perfect for university students.', 'fair', 1, 'Off-campus housing near Columbia', 'for sale', 'images/kitchen/toaster.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 40.00, 'Jeans - Clothing', 'High-quality material. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', 'images/clothing/jeans.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 100.00, 'Webcam - Electronics', 'Great for online classes. Perfect for university students.', 'new', 1, 'UWaterloo Campus', 'for sale', 'images/electronics/webcam.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 10.00, 'Stapler - School Supplies', 'Essential for your studies. Perfect for university students.', 'new', 1, 'Village 1', 'for sale', 'images/school_supplies/stapler.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 90.00, 'Lamp - Furniture', 'Great for studying. Perfect for university students.', 'gently used', 1, 'Waterloo Park', 'for sale', 'images/furniture/lamp.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 50.00, 'Rice Cooker - Kitchen', 'Perfect for meal prep. Perfect for university students.', 'fair', 1, 'UWaterloo SLC', 'for sale', 'images/kitchen/rice_cooker.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 25.00, 'Sweater - Clothing', 'Comfortable and warm. Perfect for university students.', 'gently used', 1, 'University Plaza', 'for sale', 'images/clothing/sweater.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 80.00, 'Keyboard - Electronics', 'Mechanical keyboard. Perfect for university students.', 'like new', 1, 'Student Housing Complex', 'for sale', 'images/electronics/keyboard.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 20.00, 'Binder Set - School Supplies', 'Great for organization. Perfect for university students.', 'new', 1, 'Kitchener Campus', 'for sale', 'images/school_supplies/binders.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 70.00, 'Storage Unit - Furniture', 'Multi-functional piece. Perfect for university students.', 'fair', 1, 'Off-campus housing near University', 'for sale', 'images/furniture/storage.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 35.00, 'Mixing Bowls - Kitchen', 'Stainless steel construction. Perfect for university students.', 'new', 1, 'Village 2', 'for sale', 'images/kitchen/bowls.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 30.00, 'Dress - Clothing', 'Perfect for formal events. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', 'images/clothing/dress.jpg'),
-    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 120.00, 'Mouse - Electronics', 'Gaming mouse. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'for sale', 'images/electronics/mouse.jpg')
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 299.99, 'MacBook Air 2019 - Electronics', 'Great condition, barely used. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'for sale', '/photos/electronics.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 45.00, 'Calculus Textbook - School Supplies', 'Used for one term, some highlights. Perfect for university students.', 'gently used', 1, 'UWaterloo Dana Porter Library', 'for sale', '/photos/schoolsupplies.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 120.00, 'Study Desk - Furniture', 'Perfect for student housing. Condition: like new. Perfect for university students.', 'like new', 1, 'Student Housing Complex', 'for sale', '/photos/furniture.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 75.00, 'Coffee Maker - Kitchen', 'Still works perfectly, just upgraded. Perfect for university students.', 'gently used', 1, 'Village 1', 'for sale', '/photos/kitchen.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 35.00, 'Winter Jacket - Clothing', 'Barely worn. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', '/photos/clothing.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 150.00, 'Wireless Headphones - Electronics', 'Great for studying. Perfect for university students.', 'fair', 1, 'UWaterloo SLC', 'for sale', '/photos/electronics.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 25.00, 'Notebook Set - School Supplies', 'Complete set with extras. Perfect for university students.', 'new', 1, 'UWaterloo Campus', 'for sale', '/photos/schoolsupplies.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 80.00, 'Bookshelf - Furniture', 'Space-saving design. Perfect for university students.', 'fair', 1, 'Off-campus housing near University', 'for sale', '/photos/furniture.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 45.00, 'Blender - Kitchen', 'Perfect for smoothies. Perfect for university students.', 'gently used', 1, 'Village 2', 'for sale', '/photos/kitchen.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 20.00, 'T-shirt Bundle - Clothing', '5 t-shirts in good condition. Perfect for university students.', 'fair', 1, 'Waterloo Park', 'for sale', '/photos/clothing.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 200.00, 'Monitor - Electronics', '24-inch monitor. Perfect for university students.', 'like new', 1, 'Columbia Lake Village', 'for sale', '/photos/electronics.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 15.00, 'Pen Set - School Supplies', 'Professional quality materials. Perfect for university students.', 'new', 1, 'UWaterloo Student Centre', 'for sale', '/photos/schoolsupplies.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 60.00, 'Chair - Furniture', 'Comfortable and ergonomic. Perfect for university students.', 'gently used', 1, 'Student Housing Complex', 'for sale', '/photos/furniture.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 30.00, 'Toaster - Kitchen', 'Perfect for small kitchens. Perfect for university students.', 'fair', 1, 'Off-campus housing near Columbia', 'for sale', '/photos/kitchen.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 40.00, 'Jeans - Clothing', 'High-quality material. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', '/photos/clothing.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 100.00, 'Webcam - Electronics', 'Great for online classes. Perfect for university students.', 'new', 1, 'UWaterloo Campus', 'for sale', '/photos/electronics.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 10.00, 'Stapler - School Supplies', 'Essential for your studies. Perfect for university students.', 'new', 1, 'Village 1', 'for sale', '/photos/schoolsupplies.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 90.00, 'Lamp - Furniture', 'Great for studying. Perfect for university students.', 'gently used', 1, 'Waterloo Park', 'for sale', '/photos/furniture.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 50.00, 'Rice Cooker - Kitchen', 'Perfect for meal prep. Perfect for university students.', 'fair', 1, 'UWaterloo SLC', 'for sale', '/photos/kitchen.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 25.00, 'Sweater - Clothing', 'Comfortable and warm. Perfect for university students.', 'gently used', 1, 'University Plaza', 'for sale', '/photos/clothing.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 80.00, 'Keyboard - Electronics', 'Mechanical keyboard. Perfect for university students.', 'like new', 1, 'Student Housing Complex', 'for sale', '/photos/electronics.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'School Supplies', 20.00, 'Binder Set - School Supplies', 'Great for organization. Perfect for university students.', 'new', 1, 'Kitchener Campus', 'for sale', '/photos/schoolsupplies.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Furniture', 70.00, 'Storage Unit - Furniture', 'Multi-functional piece. Perfect for university students.', 'fair', 1, 'Off-campus housing near University', 'for sale', '/photos/furniture.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Kitchen', 35.00, 'Mixing Bowls - Kitchen', 'Stainless steel construction. Perfect for university students.', 'new', 1, 'Village 2', 'for sale', '/photos/kitchen.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Clothing', 30.00, 'Dress - Clothing', 'Perfect for formal events. Perfect for university students.', 'like new', 1, 'Downtown Waterloo', 'for sale', '/photos/clothing.jpg'),
+    ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'alice', 'Electronics', 120.00, 'Mouse - Electronics', 'Gaming mouse. Perfect for university students.', 'gently used', 1, 'UWaterloo Campus', 'for sale', '/photos/electronics.jpg')
 ]
 
 # add alice's listings to the main listings array

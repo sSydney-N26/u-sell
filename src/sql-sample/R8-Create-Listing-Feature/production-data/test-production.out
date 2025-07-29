@@ -7,7 +7,7 @@ Query OK, 1 row affected (0.230 sec)
                                                                                                                 
                      |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| -> Filter: ((listing.image_storage_ref = 'images/school_supplies/pencil_case.jpg') and (listing.title = 'Pencil Case'))  (cost=0.778 rows=0.28) (actual time=0.168..0.451 rows=1 loops=1)
+| -> Filter: ((listing.image_storage_ref = '/photos/schoolsupplies.jpg') and (listing.title = 'Pencil Case'))  (cost=0.778 rows=0.28) (actual time=0.168..0.451 rows=1 loops=1)
     -> Index lookup on Listing using idx_listing_seller_id (seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1')  (cost=0.778 rows=28) (actual time=0.161..0.42 rows=28 loops=1)
  |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -25,7 +25,7 @@ Query OK, 0 rows affected (0.004 sec)
                                                                                                                 
                                      |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| -> Index lookup on Listing using idx_listing_seller_title_image (seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', title = 'Pencil Case', image_storage_ref = 'images/school_supplies/pencil_case.jpg')  (cost=0.35 rows=1) (actual time=0.0621..0.0703 rows=1 loops=1)
+| -> Index lookup on Listing using idx_listing_seller_title_image (seller_id = 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', title = 'Pencil Case', image_storage_ref = '/photos/schoolsupplies.jpg')  (cost=0.35 rows=1) (actual time=0.0621..0.0703 rows=1 loops=1)
  |
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 1 row in set (0.017 sec)

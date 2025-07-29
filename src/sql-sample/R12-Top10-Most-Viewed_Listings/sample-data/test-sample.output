@@ -1,18 +1,18 @@
 -- Output: Display the Top 10 Most-Viewed Listings
-+----+-----------------+-------+-----------------+-----------+--------------------+------------+
-| id | title           | price | type            | posted_by | image_storage_ref  | view_count |
-+----+-----------------+-------+-----------------+-----------+--------------------+------------+
-|  2 | IKEA Chair      |    25 | Furniture       | bob       | images/chair.jpg   |          7 |
-|  6 | CS 246 Textbook |    40 | School Supplies | Alice     | images/cs246.jpg   |          5 |
-|  7 | IKEA Chair      |    25 | Furniture       | Bob       | images/chair.jpg   |          3 |
-| 16 | CS 246 Textbook |    40 | School Supplies | Alice     | images/cs246.jpg   |          3 |
-| 17 | IKEA Chair      |    25 | Furniture       | Bob       | images/chair.jpg   |          3 |
-| 11 | CS 246 Textbook |    40 | School Supplies | Alice     | images/cs246.jpg   |          2 |
-| 12 | IKEA Chair      |    25 | Furniture       | Bob       | images/chair.jpg   |          2 |
-| 21 | CS 246 Textbook |    40 | School Supplies | Alice     | images/cs246.jpg   |          2 |
-| 22 | IKEA Chair      |    25 | Furniture       | Bob       | images/chair.jpg   |          2 |
-| 28 | Hair Dryer      |   110 | Misc            | Joe       | images/speaker.jpg |          2 |
-+----+-----------------+-------+-----------------+-----------+--------------------+------------+
++----+-----------------+-------+-----------------+-----------+----------------------------+------------+
+| id | title           | price | type            | posted_by | image_storage_ref          | view_count |
++----+-----------------+-------+-----------------+-----------+----------------------------+------------+
+|  2 | IKEA Chair      |    25 | Furniture       | bob       | /photos/furniture.jpg      |          7 |
+|  6 | CS 246 Textbook |    40 | School Supplies | Alice     | /photos/schoolsupplies.jpg |          5 |
+|  7 | IKEA Chair      |    25 | Furniture       | Bob       | /photos/furniture.jpg      |          3 |
+| 16 | CS 246 Textbook |    40 | School Supplies | Alice     | /photos/schoolsupplies.jpg |          3 |
+| 17 | IKEA Chair      |    25 | Furniture       | Bob       | /photos/furniture.jpg      |          3 |
+| 11 | CS 246 Textbook |    40 | School Supplies | Alice     | /photos/schoolsupplies.jpg |          2 |
+| 12 | IKEA Chair      |    25 | Furniture       | Bob       | /photos/furniture.jpg      |          2 |
+| 21 | CS 246 Textbook |    40 | School Supplies | Alice     | /photos/schoolsupplies.jpg |          2 |
+| 22 | IKEA Chair      |    25 | Furniture       | Bob       | /photos/furniture.jpg      |          2 |
+| 28 | Hair Dryer      |   110 | Misc            | Joe       | /photos/misc.jpg           |          2 |
++----+-----------------+-------+-----------------+-----------+----------------------------+------------+
 10 rows in set (0.001 sec)
 
 -- Output: Log a view for a listing
