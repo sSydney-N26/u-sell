@@ -1,0 +1,9 @@
+type    value   tag_id  tag_name
+category        Electronics     NULL    NULL
+category        School Supplies NULL    NULL
+keyword laptop  NULL    NULL
+keyword programming     NULL    NULL
+keyword textbook        NULL    NULL
+tag     NULL    6       calculator
+tag     NULL    2       laptop
+tag     NULL    12      monitor
