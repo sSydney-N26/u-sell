@@ -1,0 +1,28 @@
+-- Output: Display the Top 10 Most-Viewed Listings
+
++------+--------------------------------------+--------+-----------------+---------------+----------------------------+------------+
+| id   | title                                | price  | type            | posted_by     | image_storage_ref          | view_count |
++------+--------------------------------------+--------+-----------------+---------------+----------------------------+------------+
+|   14 | Tablet - Electronics                 | 144.67 | Electronics     | barbara10     | /photos/electronics.jpg    |          6 |
+|    3 | Index Cards for Software Engineering | 119.34 | School Supplies | johnsonjoshua | /photos/schoolsupplies.jpg |          4 |
+|    2 | Boots - Clothing                     |  57.64 | Clothing        | johnsonjoshua | /photos/clothing.jpg       |          2 |
+| 1589 | Calculus Textbook - School Supplies  |     45 | School Supplies | alice         | /photos/schoolsupplies.jpg |          2 |
+|    6 | Ruler for Civil Engineering          |  34.23 | School Supplies | jennifermiles | /photos/schoolsupplies.jpg |          1 |
+|    7 | Gloves - Clothing                    |  29.06 | Clothing        | jennifermiles | /photos/clothing.jpg       |          1 |
+|    8 | Air Fryer - Kitchen                  |  33.65 | Kitchen         | blakeerik     | /photos/kitchen.jpg        |          1 |
+|    9 | Motherboard - Electronics            | 780.29 | Electronics     | blakeerik     | /photos/electronics.jpg    |          1 |
+|   10 | Markers for Software Engineering     |  16.44 | School Supplies | blakeerik     | /photos/schoolsupplies.jpg |          1 |
+|   11 | Paint - Misc                         |  49.44 | Misc            | curtis61      | /photos/misc.jpg           |          1 |
++------+--------------------------------------+--------+-----------------+---------------+----------------------------+------------+
+10 rows in set (0.002 sec)
+
+-- Output: Log a view for a listing
+Query OK, 1 row affected (0.004 sec)
+
+-- Output: Fetch new view count for a listing
++------------+
+| view_count |
++------------+
+|          2 |
++------------+
+1 row in set (0.001 sec)
