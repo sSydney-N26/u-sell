@@ -65,7 +65,8 @@ VALUES
   ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'Alice', 'sold', 'images/speaker.jpg'),
   ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Alice', 'sold', 'images/speaker.jpg'),
   ('uid_jane', 'Misc', 150.00, 'Hair Dryer Useful', 'Dyson Hair Dryer Pretty Useful', 'fair', 1, 'Davis Center Library', 'Jane', 'sold', 'images/speaker.jpg'),
-  ('uid_joe', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Joe', 'sold', 'images/speaker.jpg');
+  ('uid_joe', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Joe', 'sold', 'images/speaker.jpg'),
+  ('uid_jane', 'Misc', 20.00, 'Blanket', 'Weighted Blanker', 'fair', 1, 'SLC', 'Jane', 'for sale', 'images/speaker.jpg');
 
 -- === Admins ===
 INSERT INTO Admin (admin_id)

@@ -122,7 +122,15 @@ export default function Listings() {
     <div>
       <Navigation />
       {/* Filter buttons + Top 10 Most Viewed button + Bundle button*/}
-      <div className="flex p-8 m-5 justify-between flex-wrap gap-10">
+      <div
+        className="flex p-8 m-5 justify-center flex-wrap gap-10"
+        style={{ maxWidth: "1200px", margin: "20px auto" }}
+      >
+        <FilterButton
+          key="all-listings"
+          category="All Listings"
+          handleClick={() => handleFilterClick("All Listings")}
+        />
         <FilterButton
           key="most-viewed"
           category={MOST_VIEWED_LABEL}

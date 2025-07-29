@@ -2714,7 +2714,8 @@ INSERT INTO Tags (tag_name) VALUES
     ('electric'),
     ('serve'),
     ('drink'),
-    ('furniture');
+    ('furniture'),
+    ('iphone');
 
 -- Tag combinations for listings 4-20 using seeded tags (with variety: 1-5 tags per listing)
 -- Listing 4: Cooling Fan - Electronics (2 tags)
@@ -3711,7 +3712,6 @@ INSERT INTO Notifications (user_id, listing_id, message, is_read, created_at) VA
 ('59a35ba8-5e90-4e69-bf44-1801871c1f62', 42, 'New listing posted matching your preferences: Art Supplies Kit', FALSE, '2024-03-21 14:20:00'),
 ('794f7dbd-44f4-4a0f-bb76-91c1509d1142', 20, 'New listing posted matching your preferences: Engineering Textbook - Statics', FALSE, '2024-03-21 15:10:00'),
 ('7ca61f35-0be5-4b58-8007-9683d733f55b', 35, 'New listing posted matching your preferences: Desk Lamp LED', FALSE, '2024-03-21 16:30:00');
-=======
 
 INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '790818cc-bef4-4c39-beff-5b8bda31c3df'); -- barbara10 follows jennifercruz
 INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('790818cc-bef4-4c39-beff-5b8bda31c3df', '5b5a7e61-14a4-4de1-9c3f-c093edeff64f'); -- jennifercruz follows joshuajones

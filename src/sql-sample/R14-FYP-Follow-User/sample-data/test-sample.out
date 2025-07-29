@@ -61,3 +61,6 @@ After DELETE, the current following of that user is:
 | 566f84e4-fc6a-4ab8-82be-c440c77b2745 | jrivas@example.com         | stephanie79 | Management Engineering |    4 |
 +--------------------------------------+----------------------------+-------------+------------------------+------+
 3 rows in set (0.00 sec)
+
+6.
+Empty set (0.00 sec)
