@@ -2679,20 +2679,94 @@ INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tag
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'microphone'));
 
 
--- Following Users - "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1" is user Alice
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "1afb501b-57cc-422c-827f-7826ae22db55");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "3f9a1261-df93-4e67-9a77-09be06c35924");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "5af9ae2f-b972-4a19-b095-ed3a1be078c3");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "917e2c44-2103-4d80-b093-36e6270bac3b");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "bb076683-88d2-449f-9100-32ef4b0ba023");
+-- Popular users with many followers
+-- uid x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 is Alice, has 10 followers
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- barbara10 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('83af10c1-2021-4eca-a9e5-76e6f4e9523b', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- jeffrey10 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f13d3ec6-3459-4c95-aa8b-aaec381b41ed', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- brentgray follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('790818cc-bef4-4c39-beff-5b8bda31c3df', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- jennifercruz follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('5b5a7e61-14a4-4de1-9c3f-c093edeff64f', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- joshuajones follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('5e00c6e1-e720-4f68-bc68-47a46729b6f2', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- burchgeorge follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- jennifermiles follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- blakeerik follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- curtis61 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- yherrera follows alice
 
--- Insert for Friends of Friends Suggestions (should get 6 suggestions in total)
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("5af9ae2f-b972-4a19-b095-ed3a1be078c3", "7ff59612-9d23-4501-824f-685d8c63967e");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("5af9ae2f-b972-4a19-b095-ed3a1be078c3", "ddc899fd-5c20-4656-8c03-ec28bed09806");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("917e2c44-2103-4d80-b093-36e6270bac3b", "ddc899fd-5c20-4656-8c03-ec28bed09806");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("917e2c44-2103-4d80-b093-36e6270bac3b", "dc5dbe09-3d8e-486b-9254-902ffb1f0d86");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("917e2c44-2103-4d80-b093-36e6270bac3b", "e2c03bd2-0312-4c5d-a080-c00675893c0d");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("bb076683-88d2-449f-9100-32ef4b0ba023", "abf7b346-09c2-4f9b-8b58-3d5afd4ec73e");
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("bb076683-88d2-449f-9100-32ef4b0ba023", "cc2f1171-02be-4fb3-9ecc-5a78cdf78ff0");
--- This shouldn't get suggested because it is a friend of a user that Alice doesn't follow
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("7ff59612-9d23-4501-824f-685d8c63967e", "abf7b346-09c2-4f9b-8b58-3d5afd4ec73e");
+-- uid x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 is Alice, follows 5
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '40d6af98-9170-40ec-95b1-9f521e4958f6'); -- alice follows barbara10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '83af10c1-2021-4eca-a9e5-76e6f4e9523b'); -- alice follows jeffrey10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '790818cc-bef4-4c39-beff-5b8bda31c3df'); -- alice follows jennifercruz
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '5b5a7e61-14a4-4de1-9c3f-c093edeff64f'); -- alice follows joshuajones
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '2ab3410d-aa84-404e-a9f5-52caa19fe15b'); -- alice follows curtis61 (and vice versa)
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1','325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- alice follows yherrera (and vice versa)
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '790818cc-bef4-4c39-beff-5b8bda31c3df'); -- barbara10 follows jennifercruz
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('790818cc-bef4-4c39-beff-5b8bda31c3df', '5b5a7e61-14a4-4de1-9c3f-c093edeff64f'); -- jennifercruz follows joshuajones
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('5b5a7e61-14a4-4de1-9c3f-c093edeff64f', '83af10c1-2021-4eca-a9e5-76e6f4e9523b'); -- joshuajones follows jeffrey10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('83af10c1-2021-4eca-a9e5-76e6f4e9523b', 'f13d3ec6-3459-4c95-aa8b-aaec381b41ed'); -- jeffrey10 follows brentgray
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f13d3ec6-3459-4c95-aa8b-aaec381b41ed', '5e00c6e1-e720-4f68-bc68-47a46729b6f2'); -- brentgray follows burchgeorge
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'bdb6f3dd-a498-41ba-8728-096dff3bd330'); -- johnsonjoshua follows blakeerik
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', '0dd06365-9be3-4651-afd4-e07d7ca2f825'); -- blakeerik follows mnavarro
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('0dd06365-9be3-4651-afd4-e07d7ca2f825', '53e5718a-7200-431f-837d-9507fd33531a'); -- mnavarro follows elizabeth56
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('53e5718a-7200-431f-837d-9507fd33531a', '8a861b52-9f73-4b55-9726-2492315c1ef0'); -- elizabeth56 follows jreed
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('8a861b52-9f73-4b55-9726-2492315c1ef0', '962d23e1-6578-422e-bbf4-dbe0c785ec06'); -- jreed follows danny49
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', '6016e394-db8d-4bd3-8615-fbb0131db924'); -- garzaanthony follows jennifermiles
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'bfa6b7ee-950d-4d2a-a875-d34b0a28becd'); -- jennifermiles follows sarahcampos
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bfa6b7ee-950d-4d2a-a875-d34b0a28becd', '27c6b33f-9448-4d0a-9b2f-ece54c58fc13'); -- sarahcampos follows qhughes
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('27c6b33f-9448-4d0a-9b2f-ece54c58fc13', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27'); -- qhughes follows younggabrielle
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f02aeab3-423a-44f7-bc40-7325ad2dcf27', '634bf525-a66b-4045-a55a-6691748a32e5'); -- younggabrielle follows linda71
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- Year 1: johnsonjoshua follows yherrera
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', '40d6af98-9170-40ec-95b1-9f521e4958f6'); -- Year 1: yherrera follows barbara10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'b1863163-0cb4-49f3-abbc-053c304480b3'); -- Year 2: garzaanthony follows jamesshawn
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1863163-0cb4-49f3-abbc-053c304480b3', '6016e394-db8d-4bd3-8615-fbb0131db924'); -- Year 2: jamesshawn follows jennifermiles
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('98eb6e25-dbf6-481e-8e96-360d2bf259f7', '15b960cf-c9ee-4159-8fee-6c355f988172'); -- julie69 follows jonesjason
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('15b960cf-c9ee-4159-8fee-6c355f988172', 'ee5d296c-9dce-4588-b318-4eefd1433c01'); -- jonesjason follows tasha01
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '247fc8f9-0491-49ce-aa15-86f829a9554e'); -- tasha01 follows meagan89
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('247fc8f9-0491-49ce-aa15-86f829a9554e', '78a25057-dcbb-44f9-b990-61d5ab966ba2'); -- meagan89 follows georgetracy
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6e6b8cff-96b5-4fea-bdb5-842d282951e1', '195b33a0-891f-472c-bc9d-85754eb86553'); -- kevin33 follows staffordmichelle
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('195b33a0-891f-472c-bc9d-85754eb86553', '81c5d050-2ff7-42d3-8bdb-84643598d71b'); -- staffordmichelle follows juliawells
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('81c5d050-2ff7-42d3-8bdb-84643598d71b', '3441d459-5cd8-46b1-988b-0dec3b661350'); -- juliawells follows cynthia72
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '40d6af98-9170-40ec-95b1-9f521e4958f6'); -- johnsonjoshua follows barbara10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- barbara10 follows yherrera
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d'); -- yherrera follows johnsonjoshua
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', 'bdb6f3dd-a498-41ba-8728-096dff3bd330');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', 'ee5d296c-9dce-4588-b318-4eefd1433c01');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '4a77c430-6444-4592-8118-87e71cf5a08f');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- jennifermiles follows alice (active seller)
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('634bf525-a66b-4045-a55a-6691748a32e5', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- blakeerik follows alice (active seller)
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d'); -- curtis61 follows johnsonjoshua
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b8430a4d-8943-4c6f-9f2e-088e4ba128ce', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f02aeab3-423a-44f7-bc40-7325ad2dcf27', '0d9a2e3b-9fc8-493e-82e3-e496c39afa2b');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('634bf525-a66b-4045-a55a-6691748a32e5', '4a77c430-6444-4592-8118-87e71cf5a08f');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'dae7c09f-b7c6-45d2-9eb4-7bc249bcfc7c');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('8f00a996-7ea4-415e-8ed5-6c2057ad6520', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'bfa6b7ee-950d-4d2a-a875-d34b0a28becd');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bfa6b7ee-950d-4d2a-a875-d34b0a28becd', 'da41138e-2134-48ff-96a3-6a1d144e8874');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('da41138e-2134-48ff-96a3-6a1d144e8874', '29392e78-8c82-4785-8be9-fd280874f20a');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b4de64c8-bebd-4eb6-a2d8-640b781c7017', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('3db047ae-b3e1-47e5-855e-8a7a688f10ac', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('59a35ba8-5e90-4e69-bf44-1801871c1f62', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4172543c-dd94-4191-a1a5-6d05b6566c74', 'bdb6f3dd-a498-41ba-8728-096dff3bd330');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', '4a77c430-6444-4592-8118-87e71cf5a08f');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'ee5d296c-9dce-4588-b318-4eefd1433c01');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '4a77c430-6444-4592-8118-87e71cf5a08f');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6658a9cc-1f8d-4d49-871e-dcb29629a80d', '6016e394-db8d-4bd3-8615-fbb0131db924');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('98eb6e25-dbf6-481e-8e96-360d2bf259f7', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('15b960cf-c9ee-4159-8fee-6c355f988172', '98eb6e25-dbf6-481e-8e96-360d2bf259f7');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '15b960cf-c9ee-4159-8fee-6c355f988172');
