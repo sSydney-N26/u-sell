@@ -19,14 +19,15 @@ export async function GET(
     // Get listing details with tags
     const [rows] = await pool.query(
       `SELECT
-        l.id, l.type, l.price, l.title, l.description, l.product_condition,
-        l.quantity, l.location, l.posted_date, l.posted_by, l.status, l.image_storage_ref,
-        l.view_count, t.tag_id, t.tag_name
-       FROM Listing l
-       LEFT JOIN ListingTags lt ON l.id = lt.listing_id
-       LEFT JOIN Tags t ON lt.tag_id = t.tag_id
-       WHERE l.id = ? AND l.status != 'removed' AND l.status != 'flagged'
-       ORDER BY t.tag_name`,
+      l.id, l.type, l.price, l.title, l.description, l.product_condition,
+      l.quantity, l.location, l.posted_date, l.posted_by, l.status, l.image_storage_ref,
+      (SELECT COUNT(*) FROM ListingViews lv WHERE lv.listing_id = l.id) AS view_count,
+      t.tag_id, t.tag_name
+      FROM Listing l
+      LEFT JOIN ListingTags lt ON l.id = lt.listing_id
+      LEFT JOIN Tags t ON lt.tag_id = t.tag_id
+      WHERE l.id = ? AND l.status != 'removed' AND l.status != 'flagged'
+      ORDER BY t.tag_name`,
       [listingId]
     );
 

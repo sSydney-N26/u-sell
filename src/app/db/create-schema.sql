@@ -35,7 +35,6 @@ CREATE TABLE Listing (
     posted_by VARCHAR(50),
     status ENUM('for sale', 'pending', 'sold', 'removed', 'flagged') DEFAULT 'for sale',
     image_storage_ref VARCHAR(255), -- Firebase Storage reference/ID for the image
-    view_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
     FOREIGN KEY (type) REFERENCES ProductType(type),
     FOREIGN KEY (product_condition) REFERENCES ProductCondition(type),
     FOREIGN KEY (posted_by) REFERENCES Users(username),
@@ -77,7 +76,6 @@ CREATE TABLE Reports (
 CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
 CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
 CREATE INDEX idx_listing_date ON Listing(posted_date);
-CREATE INDEX idx_listing_view_count ON Listing(view_count DESC);
 CREATE INDEX idx_tags_name ON Tags(tag_name);
 CREATE INDEX idx_listing_tags_listing ON ListingTags(listing_id);
 CREATE INDEX idx_listing_tags_tag ON ListingTags(tag_id);
@@ -113,17 +111,15 @@ CREATE TABLE ListingViews (
 );
 CREATE INDEX idx_lv_listing ON ListingViews(listing_id, viewed_at);
 
-DELIMITER //
-CREATE TRIGGER trigger_after_view_insert
-AFTER INSERT ON ListingViews
-FOR EACH ROW
-BEGIN
-  UPDATE Listing
-     SET view_count = view_count + 1
-   WHERE id = NEW.listing_id;
-END;
-//
+-- replacing trigger with view
+CREATE OR REPLACE VIEW Top10View AS
+SELECT lv.listing_id, COUNT(*) AS view_count
+FROM ListingViews lv
+GROUP BY lv.listing_id
+ORDER BY view_count DESC
+LIMIT 10;
 
+DELIMITER //
 -- Trigger to create notifications when new listings match user preferences
 CREATE TRIGGER create_listing_notifications
 AFTER INSERT ON Listing
@@ -158,10 +154,12 @@ BEGIN
         CONCAT('New listing from ', NEW.posted_by, ': ', NEW.title)
     FROM UserFollowedUsers ufu
     WHERE ufu.followee_id = NEW.seller_id;
-END;
-//
+END//
+DELIMITER ;
+
 
 -- Trigger to create notifications when tags are added to listings
+DELIMITER //
 CREATE TRIGGER create_tag_notifications
 AFTER INSERT ON ListingTags
 FOR EACH ROW

@@ -15,6 +15,7 @@ interface Tag {
 
 interface ListingWithTags extends UserListing {
   tags: Tag[];
+  view_count?: number;
 }
 
 export default function ListingDetail() {
@@ -30,12 +31,22 @@ export default function ListingDetail() {
 
   // Want to log view once
   useEffect(() => {
-    if (!id || didLogView.current) return;
-    fetch(`/api/listing/${id}/view`, { method: 'POST' }).catch((e) =>
-      console.error('Error logging view:', e)
-    );
-    didLogView.current = true;
+  if (!id || didLogView.current) return;
+
+  didLogView.current = true;
+  (async () => {
+    try {
+      const res = await fetch(`/api/listing/${id}/view`, { method: 'POST' });
+      if (!res.ok) throw new Error(`Status ${res.status}`);
+      const { view_count } = await res.json();
+      setListing((prev) => (prev ? { ...prev, view_count } : prev));
+    } catch (e) {
+      console.error("Error logging view:", e);
+    }
+  })();
   }, [id]);
+
+
 
   useEffect(() => {
     if (!id) return;
@@ -225,9 +236,12 @@ export default function ListingDetail() {
         )}
 
         {/* View count */}
-        <p className="text-sm text-gray-500">
-          Viewed {listing.view_count} times
-        </p>
+        {typeof listing.view_count === 'number' && (
+          <p className="text-sm text-gray-500">
+            Viewed {listing.view_count} times
+          </p>
+        )}
+
       </div>
     </>
   );
