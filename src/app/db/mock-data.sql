@@ -140,3 +140,46 @@ INSERT INTO ListingTags (listing_id, tag_id) VALUES
   (22, 5), -- IKEA Chair -> furniture
   (24, 3), -- Bluetooth Speaker -> speaker
   (24, 4); -- Bluetooth Speaker -> electronics
+
+  -- ListingViews entries for Testing
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-24 14:00:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-24 14:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-24 14:02:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-24 14:03:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-22 08:00:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-22 08:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (2, NULL, '2025-07-22 08:02:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (6, NULL, '2025-07-25 12:00:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (6, NULL, '2025-07-25 12:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (6, NULL, '2025-07-25 12:02:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (6, NULL, '2025-07-25 12:03:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (6, NULL, '2025-07-25 12:04:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (7, NULL, '2025-07-25 12:04:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (7, NULL, '2025-07-25 12:04:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (7, NULL, '2025-07-25 12:04:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (11, NULL, '2025-07-23 10:00:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (11, NULL, '2025-07-23 10:01:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (12, NULL, '2025-07-23 10:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (12, NULL, '2025-07-23 10:01:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (16, NULL, '2025-07-23 10:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (16, NULL, '2025-07-23 10:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (16, NULL, '2025-07-23 10:01:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (17, NULL, '2025-07-23 10:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (17, NULL, '2025-07-23 10:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (17, NULL, '2025-07-23 10:01:00');
+
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (21, NULL, '2025-07-21 16:00:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (21, NULL, '2025-07-21 16:01:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (22, NULL, '2025-07-21 16:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (22, NULL, '2025-07-21 16:01:00');
+
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (28, NULL, '2025-07-21 16:01:00');
+INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES (28, NULL, '2025-07-21 16:01:00');
