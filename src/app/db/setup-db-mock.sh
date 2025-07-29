@@ -3,7 +3,7 @@
 # Exit on error
 set -e
 
-echo "Setting up database..."
+echo "Setting up database with MOCK DATA..."
 
 echo "Enter your MySQL Root Password"
 mysql -u root -p -e "
@@ -20,9 +20,8 @@ mysql -u admin -p"admin1!" -e "
 echo "Creating schema..."
 mysql -u admin -p"admin1!" u_sell < create-schema.sql
 
-# Run the production data script
-echo "Loading production data..."
-mysql -u admin -p"admin1!" u_sell < usell_prod_data.sql
+# Run the MOCK data script instead of production data
+echo "Loading MOCK data..."
+mysql -u admin -p"admin1!" u_sell < mock-data.sql
 
-
-echo "Database setup complete!"
+echo "Database setup with MOCK DATA complete!"

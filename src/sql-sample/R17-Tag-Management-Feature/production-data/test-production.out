@@ -1,0 +1,833 @@
+-- Test 1
++--------+---------------+---------------------+------------------+
+| tag_id | tag_name      | created_at          | current_listings |
++--------+---------------+---------------------+------------------+
+|      1 | charger       | 2025-07-28 23:51:23 |                8 |
+|      2 | laptop        | 2025-07-28 23:51:23 |                6 |
+|     19 | speaker       | 2025-07-28 23:51:23 |                6 |
+|     61 | study         | 2025-07-28 23:51:23 |                6 |
+|     67 | dining        | 2025-07-28 23:51:23 |                6 |
+|      3 | monitor       | 2025-07-28 23:51:23 |                5 |
+|      4 | keyboard      | 2025-07-28 23:51:23 |                5 |
+|      9 | shelf         | 2025-07-28 23:51:23 |                5 |
+|     10 | lamp          | 2025-07-28 23:51:23 |                5 |
+|      5 | notebook      | 2025-07-28 23:51:23 |                4 |
+|      7 | textbook      | 2025-07-28 23:51:23 |                4 |
+|      8 | mouse         | 2025-07-28 23:51:23 |                4 |
+|     11 | desk          | 2025-07-28 23:51:23 |                4 |
+|     12 | chair         | 2025-07-28 23:51:23 |                4 |
+|     14 | headphones    | 2025-07-28 23:51:23 |                4 |
+|     17 | phone         | 2025-07-28 23:51:23 |                4 |
+|     18 | camera        | 2025-07-28 23:51:23 |                4 |
+|     20 | printer       | 2025-07-28 23:51:23 |                4 |
+|     21 | cable         | 2025-07-28 23:51:23 |                4 |
+|     22 | adapter       | 2025-07-28 23:51:23 |                4 |
+|     23 | table         | 2025-07-28 23:51:23 |                4 |
+|     24 | bed           | 2025-07-28 23:51:23 |                4 |
+|     25 | couch         | 2025-07-28 23:51:23 |                4 |
+|     26 | cabinet       | 2025-07-28 23:51:23 |                4 |
+|     27 | mirror        | 2025-07-28 23:51:23 |                4 |
+|     29 | shirt         | 2025-07-28 23:51:23 |                4 |
+|     30 | pants         | 2025-07-28 23:51:23 |                4 |
+|     31 | shoes         | 2025-07-28 23:51:23 |                4 |
+|     32 | jacket        | 2025-07-28 23:51:23 |                4 |
+|     33 | dress         | 2025-07-28 23:51:23 |                4 |
+|     35 | pen           | 2025-07-28 23:51:23 |                4 |
+|     36 | pencil        | 2025-07-28 23:51:23 |                4 |
+|     37 | paper         | 2025-07-28 23:51:23 |                4 |
+|     38 | folder        | 2025-07-28 23:51:23 |                4 |
+|     39 | backpack      | 2025-07-28 23:51:23 |                4 |
+|     40 | pot           | 2025-07-28 23:51:23 |                4 |
+|     41 | pan           | 2025-07-28 23:51:23 |                4 |
+|     48 | tool          | 2025-07-28 23:51:23 |                4 |
+|     52 | music         | 2025-07-28 23:51:23 |                4 |
+|     53 | sport         | 2025-07-28 23:51:23 |                4 |
+|     54 | fitness       | 2025-07-28 23:51:23 |                4 |
+|     56 | health        | 2025-07-28 23:51:23 |                4 |
+|     58 | outdoor       | 2025-07-28 23:51:23 |                4 |
+|     59 | travel        | 2025-07-28 23:51:23 |                4 |
+|     60 | office        | 2025-07-28 23:51:23 |                4 |
+|     62 | kitchen       | 2025-07-28 23:51:23 |                4 |
+|     63 | bathroom      | 2025-07-28 23:51:23 |                4 |
+|     64 | bedroom       | 2025-07-28 23:51:23 |                4 |
+|     65 | living        | 2025-07-28 23:51:23 |                4 |
+|     66 | storage       | 2025-07-28 23:51:23 |                4 |
+|     72 | writing       | 2025-07-28 23:51:23 |                4 |
+|     74 | cooking       | 2025-07-28 23:51:23 |                4 |
+|     13 | tablet        | 2025-07-28 23:51:23 |                3 |
+|     15 | calculator    | 2025-07-28 23:51:23 |                3 |
+|     16 | microphone    | 2025-07-28 23:51:23 |                3 |
+|     42 | utensil       | 2025-07-28 23:51:23 |                3 |
+|     43 | appliance     | 2025-07-28 23:51:23 |                3 |
+|     44 | dish          | 2025-07-28 23:51:23 |                3 |
+|     28 | rug           | 2025-07-28 23:51:23 |                2 |
+|     34 | sweater       | 2025-07-28 23:51:23 |                2 |
+|     46 | book          | 2025-07-28 23:51:23 |                2 |
+|     47 | bag           | 2025-07-28 23:51:23 |                2 |
+|     49 | game          | 2025-07-28 23:51:23 |                2 |
+|     50 | toy           | 2025-07-28 23:51:23 |                2 |
+|     51 | art           | 2025-07-28 23:51:23 |                2 |
+|     55 | beauty        | 2025-07-28 23:51:23 |                2 |
+|     57 | garden        | 2025-07-28 23:51:23 |                2 |
+|     68 | casual        | 2025-07-28 23:51:23 |                2 |
+|     69 | jeans         | 2025-07-28 23:51:23 |                2 |
+|     70 | winter        | 2025-07-28 23:51:23 |                2 |
+|     71 | formal        | 2025-07-28 23:51:23 |                2 |
+|     73 | organization  | 2025-07-28 23:51:23 |                2 |
+|     75 | modern        | 2025-07-28 23:51:23 |                2 |
+|     76 | fashion       | 2025-07-28 23:51:23 |                2 |
+|     77 | home          | 2025-07-28 23:51:23 |                2 |
+|     78 | entertainment | 2025-07-28 23:51:23 |                2 |
+|     79 | children      | 2025-07-28 23:51:23 |                2 |
+|     80 | creative      | 2025-07-28 23:51:23 |                2 |
+|     81 | instrument    | 2025-07-28 23:51:23 |                2 |
+|     82 | personal      | 2025-07-28 23:51:23 |                2 |
+|     83 | wellness      | 2025-07-28 23:51:23 |                2 |
+|     84 | recreation    | 2025-07-28 23:51:23 |                2 |
+|     85 | luggage       | 2025-07-28 23:51:23 |                2 |
+|     86 | professional  | 2025-07-28 23:51:23 |                2 |
+|     87 | academic      | 2025-07-28 23:51:23 |                2 |
+|     88 | hygiene       | 2025-07-28 23:51:23 |                2 |
+|     89 | sleep         | 2025-07-28 23:51:23 |                2 |
+|     90 | comfort       | 2025-07-28 23:51:23 |                2 |
+|     91 | meal          | 2025-07-28 23:51:23 |                2 |
+|     92 | computer      | 2025-07-28 23:51:23 |                2 |
+|     93 | mobile        | 2025-07-28 23:51:23 |                2 |
+|     94 | course        | 2025-07-28 23:51:23 |                2 |
+|     95 | seating       | 2025-07-28 23:51:23 |                2 |
+|     96 | work          | 2025-07-28 23:51:23 |                2 |
+|     97 | display       | 2025-07-28 23:51:23 |                2 |
+|     98 | input         | 2025-07-28 23:51:23 |                2 |
+|     99 | pointer       | 2025-07-28 23:51:23 |                2 |
+|    100 | portable      | 2025-07-28 23:51:23 |                2 |
+|    101 | audio         | 2025-07-28 23:51:23 |                2 |
+|    102 | math          | 2025-07-28 23:51:23 |                2 |
+|    103 | recording     | 2025-07-28 23:51:23 |                2 |
+|    104 | power         | 2025-07-28 23:51:23 |                2 |
+|    105 | photography   | 2025-07-28 23:51:23 |                2 |
+|    106 | sound         | 2025-07-28 23:51:23 |                2 |
+|    107 | output        | 2025-07-28 23:51:23 |                2 |
+|    108 | connection    | 2025-07-28 23:51:23 |                2 |
+|    109 | compatibility | 2025-07-28 23:51:23 |                2 |
+|    110 | surface       | 2025-07-28 23:51:23 |                2 |
+|    111 | rest          | 2025-07-28 23:51:23 |                2 |
+|    112 | sofa          | 2025-07-28 23:51:23 |                2 |
+|    113 | reflection    | 2025-07-28 23:51:23 |                2 |
+|    114 | floor         | 2025-07-28 23:51:23 |                2 |
+|    115 | top           | 2025-07-28 23:51:23 |                2 |
+|    116 | bottom        | 2025-07-28 23:51:23 |                2 |
+|    117 | footwear      | 2025-07-28 23:51:23 |                2 |
+|    118 | outerwear     | 2025-07-28 23:51:23 |                2 |
+|    119 | garment       | 2025-07-28 23:51:23 |                2 |
+|    120 | warm          | 2025-07-28 23:51:23 |                2 |
+|    121 | drawing       | 2025-07-28 23:51:23 |                2 |
+|    122 | sheet         | 2025-07-28 23:51:23 |                2 |
+|    123 | organize      | 2025-07-28 23:51:23 |                2 |
+|    124 | carry         | 2025-07-28 23:51:23 |                2 |
+|    125 | cookware      | 2025-07-28 23:51:23 |                2 |
+|    126 | frying        | 2025-07-28 23:51:23 |                2 |
+|      6 | binder        | 2025-07-28 23:51:23 |                1 |
+|     45 | cup           | 2025-07-28 23:51:23 |                1 |
+|    127 | eating        | 2025-07-28 23:51:23 |                1 |
+|    128 | electric      | 2025-07-28 23:51:23 |                1 |
+|    129 | serve         | 2025-07-28 23:51:23 |                1 |
+|    130 | drink         | 2025-07-28 23:51:23 |                1 |
+|    131 | furniture     | 2025-07-29 00:09:37 |                1 |
++--------+---------------+---------------------+------------------+
+
+-- Test 2
++--------------+-----------+----------------+
+| word         | frequency | total_listings |
++--------------+-----------+----------------+
+| engineering  |      2327 |            141 |
+| science      |       393 |             23 |
+| architecture |       314 |             18 |
+| environment  |       298 |             17 |
+| planning     |       245 |             14 |
+| arts         |       230 |             13 |
+| mathematics  |       230 |             13 |
+| physics      |        69 |              4 |
+| supplies     |        66 |              6 |
+| set          |        50 |             59 |
++--------------+-----------+----------------+
+
+-- Test 3
+Query OK, 1 row affected (0.014 sec)
+
+-- Test 4
++--------+-------------+---------------------+
+| tag_id | tag_name    | created_at          |
++--------+-------------+---------------------+
+|    132 | engineering | 2025-07-28 23:54:01 |
++--------+-------------+---------------------+
+
+-- Test 5
+Query OK, 3 rows affected (0.002 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+-- Test 6
++--------+---------------+---------------------+------------------+
+| tag_id | tag_name      | created_at          | current_listings |
++--------+---------------+---------------------+------------------+
+|      1 | charger       | 2025-07-29 00:09:37 |                7 |
+|     19 | speaker       | 2025-07-29 00:09:37 |                6 |
+|     61 | study         | 2025-07-29 00:09:37 |                6 |
+|     67 | dining        | 2025-07-29 00:09:37 |                6 |
+|      2 | laptop        | 2025-07-29 00:09:37 |                5 |
+|      9 | shelf         | 2025-07-29 00:09:37 |                5 |
+|     10 | lamp          | 2025-07-29 00:09:37 |                5 |
+|     27 | mirror        | 2025-07-29 00:09:37 |                5 |
+|     64 | bedroom       | 2025-07-29 00:09:37 |                5 |
+|      3 | monitor       | 2025-07-29 00:09:37 |                4 |
+|      4 | keyboard      | 2025-07-29 00:09:37 |                4 |
+|      5 | notebook      | 2025-07-29 00:09:37 |                4 |
+|      7 | textbook      | 2025-07-29 00:09:37 |                4 |
+|     11 | desk          | 2025-07-29 00:09:37 |                4 |
+|     12 | chair         | 2025-07-29 00:09:37 |                4 |
+|     14 | headphones    | 2025-07-29 00:09:37 |                4 |
+|     17 | phone         | 2025-07-29 00:09:37 |                4 |
+|     18 | camera        | 2025-07-29 00:09:37 |                4 |
+|     20 | printer       | 2025-07-29 00:09:37 |                4 |
+|     21 | cable         | 2025-07-29 00:09:37 |                4 |
+|     22 | adapter       | 2025-07-29 00:09:37 |                4 |
+|     23 | table         | 2025-07-29 00:09:37 |                4 |
+|     24 | bed           | 2025-07-29 00:09:37 |                4 |
+|     25 | couch         | 2025-07-29 00:09:37 |                4 |
+|     26 | cabinet       | 2025-07-29 00:09:37 |                4 |
+|     29 | shirt         | 2025-07-29 00:09:37 |                4 |
+|     30 | pants         | 2025-07-29 00:09:37 |                4 |
+|     31 | shoes         | 2025-07-29 00:09:37 |                4 |
+|     32 | jacket        | 2025-07-29 00:09:37 |                4 |
+|     33 | dress         | 2025-07-29 00:09:37 |                4 |
+|     35 | pen           | 2025-07-29 00:09:37 |                4 |
+|     36 | pencil        | 2025-07-29 00:09:37 |                4 |
+|     37 | paper         | 2025-07-29 00:09:37 |                4 |
+|     38 | folder        | 2025-07-29 00:09:37 |                4 |
+|     39 | backpack      | 2025-07-29 00:09:37 |                4 |
+|     40 | pot           | 2025-07-29 00:09:37 |                4 |
+|     41 | pan           | 2025-07-29 00:09:37 |                4 |
+|     48 | tool          | 2025-07-29 00:09:37 |                4 |
+|     52 | music         | 2025-07-29 00:09:37 |                4 |
+|     53 | sport         | 2025-07-29 00:09:37 |                4 |
+|     54 | fitness       | 2025-07-29 00:09:37 |                4 |
+|     56 | health        | 2025-07-29 00:09:37 |                4 |
+|     58 | outdoor       | 2025-07-29 00:09:37 |                4 |
+|     59 | travel        | 2025-07-29 00:09:37 |                4 |
+|     60 | office        | 2025-07-29 00:09:37 |                4 |
+|     62 | kitchen       | 2025-07-29 00:09:37 |                4 |
+|     63 | bathroom      | 2025-07-29 00:09:37 |                4 |
+|     65 | living        | 2025-07-29 00:09:37 |                4 |
+|     66 | storage       | 2025-07-29 00:09:37 |                4 |
+|     72 | writing       | 2025-07-29 00:09:37 |                4 |
+|     74 | cooking       | 2025-07-29 00:09:37 |                4 |
+|    132 | engineering   | 2025-07-29 00:12:12 |                3 |
+|      8 | mouse         | 2025-07-29 00:09:37 |                3 |
+|     13 | tablet        | 2025-07-29 00:09:37 |                3 |
+|     15 | calculator    | 2025-07-29 00:09:37 |                3 |
+|     16 | microphone    | 2025-07-29 00:09:37 |                3 |
+|     42 | utensil       | 2025-07-29 00:09:37 |                3 |
+|     43 | appliance     | 2025-07-29 00:09:37 |                3 |
+|     44 | dish          | 2025-07-29 00:09:37 |                3 |
+|     73 | organization  | 2025-07-29 00:09:37 |                3 |
+|     77 | home          | 2025-07-29 00:09:37 |                3 |
+|     28 | rug           | 2025-07-29 00:09:37 |                2 |
+|     34 | sweater       | 2025-07-29 00:09:37 |                2 |
+|     46 | book          | 2025-07-29 00:09:37 |                2 |
+|     47 | bag           | 2025-07-29 00:09:37 |                2 |
+|     49 | game          | 2025-07-29 00:09:37 |                2 |
+|     50 | toy           | 2025-07-29 00:09:37 |                2 |
+|     51 | art           | 2025-07-29 00:09:37 |                2 |
+|     55 | beauty        | 2025-07-29 00:09:37 |                2 |
+|     57 | garden        | 2025-07-29 00:09:37 |                2 |
+|     68 | casual        | 2025-07-29 00:09:37 |                2 |
+|     69 | jeans         | 2025-07-29 00:09:37 |                2 |
+|     70 | winter        | 2025-07-29 00:09:37 |                2 |
+|     71 | formal        | 2025-07-29 00:09:37 |                2 |
+|     75 | modern        | 2025-07-29 00:09:37 |                2 |
+|     76 | fashion       | 2025-07-29 00:09:37 |                2 |
+|     78 | entertainment | 2025-07-29 00:09:37 |                2 |
+|     79 | children      | 2025-07-29 00:09:37 |                2 |
+|     80 | creative      | 2025-07-29 00:09:37 |                2 |
+|     81 | instrument    | 2025-07-29 00:09:37 |                2 |
+|     82 | personal      | 2025-07-29 00:09:37 |                2 |
+|     83 | wellness      | 2025-07-29 00:09:37 |                2 |
+|     84 | recreation    | 2025-07-29 00:09:37 |                2 |
+|     85 | luggage       | 2025-07-29 00:09:37 |                2 |
+|     86 | professional  | 2025-07-29 00:09:37 |                2 |
+|     87 | academic      | 2025-07-29 00:09:37 |                2 |
+|     88 | hygiene       | 2025-07-29 00:09:37 |                2 |
+|     89 | sleep         | 2025-07-29 00:09:37 |                2 |
+|     90 | comfort       | 2025-07-29 00:09:37 |                2 |
+|     91 | meal          | 2025-07-29 00:09:37 |                2 |
+|     92 | computer      | 2025-07-29 00:09:37 |                2 |
+|     93 | mobile        | 2025-07-29 00:09:37 |                2 |
+|     94 | course        | 2025-07-29 00:09:37 |                2 |
+|     95 | seating       | 2025-07-29 00:09:37 |                2 |
+|     96 | work          | 2025-07-29 00:09:37 |                2 |
+|     97 | display       | 2025-07-29 00:09:37 |                2 |
+|     98 | input         | 2025-07-29 00:09:37 |                2 |
+|     99 | pointer       | 2025-07-29 00:09:37 |                2 |
+|    100 | portable      | 2025-07-29 00:09:37 |                2 |
+|    101 | audio         | 2025-07-29 00:09:37 |                2 |
+|    102 | math          | 2025-07-29 00:09:37 |                2 |
+|    103 | recording     | 2025-07-29 00:09:37 |                2 |
+|    104 | power         | 2025-07-29 00:09:37 |                2 |
+|    105 | photography   | 2025-07-29 00:09:37 |                2 |
+|    106 | sound         | 2025-07-29 00:09:37 |                2 |
+|    107 | output        | 2025-07-29 00:09:37 |                2 |
+|    108 | connection    | 2025-07-29 00:09:37 |                2 |
+|    109 | compatibility | 2025-07-29 00:09:37 |                2 |
+|    110 | surface       | 2025-07-29 00:09:37 |                2 |
+|    111 | rest          | 2025-07-29 00:09:37 |                2 |
+|    112 | sofa          | 2025-07-29 00:09:37 |                2 |
+|    113 | reflection    | 2025-07-29 00:09:37 |                2 |
+|    114 | floor         | 2025-07-29 00:09:37 |                2 |
+|    115 | top           | 2025-07-29 00:09:37 |                2 |
+|    116 | bottom        | 2025-07-29 00:09:37 |                2 |
+|    117 | footwear      | 2025-07-29 00:09:37 |                2 |
+|    118 | outerwear     | 2025-07-29 00:09:37 |                2 |
+|    119 | garment       | 2025-07-29 00:09:37 |                2 |
+|    120 | warm          | 2025-07-29 00:09:37 |                2 |
+|    121 | drawing       | 2025-07-29 00:09:37 |                2 |
+|    122 | sheet         | 2025-07-29 00:09:37 |                2 |
+|    123 | organize      | 2025-07-29 00:09:37 |                2 |
+|    124 | carry         | 2025-07-29 00:09:37 |                2 |
+|    125 | cookware      | 2025-07-29 00:09:37 |                2 |
+|    126 | frying        | 2025-07-29 00:09:37 |                2 |
+|      6 | binder        | 2025-07-29 00:09:37 |                1 |
+|     45 | cup           | 2025-07-29 00:09:37 |                1 |
+|    127 | eating        | 2025-07-29 00:09:37 |                1 |
+|    128 | electric      | 2025-07-29 00:09:37 |                1 |
+|    129 | serve         | 2025-07-29 00:09:37 |                1 |
+|    130 | drink         | 2025-07-29 00:09:37 |                1 |
+|    131 | furniture     | 2025-07-29 00:09:37 |                1 |
++--------+---------------+---------------------+------------------+
+
+-- Test 7
++-----+------------------------+--------+----------+--------+
+| id  | title                  | price  | status   | tags   |
++-----+------------------------+--------+----------+--------+
+|   4 | Work Outfit - Clothing |  76.88 | pending  | laptop |
+|   5 | Chargers - Misc        | 147.22 | pending  | laptop |
+|   8 | Air Fryer - Kitchen    |  33.65 | for sale | laptop |
+| 221 | Bed Frame - Furniture  | 257.01 | pending  | laptop |
+| 225 | Hair Dryer - Misc      | 142.57 | sold     | laptop |
++-----+------------------------+--------+----------+--------+
+
+-- Test 8
++----+--------------------------+--------------------------------------------+
+| id | title                    | tags                                       |
++----+--------------------------+--------------------------------------------+
+| 15 | Mirror Stand - Furniture | mirror,bedroom,organization,home,furniture |
++----+--------------------------+--------------------------------------------+
+
+-- Test 9
++-----+------------------------+--------+----------+----------------+
+| id  | title                  | price  | status   | tags           |
++-----+------------------------+--------+----------+----------------+
+|   4 | Work Outfit - Clothing |  76.88 | pending  | laptop         |
+|   5 | Chargers - Misc        | 147.22 | pending  | laptop,monitor |
+|   8 | Air Fryer - Kitchen    |  33.65 | for sale | laptop,monitor |
+| 221 | Bed Frame - Furniture  | 257.01 | pending  | laptop         |
+| 225 | Hair Dryer - Misc      | 142.57 | sold     | laptop         |
+| 326 | Dress - Clothing       |   6.23 | pending  | monitor        |
+| 330 | Toaster - Kitchen      |  72.81 | for sale | monitor        |
++-----+------------------------+--------+----------+----------------+
+
+-- Test 10
+Query OK, 1 row affected (0.002 sec)
+
+-- Test 11
++----------------+
+| remaining_tags |
++----------------+
+|              0 |
++----------------+
++------------------------+
+| remaining_listing_tags |
++------------------------+
+|                      0 |
++------------------------+
+
+-- Test 12
++--------+---------------+---------------------+------------------+
+| tag_id | tag_name      | created_at          | current_listings |
++--------+---------------+---------------------+------------------+
+|      1 | charger       | 2025-07-29 00:09:37 |                7 |
+|     19 | speaker       | 2025-07-29 00:09:37 |                6 |
+|     61 | study         | 2025-07-29 00:09:37 |                6 |
+|     67 | dining        | 2025-07-29 00:09:37 |                6 |
+|      2 | laptop        | 2025-07-29 00:09:37 |                5 |
+|      9 | shelf         | 2025-07-29 00:09:37 |                5 |
+|     10 | lamp          | 2025-07-29 00:09:37 |                5 |
+|     27 | mirror        | 2025-07-29 00:09:37 |                5 |
+|     64 | bedroom       | 2025-07-29 00:09:37 |                5 |
+|      3 | monitor       | 2025-07-29 00:09:37 |                4 |
+|      4 | keyboard      | 2025-07-29 00:09:37 |                4 |
+|      5 | notebook      | 2025-07-29 00:09:37 |                4 |
+|      7 | textbook      | 2025-07-29 00:09:37 |                4 |
+|     11 | desk          | 2025-07-29 00:09:37 |                4 |
+|     12 | chair         | 2025-07-29 00:09:37 |                4 |
+|     14 | headphones    | 2025-07-29 00:09:37 |                4 |
+|     17 | phone         | 2025-07-29 00:09:37 |                4 |
+|     18 | camera        | 2025-07-29 00:09:37 |                4 |
+|     20 | printer       | 2025-07-29 00:09:37 |                4 |
+|     21 | cable         | 2025-07-29 00:09:37 |                4 |
+|     22 | adapter       | 2025-07-29 00:09:37 |                4 |
+|     23 | table         | 2025-07-29 00:09:37 |                4 |
+|     24 | bed           | 2025-07-29 00:09:37 |                4 |
+|     25 | couch         | 2025-07-29 00:09:37 |                4 |
+|     26 | cabinet       | 2025-07-29 00:09:37 |                4 |
+|     29 | shirt         | 2025-07-29 00:09:37 |                4 |
+|     30 | pants         | 2025-07-29 00:09:37 |                4 |
+|     31 | shoes         | 2025-07-29 00:09:37 |                4 |
+|     32 | jacket        | 2025-07-29 00:09:37 |                4 |
+|     33 | dress         | 2025-07-29 00:09:37 |                4 |
+|     35 | pen           | 2025-07-29 00:09:37 |                4 |
+|     36 | pencil        | 2025-07-29 00:09:37 |                4 |
+|     37 | paper         | 2025-07-29 00:09:37 |                4 |
+|     38 | folder        | 2025-07-29 00:09:37 |                4 |
+|     39 | backpack      | 2025-07-29 00:09:37 |                4 |
+|     40 | pot           | 2025-07-29 00:09:37 |                4 |
+|     41 | pan           | 2025-07-29 00:09:37 |                4 |
+|     48 | tool          | 2025-07-29 00:09:37 |                4 |
+|     52 | music         | 2025-07-29 00:09:37 |                4 |
+|     53 | sport         | 2025-07-29 00:09:37 |                4 |
+|     54 | fitness       | 2025-07-29 00:09:37 |                4 |
+|     56 | health        | 2025-07-29 00:09:37 |                4 |
+|     58 | outdoor       | 2025-07-29 00:09:37 |                4 |
+|     59 | travel        | 2025-07-29 00:09:37 |                4 |
+|     60 | office        | 2025-07-29 00:09:37 |                4 |
+|     62 | kitchen       | 2025-07-29 00:09:37 |                4 |
+|     63 | bathroom      | 2025-07-29 00:09:37 |                4 |
+|     65 | living        | 2025-07-29 00:09:37 |                4 |
+|     66 | storage       | 2025-07-29 00:09:37 |                4 |
+|     72 | writing       | 2025-07-29 00:09:37 |                4 |
+|     74 | cooking       | 2025-07-29 00:09:37 |                4 |
+|      8 | mouse         | 2025-07-29 00:09:37 |                3 |
+|     13 | tablet        | 2025-07-29 00:09:37 |                3 |
+|     15 | calculator    | 2025-07-29 00:09:37 |                3 |
+|     16 | microphone    | 2025-07-29 00:09:37 |                3 |
+|     42 | utensil       | 2025-07-29 00:09:37 |                3 |
+|     43 | appliance     | 2025-07-29 00:09:37 |                3 |
+|     44 | dish          | 2025-07-29 00:09:37 |                3 |
+|     73 | organization  | 2025-07-29 00:09:37 |                3 |
+|     77 | home          | 2025-07-29 00:09:37 |                3 |
+|     28 | rug           | 2025-07-29 00:09:37 |                2 |
+|     34 | sweater       | 2025-07-29 00:09:37 |                2 |
+|     46 | book          | 2025-07-29 00:09:37 |                2 |
+|     47 | bag           | 2025-07-29 00:09:37 |                2 |
+|     49 | game          | 2025-07-29 00:09:37 |                2 |
+|     50 | toy           | 2025-07-29 00:09:37 |                2 |
+|     51 | art           | 2025-07-29 00:09:37 |                2 |
+|     55 | beauty        | 2025-07-29 00:09:37 |                2 |
+|     57 | garden        | 2025-07-29 00:09:37 |                2 |
+|     68 | casual        | 2025-07-29 00:09:37 |                2 |
+|     69 | jeans         | 2025-07-29 00:09:37 |                2 |
+|     70 | winter        | 2025-07-29 00:09:37 |                2 |
+|     71 | formal        | 2025-07-29 00:09:37 |                2 |
+|     75 | modern        | 2025-07-29 00:09:37 |                2 |
+|     76 | fashion       | 2025-07-29 00:09:37 |                2 |
+|     78 | entertainment | 2025-07-29 00:09:37 |                2 |
+|     79 | children      | 2025-07-29 00:09:37 |                2 |
+|     80 | creative      | 2025-07-29 00:09:37 |                2 |
+|     81 | instrument    | 2025-07-29 00:09:37 |                2 |
+|     82 | personal      | 2025-07-29 00:09:37 |                2 |
+|     83 | wellness      | 2025-07-29 00:09:37 |                2 |
+|     84 | recreation    | 2025-07-29 00:09:37 |                2 |
+|     85 | luggage       | 2025-07-29 00:09:37 |                2 |
+|     86 | professional  | 2025-07-29 00:09:37 |                2 |
+|     87 | academic      | 2025-07-29 00:09:37 |                2 |
+|     88 | hygiene       | 2025-07-29 00:09:37 |                2 |
+|     89 | sleep         | 2025-07-29 00:09:37 |                2 |
+|     90 | comfort       | 2025-07-29 00:09:37 |                2 |
+|     91 | meal          | 2025-07-29 00:09:37 |                2 |
+|     92 | computer      | 2025-07-29 00:09:37 |                2 |
+|     93 | mobile        | 2025-07-29 00:09:37 |                2 |
+|     94 | course        | 2025-07-29 00:09:37 |                2 |
+|     95 | seating       | 2025-07-29 00:09:37 |                2 |
+|     96 | work          | 2025-07-29 00:09:37 |                2 |
+|     97 | display       | 2025-07-29 00:09:37 |                2 |
+|     98 | input         | 2025-07-29 00:09:37 |                2 |
+|     99 | pointer       | 2025-07-29 00:09:37 |                2 |
+|    100 | portable      | 2025-07-29 00:09:37 |                2 |
+|    101 | audio         | 2025-07-29 00:09:37 |                2 |
+|    102 | math          | 2025-07-29 00:09:37 |                2 |
+|    103 | recording     | 2025-07-29 00:09:37 |                2 |
+|    104 | power         | 2025-07-29 00:09:37 |                2 |
+|    105 | photography   | 2025-07-29 00:09:37 |                2 |
+|    106 | sound         | 2025-07-29 00:09:37 |                2 |
+|    107 | output        | 2025-07-29 00:09:37 |                2 |
+|    108 | connection    | 2025-07-29 00:09:37 |                2 |
+|    109 | compatibility | 2025-07-29 00:09:37 |                2 |
+|    110 | surface       | 2025-07-29 00:09:37 |                2 |
+|    111 | rest          | 2025-07-29 00:09:37 |                2 |
+|    112 | sofa          | 2025-07-29 00:09:37 |                2 |
+|    113 | reflection    | 2025-07-29 00:09:37 |                2 |
+|    114 | floor         | 2025-07-29 00:09:37 |                2 |
+|    115 | top           | 2025-07-29 00:09:37 |                2 |
+|    116 | bottom        | 2025-07-29 00:09:37 |                2 |
+|    117 | footwear      | 2025-07-29 00:09:37 |                2 |
+|    118 | outerwear     | 2025-07-29 00:09:37 |                2 |
+|    119 | garment       | 2025-07-29 00:09:37 |                2 |
+|    120 | warm          | 2025-07-29 00:09:37 |                2 |
+|    121 | drawing       | 2025-07-29 00:09:37 |                2 |
+|    122 | sheet         | 2025-07-29 00:09:37 |                2 |
+|    123 | organize      | 2025-07-29 00:09:37 |                2 |
+|    124 | carry         | 2025-07-29 00:09:37 |                2 |
+|    125 | cookware      | 2025-07-29 00:09:37 |                2 |
+|    126 | frying        | 2025-07-29 00:09:37 |                2 |
+|      6 | binder        | 2025-07-29 00:09:37 |                1 |
+|     45 | cup           | 2025-07-29 00:09:37 |                1 |
+|    127 | eating        | 2025-07-29 00:09:37 |                1 |
+|    128 | electric      | 2025-07-29 00:09:37 |                1 |
+|    129 | serve         | 2025-07-29 00:09:37 |                1 |
+|    130 | drink         | 2025-07-29 00:09:37 |                1 |
+|    131 | furniture     | 2025-07-29 00:09:37 |                1 |
++--------+---------------+---------------------+------------------+
+
+-- Test 13
++-----+--------------------------+--------+----------+--------+
+| id  | title                    | price  | status   | tags   |
++-----+--------------------------+--------+----------+--------+
+|  30 | Winter Coat - Clothing   |  63.72 | for sale | mirror |
+|  34 | Utensils - Kitchen       |  98.63 | for sale | mirror |
+| 891 | Panini Press - Kitchen   | 108.58 | for sale | mirror |
+| 895 | Mirror Stand - Furniture | 112.19 | sold     | mirror |
+|  15 | Mirror Stand - Furniture | 145.98 | for sale | mirror |
++-----+--------------------------+--------+----------+--------+
+
+-- Test 14
++------+-----------------------------------+-------------+---------------------------+
+| id   | title                             | type        | tags                      |
++------+-----------------------------------+-------------+---------------------------+
+|    9 | Motherboard - Electronics         | Electronics | shelf                     |
+|   14 | Tablet - Electronics              | Electronics | charger,tablet,headphones |
+|   24 | Smartwatch - Electronics          | Electronics | printer,office            |
+|   32 | Smart Bulb - Electronics          | Electronics | couch,pants,living,jeans  |
+|   50 | Wireless Earbuds - Electronics    | Electronics | book,toy,study,children   |
+|   55 | Case - Electronics                | Electronics | art,creative              |
+|   67 | Switch - Electronics              | Electronics | NULL                      |
+|   70 | Microphone - Electronics          | Electronics | fitness,health            |
+|   75 | Graphics Card - Electronics       | Electronics | beauty,personal           |
+|   77 | Tablet - Electronics              | Electronics | NULL                      |
+|   81 | Router - Electronics              | Electronics | NULL                      |
+|   83 | Printer - Electronics             | Electronics | NULL                      |
+|   90 | Drone - Electronics               | Electronics | garden,outdoor            |
+|   95 | Smartwatch - Electronics          | Electronics | NULL                      |
+|   96 | Keyboard - Electronics            | Electronics | outdoor,recreation        |
+|  106 | Monitor - Electronics             | Electronics | travel,luggage            |
+|  110 | SSD - Electronics                 | Electronics | travel,luggage            |
+|  116 | Power Bank - Electronics          | Electronics | office,professional       |
+|  125 | Motherboard - Electronics         | Electronics | NULL                      |
+|  130 | Webcam - Electronics              | Electronics | study,academic            |
+|  131 | Headphones - Electronics          | Electronics | NULL                      |
+|  141 | Power Bank - Electronics          | Electronics | kitchen,cooking           |
+|  152 | Camera - Electronics              | Electronics | NULL                      |
+|  155 | Mouse - Electronics               | Electronics | NULL                      |
+|  159 | Bluetooth Speaker - Electronics   | Electronics | NULL                      |
+|  170 | Headphones - Electronics          | Electronics | NULL                      |
+|  171 | Webcam - Electronics              | Electronics | bedroom,sleep             |
+|  172 | Case - Electronics                | Electronics | NULL                      |
+|  180 | Smart Plug - Electronics          | Electronics | NULL                      |
+|  187 | Wireless Earbuds - Electronics    | Electronics | NULL                      |
+|  193 | Laptop - Electronics              | Electronics | NULL                      |
+|  194 | Power Supply - Electronics        | Electronics | NULL                      |
+|  197 | Portable Charger - Electronics    | Electronics | NULL                      |
+|  208 | Webcam - Electronics              | Electronics | NULL                      |
+|  211 | Smart Bulb - Electronics          | Electronics | NULL                      |
+|  238 | Mouse - Electronics               | Electronics | NULL                      |
+|  240 | Hard Drive - Electronics          | Electronics | NULL                      |
+|  242 | VR Headset - Electronics          | Electronics | NULL                      |
+|  243 | Tablet - Electronics              | Electronics | NULL                      |
+|  244 | Power Bank - Electronics          | Electronics | NULL                      |
+|  251 | SSD - Electronics                 | Electronics | NULL                      |
+|  252 | Keyboard - Electronics            | Electronics | NULL                      |
+|  258 | Tripod - Electronics              | Electronics | NULL                      |
+|  263 | Hard Drive - Electronics          | Electronics | NULL                      |
+|  268 | Cooling Fan - Electronics         | Electronics | NULL                      |
+|  272 | Motherboard - Electronics         | Electronics | NULL                      |
+|  274 | Gaming Controller - Electronics   | Electronics | NULL                      |
+|  277 | Monitor - Electronics             | Electronics | NULL                      |
+|  286 | Keyboard - Electronics            | Electronics | NULL                      |
+|  289 | Cable Set - Electronics           | Electronics | NULL                      |
+|  307 | Motherboard - Electronics         | Electronics | NULL                      |
+|  310 | Webcam - Electronics              | Electronics | NULL                      |
+|  313 | Laptop - Electronics              | Electronics | NULL                      |
+|  316 | Motherboard - Electronics         | Electronics | NULL                      |
+|  327 | Router - Electronics              | Electronics | NULL                      |
+|  336 | Hard Drive - Electronics          | Electronics | NULL                      |
+|  342 | CPU - Electronics                 | Electronics | NULL                      |
+|  359 | Microphone - Electronics          | Electronics | NULL                      |
+|  364 | Tablet - Electronics              | Electronics | NULL                      |
+|  375 | Cooling Fan - Electronics         | Electronics | NULL                      |
+|  378 | Router - Electronics              | Electronics | NULL                      |
+|  387 | Laptop - Electronics              | Electronics | NULL                      |
+|  390 | Laptop - Electronics              | Electronics | NULL                      |
+|  395 | Camera - Electronics              | Electronics | NULL                      |
+|  397 | Cooling Fan - Electronics         | Electronics | NULL                      |
+|  406 | Mouse - Electronics               | Electronics | NULL                      |
+|  408 | Scanner - Electronics             | Electronics | NULL                      |
+|  413 | Keyboard - Electronics            | Electronics | NULL                      |
+|  414 | Motherboard - Electronics         | Electronics | NULL                      |
+|  415 | Mouse - Electronics               | Electronics | NULL                      |
+|  425 | Smartwatch - Electronics          | Electronics | NULL                      |
+|  428 | Graphics Card - Electronics       | Electronics | NULL                      |
+|  431 | LED Strip - Electronics           | Electronics | NULL                      |
+|  433 | Charger - Electronics             | Electronics | NULL                      |
+|  434 | SSD - Electronics                 | Electronics | NULL                      |
+|  437 | Power Supply - Electronics        | Electronics | NULL                      |
+|  445 | Monitor - Electronics             | Electronics | NULL                      |
+|  449 | SSD - Electronics                 | Electronics | NULL                      |
+|  471 | Mouse - Electronics               | Electronics | NULL                      |
+|  472 | Bluetooth Speaker - Electronics   | Electronics | NULL                      |
+|  476 | Drone - Electronics               | Electronics | NULL                      |
+|  486 | Router - Electronics              | Electronics | microphone,recording      |
+|  490 | Phone - Electronics               | Electronics | microphone,recording      |
+|  500 | Laptop - Electronics              | Electronics | NULL                      |
+|  507 | Monitor - Electronics             | Electronics | NULL                      |
+|  508 | CPU - Electronics                 | Electronics | NULL                      |
+|  509 | Monitor - Electronics             | Electronics | NULL                      |
+|  526 | Smart Bulb - Electronics          | Electronics | NULL                      |
+|  530 | Microphone - Electronics          | Electronics | NULL                      |
+|  548 | E-reader - Electronics            | Electronics | NULL                      |
+|  553 | Cooling Fan - Electronics         | Electronics | NULL                      |
+|  555 | CPU - Electronics                 | Electronics | camera,photography        |
+|  566 | Printer - Electronics             | Electronics | NULL                      |
+|  567 | Case - Electronics                | Electronics | NULL                      |
+|  578 | Power Bank - Electronics          | Electronics | NULL                      |
+|  579 | Smart Bulb - Electronics          | Electronics | NULL                      |
+|  581 | VR Headset - Electronics          | Electronics | NULL                      |
+|  592 | Cooling Fan - Electronics         | Electronics | NULL                      |
+|  593 | Charger - Electronics             | Electronics | NULL                      |
+|  597 | E-reader - Electronics            | Electronics | NULL                      |
+|  603 | Phone - Electronics               | Electronics | NULL                      |
+|  625 | Smart Bulb - Electronics          | Electronics | printer,output            |
+|  642 | Power Bank - Electronics          | Electronics | NULL                      |
+|  643 | Microphone - Electronics          | Electronics | NULL                      |
+|  644 | Case - Electronics                | Electronics | NULL                      |
+|  658 | Charger - Electronics             | Electronics | NULL                      |
+|  659 | Microphone - Electronics          | Electronics | NULL                      |
+|  680 | Mouse - Electronics               | Electronics | NULL                      |
+|  687 | Smart Plug - Electronics          | Electronics | NULL                      |
+|  695 | Case - Electronics                | Electronics | adapter,compatibility     |
+|  696 | Keyboard - Electronics            | Electronics | NULL                      |
+|  699 | Charger - Electronics             | Electronics | NULL                      |
+|  702 | Webcam - Electronics              | Electronics | NULL                      |
+|  704 | Hard Drive - Electronics          | Electronics | NULL                      |
+|  709 | SSD - Electronics                 | Electronics | NULL                      |
+|  715 | VR Headset - Electronics          | Electronics | NULL                      |
+|  717 | SSD - Electronics                 | Electronics | NULL                      |
+|  725 | Webcam - Electronics              | Electronics | NULL                      |
+|  735 | Smart Bulb - Electronics          | Electronics | table,surface             |
+|  740 | E-reader - Electronics            | Electronics | NULL                      |
+|  758 | Hard Drive - Electronics          | Electronics | NULL                      |
+|  770 | E-reader - Electronics            | Electronics | NULL                      |
+|  771 | Smart Plug - Electronics          | Electronics | bed,rest                  |
+|  773 | Graphics Card - Electronics       | Electronics | NULL                      |
+|  777 | Graphics Card - Electronics       | Electronics | NULL                      |
+|  786 | Smart Bulb - Electronics          | Electronics | NULL                      |
+|  787 | Portable Charger - Electronics    | Electronics | NULL                      |
+|  788 | Camera - Electronics              | Electronics | NULL                      |
+|  789 | Scanner - Electronics             | Electronics | NULL                      |
+|  798 | Smartwatch - Electronics          | Electronics | NULL                      |
+|  804 | Smartwatch - Electronics          | Electronics | NULL                      |
+|  806 | Tablet - Electronics              | Electronics | NULL                      |
+|  810 | Webcam - Electronics              | Electronics | NULL                      |
+|  818 | Headphones - Electronics          | Electronics | NULL                      |
+|  824 | Bluetooth Speaker - Electronics   | Electronics | NULL                      |
+|  826 | Motherboard - Electronics         | Electronics | NULL                      |
+|  827 | Fitness Tracker - Electronics     | Electronics | NULL                      |
+|  828 | Router - Electronics              | Electronics | NULL                      |
+|  843 | SSD - Electronics                 | Electronics | NULL                      |
+|  850 | Printer - Electronics             | Electronics | NULL                      |
+|  854 | USB Hub - Electronics             | Electronics | NULL                      |
+|  857 | Bluetooth Speaker - Electronics   | Electronics | NULL                      |
+|  859 | VR Headset - Electronics          | Electronics | NULL                      |
+|  869 | Scanner - Electronics             | Electronics | NULL                      |
+|  871 | Graphics Card - Electronics       | Electronics | NULL                      |
+|  881 | Mouse - Electronics               | Electronics | NULL                      |
+|  890 | Camera - Electronics              | Electronics | NULL                      |
+|  892 | Power Supply - Electronics        | Electronics | NULL                      |
+|  897 | Tripod - Electronics              | Electronics | NULL                      |
+|  898 | Router - Electronics              | Electronics | NULL                      |
+|  902 | VR Headset - Electronics          | Electronics | NULL                      |
+|  904 | Headphones - Electronics          | Electronics | NULL                      |
+|  906 | Phone - Electronics               | Electronics | NULL                      |
+|  911 | Headphones - Electronics          | Electronics | NULL                      |
+|  912 | Smartwatch - Electronics          | Electronics | NULL                      |
+|  924 | Graphics Card - Electronics       | Electronics | NULL                      |
+|  928 | Mouse - Electronics               | Electronics | NULL                      |
+|  940 | Laptop - Electronics              | Electronics | rug,floor                 |
+|  945 | Microphone - Electronics          | Electronics | NULL                      |
+|  947 | Drone - Electronics               | Electronics | NULL                      |
+|  952 | Tablet - Electronics              | Electronics | NULL                      |
+|  953 | Microphone - Electronics          | Electronics | NULL                      |
+|  956 | Tripod - Electronics              | Electronics | NULL                      |
+|  966 | Scanner - Electronics             | Electronics | NULL                      |
+|  967 | Webcam - Electronics              | Electronics | NULL                      |
+|  971 | Keyboard - Electronics            | Electronics | NULL                      |
+|  973 | USB Hub - Electronics             | Electronics | NULL                      |
+|  975 | SSD - Electronics                 | Electronics | NULL                      |
+|  978 | Router - Electronics              | Electronics | NULL                      |
+|  993 | Power Bank - Electronics          | Electronics | NULL                      |
+|  996 | SSD - Electronics                 | Electronics | NULL                      |
+| 1001 | Headphones - Electronics          | Electronics | NULL                      |
+| 1012 | Cooling Fan - Electronics         | Electronics | NULL                      |
+| 1013 | Headphones - Electronics          | Electronics | NULL                      |
+| 1017 | Power Bank - Electronics          | Electronics | NULL                      |
+| 1028 | USB Hub - Electronics             | Electronics | NULL                      |
+| 1034 | LED Strip - Electronics           | Electronics | NULL                      |
+| 1039 | Webcam - Electronics              | Electronics | NULL                      |
+| 1054 | Charger - Electronics             | Electronics | NULL                      |
+| 1059 | Drone - Electronics               | Electronics | NULL                      |
+| 1069 | Power Supply - Electronics        | Electronics | NULL                      |
+| 1071 | Printer - Electronics             | Electronics | shoes,footwear            |
+| 1078 | Mouse - Electronics               | Electronics | NULL                      |
+| 1083 | E-reader - Electronics            | Electronics | NULL                      |
+| 1085 | Printer - Electronics             | Electronics | NULL                      |
+| 1086 | Smart Bulb - Electronics          | Electronics | NULL                      |
+| 1087 | Monitor - Electronics             | Electronics | NULL                      |
+| 1105 | Case - Electronics                | Electronics | NULL                      |
+| 1110 | Tablet - Electronics              | Electronics | NULL                      |
+| 1112 | Keyboard - Electronics            | Electronics | NULL                      |
+| 1114 | Webcam - Electronics              | Electronics | NULL                      |
+| 1116 | Wireless Earbuds - Electronics    | Electronics | jacket,outerwear          |
+| 1118 | Headphones - Electronics          | Electronics | NULL                      |
+| 1119 | Keyboard - Electronics            | Electronics | NULL                      |
+| 1121 | Tablet - Electronics              | Electronics | NULL                      |
+| 1126 | E-reader - Electronics            | Electronics | NULL                      |
+| 1129 | CPU - Electronics                 | Electronics | NULL                      |
+| 1135 | RAM - Electronics                 | Electronics | NULL                      |
+| 1138 | Drone - Electronics               | Electronics | NULL                      |
+| 1139 | Smart Bulb - Electronics          | Electronics | NULL                      |
+| 1141 | Tablet - Electronics              | Electronics | NULL                      |
+| 1152 | Headphones - Electronics          | Electronics | NULL                      |
+| 1163 | Power Bank - Electronics          | Electronics | NULL                      |
+| 1170 | Tablet - Electronics              | Electronics | dress,garment             |
+| 1172 | Scanner - Electronics             | Electronics | NULL                      |
+| 1184 | Fitness Tracker - Electronics     | Electronics | NULL                      |
+| 1190 | Gaming Controller - Electronics   | Electronics | NULL                      |
+| 1192 | LED Strip - Electronics           | Electronics | NULL                      |
+| 1203 | Keyboard - Electronics            | Electronics | NULL                      |
+| 1208 | Tablet - Electronics              | Electronics | NULL                      |
+| 1212 | Keyboard - Electronics            | Electronics | NULL                      |
+| 1215 | Keyboard - Electronics            | Electronics | NULL                      |
+| 1222 | Webcam - Electronics              | Electronics | NULL                      |
+| 1229 | Smart Plug - Electronics          | Electronics | NULL                      |
+| 1234 | Headphones - Electronics          | Electronics | NULL                      |
+| 1246 | Headphones - Electronics          | Electronics | NULL                      |
+| 1254 | Wireless Earbuds - Electronics    | Electronics | NULL                      |
+| 1260 | Power Bank - Electronics          | Electronics | NULL                      |
+| 1278 | Bluetooth Speaker - Electronics   | Electronics | NULL                      |
+| 1279 | Power Bank - Electronics          | Electronics | NULL                      |
+| 1284 | Headphones - Electronics          | Electronics | NULL                      |
+| 1323 | CPU - Electronics                 | Electronics | NULL                      |
+| 1328 | Smart Bulb - Electronics          | Electronics | NULL                      |
+| 1341 | Power Supply - Electronics        | Electronics | NULL                      |
+| 1347 | Headphones - Electronics          | Electronics | NULL                      |
+| 1356 | Tripod - Electronics              | Electronics | NULL                      |
+| 1361 | E-reader - Electronics            | Electronics | NULL                      |
+| 1362 | E-reader - Electronics            | Electronics | NULL                      |
+| 1365 | Case - Electronics                | Electronics | NULL                      |
+| 1368 | Tablet - Electronics              | Electronics | NULL                      |
+| 1391 | Graphics Card - Electronics       | Electronics | NULL                      |
+| 1399 | Printer - Electronics             | Electronics | NULL                      |
+| 1403 | Tablet - Electronics              | Electronics | NULL                      |
+| 1404 | Monitor - Electronics             | Electronics | NULL                      |
+| 1408 | VR Headset - Electronics          | Electronics | NULL                      |
+| 1410 | Power Supply - Electronics        | Electronics | NULL                      |
+| 1414 | Scanner - Electronics             | Electronics | NULL                      |
+| 1420 | Power Bank - Electronics          | Electronics | NULL                      |
+| 1432 | Portable Charger - Electronics    | Electronics | NULL                      |
+| 1438 | Charger - Electronics             | Electronics | NULL                      |
+| 1447 | Switch - Electronics              | Electronics | NULL                      |
+| 1454 | USB Hub - Electronics             | Electronics | NULL                      |
+| 1463 | Mouse - Electronics               | Electronics | NULL                      |
+| 1468 | Laptop - Electronics              | Electronics | NULL                      |
+| 1472 | USB Hub - Electronics             | Electronics | NULL                      |
+| 1475 | Camera - Electronics              | Electronics | NULL                      |
+| 1480 | Portable Charger - Electronics    | Electronics | backpack,carry            |
+| 1486 | Router - Electronics              | Electronics | NULL                      |
+| 1492 | Fitness Tracker - Electronics     | Electronics | NULL                      |
+| 1494 | Phone - Electronics               | Electronics | NULL                      |
+| 1504 | LED Strip - Electronics           | Electronics | NULL                      |
+| 1505 | Graphics Card - Electronics       | Electronics | NULL                      |
+| 1514 | Webcam - Electronics              | Electronics | NULL                      |
+| 1521 | CPU - Electronics                 | Electronics | NULL                      |
+| 1522 | Fitness Tracker - Electronics     | Electronics | NULL                      |
+| 1524 | Drone - Electronics               | Electronics | NULL                      |
+| 1525 | Phone - Electronics               | Electronics | NULL                      |
+| 1532 | E-reader - Electronics            | Electronics | NULL                      |
+| 1536 | Mouse - Electronics               | Electronics | NULL                      |
+| 1540 | Smart Plug - Electronics          | Electronics | NULL                      |
+| 1542 | Smart Bulb - Electronics          | Electronics | NULL                      |
+| 1550 | Hard Drive - Electronics          | Electronics | NULL                      |
+| 1555 | Case - Electronics                | Electronics | NULL                      |
+| 1557 | Scanner - Electronics             | Electronics | NULL                      |
+| 1571 | Smart Plug - Electronics          | Electronics | NULL                      |
+| 1577 | Cooling Fan - Electronics         | Electronics | NULL                      |
+| 1578 | Hard Drive - Electronics          | Electronics | NULL                      |
+| 1581 | Graphics Card - Electronics       | Electronics | NULL                      |
+| 1587 | Fitness Tracker - Electronics     | Electronics | NULL                      |
+| 1588 | MacBook Air 2019 - Electronics    | Electronics | NULL                      |
+| 1593 | Wireless Headphones - Electronics | Electronics | NULL                      |
+| 1598 | Monitor - Electronics             | Electronics | NULL                      |
+| 1603 | Webcam - Electronics              | Electronics | NULL                      |
+| 1613 | Mouse - Electronics               | Electronics | cup,drink                 |
++------+-----------------------------------+-------------+---------------------------+
+
+-- Test 15
++--------+----------+---------------------+------------------+
+| tag_id | tag_name | created_at          | current_listings |
++--------+----------+---------------------+------------------+
+|      1 | charger  | 2025-07-29 00:09:37 |                7 |
+|      2 | laptop   | 2025-07-29 00:09:37 |                5 |
+|      3 | monitor  | 2025-07-29 00:09:37 |                4 |
+|      4 | keyboard | 2025-07-29 00:09:37 |                4 |
+|      5 | notebook | 2025-07-29 00:09:37 |                4 |
++--------+----------+---------------------+------------------+
+
+-- Test 20: EXPLAIN - Show how indexes are used for tag usage statistics query
+-- Expected: Shows query execution plan using indexes
+-- Should show:
+-- - Using index on Tags(tag_name) for tag lookup
+-- - Using index on ListingTags(listing_id) for joins
+-- - Using index on ListingTags(tag_id) for joins
+
+-- Test 21: EXPLAIN - Show how indexes are used for tag suggestions query
+-- Expected: Shows query execution plan for complex recursive query
+-- Should show:
+-- - Using index on Listing(id) for status filtering
+-- - Using index on Tags(tag_name) for exclusion check
+-- - Using index on ProductType(type) for exclusion check
+
+-- Test 22: EXPLAIN - Show how indexes are used for finding listings by tag
+-- Expected: Shows query execution plan for tag-based search
+-- Should show:
+-- - Using index on Tags(tag_name) for tag lookup
+-- - Using index on ListingTags(tag_id) for join
+-- - Using index on ListingTags(listing_id) for join
+
+-- Test 23: EXPLAIN - Show how indexes are used for tag co-occurrence analysis
+-- Expected: Shows query execution plan for complex self-join
+-- Should show:
+-- - Using index on ListingTags(listing_id) for self-join
+-- - Using index on ListingTags(tag_id) for tag lookup
+-- - Using index on Tags(tag_id) for tag name retrieval
+
+-- Test 24: EXPLAIN - Show how indexes are used for tag search functionality
+-- Expected: Shows query execution plan for LIKE search
+-- Should show:
+-- - Using index on Tags(tag_name) for partial match search
+-- - Using index for ORDER BY tag_name
+
+-- Test 25: EXPLAIN - Show how indexes are used for tag analytics query
+-- Expected: Shows query execution plan for aggregation query
+-- Should show:
+-- - Using index on ListingTags(tag_id) for grouping
+-- - Using index on Listing(id) for status filtering
+-- - Using index on Listing(price) for aggregation
+
+
+

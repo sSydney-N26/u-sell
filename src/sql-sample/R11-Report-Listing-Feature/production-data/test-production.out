@@ -1,0 +1,183 @@
+-- Test 1
++------+--------------------------------+----------+--------------+
+| id   | title                          | status   | report_count |
++------+--------------------------------+----------+--------------+
+| 1588 | MacBook Air 2019 - Electronics | for sale |            3 |
++------+--------------------------------+----------+--------------+
+
+-- Test 2
+Query OK, 2 rows affected (0.002 sec)
+
+-- Test 3
++------+--------------------------------+---------+--------------+
+| id   | title                          | status  | report_count |
++------+--------------------------------+---------+--------------+
+| 1588 | MacBook Air 2019 - Electronics | flagged |            5 |
++------+--------------------------------+---------+--------------+
+
+-- Test 4
+ERROR 1062 (23000): Duplicate entry '1588-6016e394-db8d-4bd3-8615-fbb0131db924' for key 'reports.unique_user_report'
+
+-- Test 5
++------+--------------------------+---------+--------------+
+| id   | title                    | status  | report_count |
++------+--------------------------+---------+--------------+
+| 1592 | Winter Jacket - Clothing | flagged |            5 |
++------+--------------------------+---------+--------------+
+
+-- Test 6
++------+------------------------+----------+--------------+
+| id   | title                  | status   | report_count |
++------+------------------------+----------+--------------+
+| 1591 | Coffee Maker - Kitchen | for sale |            4 |
++------+------------------------+----------+--------------+
+
+-- Test 7
+Query OK, 1 row affected (0.004 sec)
+
+-- Test 8
++------+------------------------+---------+--------------+
+| id   | title                  | status  | report_count |
++------+------------------------+---------+--------------+
+| 1591 | Coffee Maker - Kitchen | flagged |            5 |
++------+------------------------+---------+--------------+
+
+-- Test 9
++------+-------------------+----------+--------------+
+| id   | title             | status   | report_count |
++------+-------------------+----------+--------------+
+| 1600 | Chair - Furniture | for sale |            5 |
++------+-------------------+----------+--------------+
+
+-- Test 10
++------+------------------+---------+--------------+
+| id   | title            | status  | report_count |
++------+------------------+---------+--------------+
+| 1605 | Lamp - Furniture | removed |            5 |
++------+------------------+---------+--------------+
+
+-- Test 11
++------+-----------------------------------+---------+----------------+--------------+
+| id   | title                             | status  | posted_by      | report_count |
++------+-----------------------------------+---------+----------------+--------------+
+|  700 | Shoes - Clothing                  | flagged | glennstephanie |            5 |
+| 1300 | Calculator for Mathematics        | flagged | brenda63       |            5 |
+| 1588 | MacBook Air 2019 - Electronics    | flagged | alice          |            5 |
+| 1591 | Coffee Maker - Kitchen            | flagged | alice          |            5 |
+| 1592 | Winter Jacket - Clothing          | flagged | alice          |            5 |
+| 1593 | Wireless Headphones - Electronics | flagged | alice          |            6 |
+| 1594 | Notebook Set - School Supplies    | flagged | alice          |            5 |
+| 1595 | Bookshelf - Furniture             | flagged | alice          |            5 |
+| 1596 | Blender - Kitchen                 | flagged | alice          |            5 |
++------+-----------------------------------+---------+----------------+--------------+
+-- Test 12
++-----+---------------+---------------------------------------------+---------------------+---------------+
+| id  | reason        | description                                 | created_at          | reporter_name |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+|   6 | spam          | This seems like spam                        | 2025-07-27 01:15:22 | garzaanthony  |
+|   5 | inappropriate | This listing contains inappropriate content | 2025-07-27 01:15:22 | johnsonjoshua |
+|   7 | fake          | Fake listing                                | 2025-07-27 01:15:22 | blakeerik     |
+| 159 | spam          | This seems like spam                        | 2025-07-27 01:15:27 | yherrera      |
+| 158 | inappropriate | This listing contains inappropriate content | 2025-07-27 01:15:27 | jennifermiles |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+
+-- Test 13
++-----+---------------+---------------------------------------------+---------------------+---------------+
+| id  | reason        | description                                 | created_at          | reporter_name |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+|  14 | other         | Other reason                                | 2025-07-27 01:15:22 | curtis61      |
+|  12 | fake          | Fake listing                                | 2025-07-27 01:15:22 | garzaanthony  |
+|  11 | spam          | This seems like spam                        | 2025-07-27 01:15:22 | johnsonjoshua |
+|  13 | offensive     | Offensive content                           | 2025-07-27 01:15:22 | blakeerik     |
+| 161 | inappropriate | This listing contains inappropriate content | 2025-07-27 01:15:27 | jennifermiles |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+
+-- Test 13: Get all reports for Coffee Maker (should show 5 distinct reports)
++----+-------------+------------------------+---------------------+----------------+
+| id | reason      | description            | created_at          | reporter_name  |
++----+-------------+------------------------+---------------------+----------------+
+| [ID] | spam | This seems like spam | [Timestamp] | [Username] |
+| [ID] | fake | Fake listing | [Timestamp] | [Username] |
+| [ID] | offensive | Offensive content | [Timestamp] | [Username] |
+| [ID] | other | Other reason | [Timestamp] | [Username] |
+| [ID] | inappropriate | This listing contains inappropriate content | [Timestamp] | [Username] |
++----+-------------+------------------------+---------------------+----------------+
+
+-- Test 14
+Query OK, 1 row affected (0.011 sec)
+
+-- Test 15
++------+------------------+---------+
+| id   | title            | status  |
++------+------------------+---------+
+| 1605 | Lamp - Furniture | removed |
++------+------------------+---------+
+
+-- Test 16
++------+--------------------------+----------+--------------+
+| id   | title                    | status   | report_count |
++------+--------------------------+----------+--------------+
+|    2 | Boots - Clothing         | for sale |            4 |
+|  100 | Footrest - Furniture     | for sale |            4 |
+|  500 | Laptop - Electronics     | pending  |            4 |
+| 1200 | Running Shoes - Clothing | for sale |            4 |
++------+--------------------------+----------+--------------+
+
+-- Test 17
++------+--------------------------------+----------+--------------+
+| id   | title                          | status   | report_count |
++------+--------------------------------+----------+--------------+
+|  600 | Table - Furniture              | pending  |            5 |
+|  700 | Shoes - Clothing               | flagged  |            5 |
+|  900 | Soldering Iron - Misc          | pending  |            5 |
+| 1300 | Calculator for Mathematics     | flagged  |            5 |
+| 1500 | Settlers of Catan - Misc       | pending  |            5 |
+| 1588 | MacBook Air 2019 - Electronics | flagged  |            5 |
+| 1591 | Coffee Maker - Kitchen         | flagged  |            5 |
+| 1592 | Winter Jacket - Clothing       | flagged  |            5 |
+| 1594 | Notebook Set - School Supplies | flagged  |            5 |
+| 1595 | Bookshelf - Furniture          | flagged  |            5 |
+| 1596 | Blender - Kitchen              | flagged  |            5 |
+| 1601 | Toaster - Kitchen              | for sale |            5 |
+| 1602 | Jeans - Clothing               | for sale |            5 |
+| 1603 | Webcam - Electronics           | for sale |            5 |
+| 1604 | Stapler - School Supplies      | for sale |            5 |
+| 1605 | Lamp - Furniture               | removed  |            5 |
+| 1606 | Rice Cooker - Kitchen          | removed  |            5 |
+| 1607 | Sweater - Clothing             | removed  |            5 |
+| 1608 | Keyboard - Electronics         | removed  |            5 |
+| 1609 | Binder Set - School Supplies   | removed  |            5 |
+| 1610 | Storage Unit - Furniture       | removed  |            5 |
++------+--------------------------------+----------+--------------+
+
+-- Test 18
++------+------------------------+---------+--------------+
+| id   | title                  | status  | report_count |
++------+------------------------+---------+--------------+
+| 1611 | Mixing Bowls - Kitchen | removed |           10 |
++------+------------------------+---------+--------------+
+
+-- Test 19
++-----+---------------+---------------------------------------------+---------------------+---------------+
+| id  | reason        | description                                 | created_at          | reporter_name |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+| 151 | offensive     | Offensive content                           | 2025-07-27 16:04:59 | curtis61      |
+| 152 | other         | Other reason                                | 2025-07-27 16:04:59 | yherrera      |
+| 149 | spam          | This seems like spam                        | 2025-07-27 16:04:59 | garzaanthony  |
+| 153 | inappropriate | This listing contains inappropriate content | 2025-07-27 16:04:59 | jennifermiles |
+| 154 | spam          | This seems like spam                        | 2025-07-27 16:04:59 | wsantos       |
+| 148 | inappropriate | This listing contains inappropriate content | 2025-07-27 16:04:59 | johnsonjoshua |
+| 150 | fake          | Fake listing                                | 2025-07-27 16:04:59 | blakeerik     |
+| 156 | offensive     | Offensive content                           | 2025-07-27 16:04:59 | donaldpayne   |
+| 155 | fake          | Fake listing                                | 2025-07-27 16:04:59 | stevenbyrd    |
+| 157 | other         | Other reason                                | 2025-07-27 16:04:59 | smithkyle     |
++-----+---------------+---------------------------------------------+---------------------+---------------+
+
+-- Test 20
++------+-----------------------------------+---------+--------------+
+| id   | title                             | status  | report_count |
++------+-----------------------------------+---------+--------------+
+| 1611 | Mixing Bowls - Kitchen            | removed |           10 |
+| 1593 | Wireless Headphones - Electronics | flagged |            6 |
+| 1600 | Chair - Furniture                 | flagged |            6 |
++------+-----------------------------------+---------+--------------+

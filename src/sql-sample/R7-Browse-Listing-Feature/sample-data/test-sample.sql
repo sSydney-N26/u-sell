@@ -4,12 +4,10 @@
 -- page on the Browse tab. Offset is used so 
 -- we return the appropriate rows for each page.
 
--- We also used this query with a WHERE clause
--- with a predicate with the following format:
--- i.e., type = "School Supplies". We do it for every
--- single category so when clicking on the filter
--- buttons, only Listings with those categories
--- are returned
+-- We also used this query with type predicate in the WHERE 
+-- clause i.e., type = "School Supplies". We do it for every
+-- single category so when clicking on the filter buttons, 
+-- only Listings with those categories are returned.
 
 SELECT id, type, price, title, description, 
     product_condition, 
@@ -21,9 +19,9 @@ ORDER BY posted_date ASC LIMIT 12 OFFSET 2;
 
 -- 2) Query to get the number of items per
 -- category. We also used the query without
--- the WHERE clause to obtain the number
--- of rows in the Listing relation.
+-- specifying the type in the WHERE clause
+-- to get the total number of items in the Listing
 
 SELECT COUNT(*) AS totalItems
 FROM Listing
-WHERE type = "Electronics";
+WHERE status = 'for sale' OR status = 'pending';

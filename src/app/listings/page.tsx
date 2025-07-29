@@ -18,13 +18,15 @@ interface ListingResponse {
 }
 
 export default function Listings() {
-  const [expandedSellerId, setExpandedSellerId]   = useState<string | null>(null);
-  const [sellerBundles, setSellerBundles]         = useState<{ [sellerId: string]: UserListing[] }>({});
-  const [currentFilter, setCurrentFilter]         = useState("all");
-  const [page, setPage]                           = useState(1);
-  const [totalPages, setTotalPages]               = useState(1);
-  const [loading, setLoading]                     = useState(true);
-  const [listings, setListings]                   = useState<UserListing[]>([]);
+  const [expandedSellerId, setExpandedSellerId] = useState<string | null>(null);
+  const [sellerBundles, setSellerBundles] = useState<{
+    [sellerId: string]: UserListing[];
+  }>({});
+  const [currentFilter, setCurrentFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [listings, setListings] = useState<UserListing[]>([]);
 
   const handleFilterClick = (category: string) => {
     setCurrentFilter(category === "All Listings" ? "" : category);
@@ -92,8 +94,8 @@ export default function Listings() {
           { next: { revalidate: 0 } }
         );
         if (!listingResponse.ok) {
-            throw new Error("Failed to fetch listings");
-          }        
+          throw new Error("Failed to fetch listings");
+        }
         const data = (await listingResponse.json()) as ListingResponse;
         setTotalPages(data.totalPages);
         setListings(data.listings);
@@ -120,7 +122,7 @@ export default function Listings() {
     <div>
       <Navigation />
       {/* Filter buttons + Top 10 Most Viewed button + Bundle button*/}
-      <div className="flex p-5 m-5 justify-between flex-wrap gap-4">
+      <div className="flex p-8 m-5 justify-between flex-wrap gap-10">
         <FilterButton
           key="most-viewed"
           category={MOST_VIEWED_LABEL}
@@ -147,7 +149,9 @@ export default function Listings() {
             return (
               <li key={sellerId}>
                 <button
-                  onClick={() => setExpandedSellerId(isExpanded ? null : sellerId)}
+                  onClick={() =>
+                    setExpandedSellerId(isExpanded ? null : sellerId)
+                  }
                   className="w-full text-left p-5 border border-gray-300 rounded-lg shadow-md hover:bg-yellow-100 transition"
                 >
                   <div className="flex justify-between items-center">
@@ -163,12 +167,16 @@ export default function Listings() {
                 {isExpanded && (
                   <ul className="grid grid-cols-3 gap-5 mt-5">
                     {bundle.map((listing) => {
-                      const fallbackImage = `/photos/${listing.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+                      const fallbackImage = `/photos/${listing.type
+                        .toLowerCase()
+                        .replace(/\s/g, "")}.jpg`;
                       return (
                         <Link href={`/listings/${listing.id}`} key={listing.id}>
                           <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
                             <Post
-                              imageUrl={listing.image_storage_ref || fallbackImage}
+                              imageUrl={
+                                listing.image_storage_ref || fallbackImage
+                              }
                               title={listing.title}
                               description={listing.description}
                               price={listing.price}
@@ -189,7 +197,9 @@ export default function Listings() {
       ) : (
         <ul className="grid grid-cols-3 gap-10 mt-10 mb-10 mx-10 my-10">
           {listings.map((l) => {
-            const fallbackImage = `/photos/${l.type.toLowerCase().replace(/\s/g, "")}.jpg`;
+            const fallbackImage = `/photos/${l.type
+              .toLowerCase()
+              .replace(/\s/g, "")}.jpg`;
             return (
               <Link href={`/listings/${l.id}`} key={l.id}>
                 <li className="rounded-2xl shadow-xl hover:shadow-yellow-200 shadow-amber-50 overflow-hidden hover:shadow-lg transition hover:scale-105">
@@ -199,11 +209,11 @@ export default function Listings() {
                     description={l.description}
                     price={l.price}
                     sold={l.status === "sold"}
-                      category={
-                        currentFilter === MOST_VIEWED_LABEL
-                          ? `Views: ${l.view_count}`
-                          : l.type
-                      }
+                    category={
+                      currentFilter === MOST_VIEWED_LABEL
+                        ? `Views: ${l.view_count}`
+                        : l.type
+                    }
                     postedBy={l.posted_by}
                   />
                 </li>

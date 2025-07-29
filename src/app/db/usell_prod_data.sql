@@ -2569,28 +2569,6 @@ INSERT INTO ListingViews (listing_id, viewer_id, viewed_at) VALUES
   ( 121, NULL, '2025-07-22 18:43:15');
 
 
--- Seed initial tags for testing
-INSERT IGNORE INTO Tags (tag_name) VALUES
-('iphone'),
-('laptop'),
-('textbook'),
-('chair'),
-('desk'),
-('calculator'),
-('binder'),
-('notebook'),
-('charger'),
-('headphones'),
-('tablet'),
-('monitor'),
-('keyboard'),
-('mouse'),
-('printer'),
-('camera'),
-('speaker'),
-('microphone'),
-('lamp'),
-('shelf');
 
 -- Reports for listing_id 2 (for testing reporting functionality)
 INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
@@ -2602,6 +2580,141 @@ INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
 -- Admin user for testing
 INSERT INTO Users (uid, username, email, program, year) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2', 'admin5', 'admin5@test.com', 'Computer Science', 4);
 INSERT INTO Admin (admin_id) VALUES ('9ggOWuYjeVNCKWjorCl3VhVgMly2');
+
+-- Tags for production data testing
+-- These tags are referenced in the ListingTags associations below
+INSERT INTO Tags (tag_name) VALUES
+    ('charger'),
+    ('laptop'),
+    ('monitor'),
+    ('keyboard'),
+    ('notebook'),
+    ('binder'),
+    ('textbook'),
+    ('mouse'),
+    ('shelf'),
+    ('lamp'),
+    ('desk'),
+    ('chair'),
+    ('tablet'),
+    ('headphones'),
+    ('calculator'),
+    ('microphone'),
+    ('phone'),
+    ('camera'),
+    ('speaker'),
+    ('printer'),
+    ('cable'),
+    ('adapter'),
+    ('table'),
+    ('bed'),
+    ('couch'),
+    ('cabinet'),
+    ('mirror'),
+    ('rug'),
+    ('shirt'),
+    ('pants'),
+    ('shoes'),
+    ('jacket'),
+    ('dress'),
+    ('sweater'),
+    ('pen'),
+    ('pencil'),
+    ('paper'),
+    ('folder'),
+    ('backpack'),
+    ('pot'),
+    ('pan'),
+    ('utensil'),
+    ('appliance'),
+    ('dish'),
+    ('cup'),
+    ('book'),
+    ('bag'),
+    ('tool'),
+    ('game'),
+    ('toy'),
+    ('art'),
+    ('music'),
+    ('sport'),
+    ('fitness'),
+    ('beauty'),
+    ('health'),
+    ('garden'),
+    ('outdoor'),
+    ('travel'),
+    ('office'),
+    ('study'),
+    ('kitchen'),
+    ('bathroom'),
+    ('bedroom'),
+    ('living'),
+    ('storage'),
+    ('dining'),
+    ('casual'),
+    ('jeans'),
+    ('winter'),
+    ('formal'),
+    ('writing'),
+    ('organization'),
+    ('cooking'),
+    ('modern'),
+    ('fashion'),
+    ('home'),
+    ('entertainment'),
+    ('children'),
+    ('creative'),
+    ('instrument'),
+    ('personal'),
+    ('wellness'),
+    ('recreation'),
+    ('luggage'),
+    ('professional'),
+    ('academic'),
+    ('hygiene'),
+    ('sleep'),
+    ('comfort'),
+    ('meal'),
+    ('computer'),
+    ('mobile'),
+    ('course'),
+    ('seating'),
+    ('work'),
+    ('display'),
+    ('input'),
+    ('pointer'),
+    ('portable'),
+    ('audio'),
+    ('math'),
+    ('recording'),
+    ('power'),
+    ('photography'),
+    ('sound'),
+    ('output'),
+    ('connection'),
+    ('compatibility'),
+    ('surface'),
+    ('rest'),
+    ('sofa'),
+    ('reflection'),
+    ('floor'),
+    ('top'),
+    ('bottom'),
+    ('footwear'),
+    ('outerwear'),
+    ('garment'),
+    ('warm'),
+    ('drawing'),
+    ('sheet'),
+    ('organize'),
+    ('carry'),
+    ('cookware'),
+    ('frying'),
+    ('eating'),
+    ('electric'),
+    ('serve'),
+    ('drink'),
+    ('furniture');
 
 -- Tag combinations for listings 4-20 using seeded tags (with variety: 1-5 tags per listing)
 -- Listing 4: Cooling Fan - Electronics (2 tags)
@@ -2650,12 +2763,12 @@ INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tag
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (14, (SELECT tag_id FROM Tags WHERE tag_name = 'headphones'));
 
--- Listing 15: MacBook Air 2019 - Electronics (5 tags)
-INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
-INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
-INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
-INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'mouse'));
-INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+-- Listing 15: Mirror Stand - Furniture (5 tags)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'home'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'furniture'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'mirror'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'bedroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (15, (SELECT tag_id FROM Tags WHERE tag_name = 'organization'));
 
 -- Listing 16: Calculus Textbook - School Supplies (2 tags)
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (16, (SELECT tag_id FROM Tags WHERE tag_name = 'textbook'));
@@ -2678,9 +2791,428 @@ INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tag
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
 INSERT INTO ListingTags (listing_id, tag_id) VALUES (20, (SELECT tag_id FROM Tags WHERE tag_name = 'microphone'));
 
+-- More tags for prod testing
+-- Electronics listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (21, (SELECT tag_id FROM Tags WHERE tag_name = 'phone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (21, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (22, (SELECT tag_id FROM Tags WHERE tag_name = 'camera'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (22, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (23, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (23, (SELECT tag_id FROM Tags WHERE tag_name = 'music'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (24, (SELECT tag_id FROM Tags WHERE tag_name = 'printer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (24, (SELECT tag_id FROM Tags WHERE tag_name = 'office'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (25, (SELECT tag_id FROM Tags WHERE tag_name = 'cable'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (25, (SELECT tag_id FROM Tags WHERE tag_name = 'adapter'));
 
--- Following Users - "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1" is user Alice
-INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "1afb501b-57cc-422c-827f-7826ae22db55");
+-- Furniture listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (26, (SELECT tag_id FROM Tags WHERE tag_name = 'table'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (26, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (27, (SELECT tag_id FROM Tags WHERE tag_name = 'bed'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (27, (SELECT tag_id FROM Tags WHERE tag_name = 'bedroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (28, (SELECT tag_id FROM Tags WHERE tag_name = 'couch'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (28, (SELECT tag_id FROM Tags WHERE tag_name = 'living'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (29, (SELECT tag_id FROM Tags WHERE tag_name = 'cabinet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (29, (SELECT tag_id FROM Tags WHERE tag_name = 'storage'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (30, (SELECT tag_id FROM Tags WHERE tag_name = 'mirror'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (30, (SELECT tag_id FROM Tags WHERE tag_name = 'bathroom'));
+
+-- Clothing listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (31, (SELECT tag_id FROM Tags WHERE tag_name = 'shirt'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (31, (SELECT tag_id FROM Tags WHERE tag_name = 'casual'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (32, (SELECT tag_id FROM Tags WHERE tag_name = 'pants'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (32, (SELECT tag_id FROM Tags WHERE tag_name = 'jeans'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (33, (SELECT tag_id FROM Tags WHERE tag_name = 'shoes'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (33, (SELECT tag_id FROM Tags WHERE tag_name = 'sport'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (34, (SELECT tag_id FROM Tags WHERE tag_name = 'jacket'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (34, (SELECT tag_id FROM Tags WHERE tag_name = 'winter'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (35, (SELECT tag_id FROM Tags WHERE tag_name = 'dress'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (35, (SELECT tag_id FROM Tags WHERE tag_name = 'formal'));
+
+-- School Supplies listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (36, (SELECT tag_id FROM Tags WHERE tag_name = 'pen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (36, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (37, (SELECT tag_id FROM Tags WHERE tag_name = 'pencil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (37, (SELECT tag_id FROM Tags WHERE tag_name = 'writing'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (38, (SELECT tag_id FROM Tags WHERE tag_name = 'paper'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (38, (SELECT tag_id FROM Tags WHERE tag_name = 'notebook'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (39, (SELECT tag_id FROM Tags WHERE tag_name = 'folder'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (39, (SELECT tag_id FROM Tags WHERE tag_name = 'organization'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (40, (SELECT tag_id FROM Tags WHERE tag_name = 'backpack'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (40, (SELECT tag_id FROM Tags WHERE tag_name = 'travel'));
+
+-- Kitchen listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (41, (SELECT tag_id FROM Tags WHERE tag_name = 'pot'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (41, (SELECT tag_id FROM Tags WHERE tag_name = 'cooking'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (42, (SELECT tag_id FROM Tags WHERE tag_name = 'pan'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (42, (SELECT tag_id FROM Tags WHERE tag_name = 'kitchen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (43, (SELECT tag_id FROM Tags WHERE tag_name = 'utensil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (43, (SELECT tag_id FROM Tags WHERE tag_name = 'tool'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (44, (SELECT tag_id FROM Tags WHERE tag_name = 'appliance'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (44, (SELECT tag_id FROM Tags WHERE tag_name = 'modern'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (45, (SELECT tag_id FROM Tags WHERE tag_name = 'dish'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (45, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+
+-- Continue with more listings (46-100) for better distribution
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (46, (SELECT tag_id FROM Tags WHERE tag_name = 'book'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (46, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (47, (SELECT tag_id FROM Tags WHERE tag_name = 'bag'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (47, (SELECT tag_id FROM Tags WHERE tag_name = 'fashion'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (48, (SELECT tag_id FROM Tags WHERE tag_name = 'tool'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (48, (SELECT tag_id FROM Tags WHERE tag_name = 'home'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (49, (SELECT tag_id FROM Tags WHERE tag_name = 'game'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (49, (SELECT tag_id FROM Tags WHERE tag_name = 'entertainment'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (50, (SELECT tag_id FROM Tags WHERE tag_name = 'toy'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (50, (SELECT tag_id FROM Tags WHERE tag_name = 'children'));
+
+-- Add tags to listings 51-100 (every 5th listing to spread coverage)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (51, (SELECT tag_id FROM Tags WHERE tag_name = 'art'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (51, (SELECT tag_id FROM Tags WHERE tag_name = 'creative'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (56, (SELECT tag_id FROM Tags WHERE tag_name = 'music'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (56, (SELECT tag_id FROM Tags WHERE tag_name = 'instrument'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (61, (SELECT tag_id FROM Tags WHERE tag_name = 'sport'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (61, (SELECT tag_id FROM Tags WHERE tag_name = 'fitness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (66, (SELECT tag_id FROM Tags WHERE tag_name = 'fitness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (66, (SELECT tag_id FROM Tags WHERE tag_name = 'health'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (71, (SELECT tag_id FROM Tags WHERE tag_name = 'beauty'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (71, (SELECT tag_id FROM Tags WHERE tag_name = 'personal'));
+
+-- Add tags to listings 76-200 (every 10th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (76, (SELECT tag_id FROM Tags WHERE tag_name = 'health'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (76, (SELECT tag_id FROM Tags WHERE tag_name = 'wellness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (86, (SELECT tag_id FROM Tags WHERE tag_name = 'garden'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (86, (SELECT tag_id FROM Tags WHERE tag_name = 'outdoor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (96, (SELECT tag_id FROM Tags WHERE tag_name = 'outdoor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (96, (SELECT tag_id FROM Tags WHERE tag_name = 'recreation'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (106, (SELECT tag_id FROM Tags WHERE tag_name = 'travel'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (106, (SELECT tag_id FROM Tags WHERE tag_name = 'luggage'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (116, (SELECT tag_id FROM Tags WHERE tag_name = 'office'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (116, (SELECT tag_id FROM Tags WHERE tag_name = 'professional'));
+
+-- Add tags to listings 126-300 (every 15th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (126, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (126, (SELECT tag_id FROM Tags WHERE tag_name = 'academic'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (141, (SELECT tag_id FROM Tags WHERE tag_name = 'kitchen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (141, (SELECT tag_id FROM Tags WHERE tag_name = 'cooking'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (156, (SELECT tag_id FROM Tags WHERE tag_name = 'bathroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (156, (SELECT tag_id FROM Tags WHERE tag_name = 'hygiene'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (171, (SELECT tag_id FROM Tags WHERE tag_name = 'bedroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (171, (SELECT tag_id FROM Tags WHERE tag_name = 'sleep'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (186, (SELECT tag_id FROM Tags WHERE tag_name = 'living'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (186, (SELECT tag_id FROM Tags WHERE tag_name = 'comfort'));
+
+-- Add tags to listings 201-400 (every 20th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (201, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (201, (SELECT tag_id FROM Tags WHERE tag_name = 'meal'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (221, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (221, (SELECT tag_id FROM Tags WHERE tag_name = 'computer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (241, (SELECT tag_id FROM Tags WHERE tag_name = 'phone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (241, (SELECT tag_id FROM Tags WHERE tag_name = 'mobile'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (261, (SELECT tag_id FROM Tags WHERE tag_name = 'textbook'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (261, (SELECT tag_id FROM Tags WHERE tag_name = 'course'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (281, (SELECT tag_id FROM Tags WHERE tag_name = 'chair'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (281, (SELECT tag_id FROM Tags WHERE tag_name = 'seating'));
+
+-- Add tags to listings 301-500 (every 25th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (301, (SELECT tag_id FROM Tags WHERE tag_name = 'desk'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (301, (SELECT tag_id FROM Tags WHERE tag_name = 'work'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (326, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (326, (SELECT tag_id FROM Tags WHERE tag_name = 'display'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (351, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (351, (SELECT tag_id FROM Tags WHERE tag_name = 'input'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (376, (SELECT tag_id FROM Tags WHERE tag_name = 'mouse'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (376, (SELECT tag_id FROM Tags WHERE tag_name = 'pointer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (401, (SELECT tag_id FROM Tags WHERE tag_name = 'tablet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (401, (SELECT tag_id FROM Tags WHERE tag_name = 'portable'));
+
+-- Add tags to listings 426-600 (every 30th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (426, (SELECT tag_id FROM Tags WHERE tag_name = 'headphones'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (426, (SELECT tag_id FROM Tags WHERE tag_name = 'audio'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (456, (SELECT tag_id FROM Tags WHERE tag_name = 'calculator'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (456, (SELECT tag_id FROM Tags WHERE tag_name = 'math'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (486, (SELECT tag_id FROM Tags WHERE tag_name = 'microphone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (486, (SELECT tag_id FROM Tags WHERE tag_name = 'recording'));
+
+-- Add tags to listings 516-800 (every 35th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (516, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (516, (SELECT tag_id FROM Tags WHERE tag_name = 'power'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (551, (SELECT tag_id FROM Tags WHERE tag_name = 'camera'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (551, (SELECT tag_id FROM Tags WHERE tag_name = 'photography'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (586, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (586, (SELECT tag_id FROM Tags WHERE tag_name = 'sound'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (621, (SELECT tag_id FROM Tags WHERE tag_name = 'printer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (621, (SELECT tag_id FROM Tags WHERE tag_name = 'output'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (656, (SELECT tag_id FROM Tags WHERE tag_name = 'cable'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (656, (SELECT tag_id FROM Tags WHERE tag_name = 'connection'));
+
+-- Add tags to listings 691-1000 (every 40th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (691, (SELECT tag_id FROM Tags WHERE tag_name = 'adapter'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (691, (SELECT tag_id FROM Tags WHERE tag_name = 'compatibility'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (731, (SELECT tag_id FROM Tags WHERE tag_name = 'table'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (731, (SELECT tag_id FROM Tags WHERE tag_name = 'surface'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (771, (SELECT tag_id FROM Tags WHERE tag_name = 'bed'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (771, (SELECT tag_id FROM Tags WHERE tag_name = 'rest'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (811, (SELECT tag_id FROM Tags WHERE tag_name = 'couch'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (811, (SELECT tag_id FROM Tags WHERE tag_name = 'sofa'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (851, (SELECT tag_id FROM Tags WHERE tag_name = 'cabinet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (851, (SELECT tag_id FROM Tags WHERE tag_name = 'storage'));
+
+-- Add tags to listings 891-1200 (every 45th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (891, (SELECT tag_id FROM Tags WHERE tag_name = 'mirror'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (891, (SELECT tag_id FROM Tags WHERE tag_name = 'reflection'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (936, (SELECT tag_id FROM Tags WHERE tag_name = 'rug'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (936, (SELECT tag_id FROM Tags WHERE tag_name = 'floor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (981, (SELECT tag_id FROM Tags WHERE tag_name = 'shirt'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (981, (SELECT tag_id FROM Tags WHERE tag_name = 'top'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1026, (SELECT tag_id FROM Tags WHERE tag_name = 'pants'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1026, (SELECT tag_id FROM Tags WHERE tag_name = 'bottom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1071, (SELECT tag_id FROM Tags WHERE tag_name = 'shoes'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1071, (SELECT tag_id FROM Tags WHERE tag_name = 'footwear'));
+
+-- Add tags to listings 1116-1400 (every 50th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1116, (SELECT tag_id FROM Tags WHERE tag_name = 'jacket'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1116, (SELECT tag_id FROM Tags WHERE tag_name = 'outerwear'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1166, (SELECT tag_id FROM Tags WHERE tag_name = 'dress'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1166, (SELECT tag_id FROM Tags WHERE tag_name = 'garment'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1216, (SELECT tag_id FROM Tags WHERE tag_name = 'sweater'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1216, (SELECT tag_id FROM Tags WHERE tag_name = 'warm'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1266, (SELECT tag_id FROM Tags WHERE tag_name = 'pen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1266, (SELECT tag_id FROM Tags WHERE tag_name = 'writing'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1316, (SELECT tag_id FROM Tags WHERE tag_name = 'pencil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1316, (SELECT tag_id FROM Tags WHERE tag_name = 'drawing'));
+
+-- Add tags to listings 1366-1654 (every 55th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1366, (SELECT tag_id FROM Tags WHERE tag_name = 'paper'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1366, (SELECT tag_id FROM Tags WHERE tag_name = 'sheet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1421, (SELECT tag_id FROM Tags WHERE tag_name = 'folder'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1421, (SELECT tag_id FROM Tags WHERE tag_name = 'organize'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1476, (SELECT tag_id FROM Tags WHERE tag_name = 'backpack'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1476, (SELECT tag_id FROM Tags WHERE tag_name = 'carry'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1531, (SELECT tag_id FROM Tags WHERE tag_name = 'pot'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1531, (SELECT tag_id FROM Tags WHERE tag_name = 'cookware'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1586, (SELECT tag_id FROM Tags WHERE tag_name = 'pan'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1586, (SELECT tag_id FROM Tags WHERE tag_name = 'frying'));
+
+-- Electronics listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (25, (SELECT tag_id FROM Tags WHERE tag_name = 'phone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (25, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (26, (SELECT tag_id FROM Tags WHERE tag_name = 'camera'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (26, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (27, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (27, (SELECT tag_id FROM Tags WHERE tag_name = 'music'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (28, (SELECT tag_id FROM Tags WHERE tag_name = 'printer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (28, (SELECT tag_id FROM Tags WHERE tag_name = 'office'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (29, (SELECT tag_id FROM Tags WHERE tag_name = 'cable'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (29, (SELECT tag_id FROM Tags WHERE tag_name = 'adapter'));
+
+-- Furniture listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (30, (SELECT tag_id FROM Tags WHERE tag_name = 'table'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (30, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (31, (SELECT tag_id FROM Tags WHERE tag_name = 'bed'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (31, (SELECT tag_id FROM Tags WHERE tag_name = 'bedroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (32, (SELECT tag_id FROM Tags WHERE tag_name = 'couch'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (32, (SELECT tag_id FROM Tags WHERE tag_name = 'living'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (33, (SELECT tag_id FROM Tags WHERE tag_name = 'cabinet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (33, (SELECT tag_id FROM Tags WHERE tag_name = 'storage'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (34, (SELECT tag_id FROM Tags WHERE tag_name = 'mirror'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (34, (SELECT tag_id FROM Tags WHERE tag_name = 'bathroom'));
+
+-- Clothing listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (35, (SELECT tag_id FROM Tags WHERE tag_name = 'shirt'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (35, (SELECT tag_id FROM Tags WHERE tag_name = 'casual'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (36, (SELECT tag_id FROM Tags WHERE tag_name = 'pants'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (36, (SELECT tag_id FROM Tags WHERE tag_name = 'jeans'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (37, (SELECT tag_id FROM Tags WHERE tag_name = 'shoes'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (37, (SELECT tag_id FROM Tags WHERE tag_name = 'sport'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (38, (SELECT tag_id FROM Tags WHERE tag_name = 'jacket'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (38, (SELECT tag_id FROM Tags WHERE tag_name = 'winter'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (39, (SELECT tag_id FROM Tags WHERE tag_name = 'dress'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (39, (SELECT tag_id FROM Tags WHERE tag_name = 'formal'));
+
+-- School Supplies listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (40, (SELECT tag_id FROM Tags WHERE tag_name = 'pen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (40, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (41, (SELECT tag_id FROM Tags WHERE tag_name = 'pencil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (41, (SELECT tag_id FROM Tags WHERE tag_name = 'writing'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (42, (SELECT tag_id FROM Tags WHERE tag_name = 'paper'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (42, (SELECT tag_id FROM Tags WHERE tag_name = 'notebook'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (43, (SELECT tag_id FROM Tags WHERE tag_name = 'folder'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (43, (SELECT tag_id FROM Tags WHERE tag_name = 'organization'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (44, (SELECT tag_id FROM Tags WHERE tag_name = 'backpack'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (44, (SELECT tag_id FROM Tags WHERE tag_name = 'travel'));
+
+-- Kitchen listings
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (45, (SELECT tag_id FROM Tags WHERE tag_name = 'pot'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (45, (SELECT tag_id FROM Tags WHERE tag_name = 'cooking'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (46, (SELECT tag_id FROM Tags WHERE tag_name = 'pan'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (46, (SELECT tag_id FROM Tags WHERE tag_name = 'kitchen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (47, (SELECT tag_id FROM Tags WHERE tag_name = 'utensil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (47, (SELECT tag_id FROM Tags WHERE tag_name = 'tool'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (48, (SELECT tag_id FROM Tags WHERE tag_name = 'appliance'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (48, (SELECT tag_id FROM Tags WHERE tag_name = 'modern'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (49, (SELECT tag_id FROM Tags WHERE tag_name = 'dish'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (49, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+
+-- Continue with more listings (50-100) for better distribution
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (50, (SELECT tag_id FROM Tags WHERE tag_name = 'book'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (50, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (51, (SELECT tag_id FROM Tags WHERE tag_name = 'bag'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (51, (SELECT tag_id FROM Tags WHERE tag_name = 'fashion'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (52, (SELECT tag_id FROM Tags WHERE tag_name = 'tool'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (52, (SELECT tag_id FROM Tags WHERE tag_name = 'home'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (53, (SELECT tag_id FROM Tags WHERE tag_name = 'game'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (53, (SELECT tag_id FROM Tags WHERE tag_name = 'entertainment'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (54, (SELECT tag_id FROM Tags WHERE tag_name = 'toy'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (54, (SELECT tag_id FROM Tags WHERE tag_name = 'children'));
+
+-- Add tags to listings 55-200 (every 5th listing to spread coverage)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (55, (SELECT tag_id FROM Tags WHERE tag_name = 'art'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (55, (SELECT tag_id FROM Tags WHERE tag_name = 'creative'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (60, (SELECT tag_id FROM Tags WHERE tag_name = 'music'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (60, (SELECT tag_id FROM Tags WHERE tag_name = 'instrument'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (65, (SELECT tag_id FROM Tags WHERE tag_name = 'sport'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (65, (SELECT tag_id FROM Tags WHERE tag_name = 'fitness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (70, (SELECT tag_id FROM Tags WHERE tag_name = 'fitness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (70, (SELECT tag_id FROM Tags WHERE tag_name = 'health'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (75, (SELECT tag_id FROM Tags WHERE tag_name = 'beauty'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (75, (SELECT tag_id FROM Tags WHERE tag_name = 'personal'));
+
+-- Add tags to listings 80-300 (every 10th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (80, (SELECT tag_id FROM Tags WHERE tag_name = 'health'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (80, (SELECT tag_id FROM Tags WHERE tag_name = 'wellness'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (90, (SELECT tag_id FROM Tags WHERE tag_name = 'garden'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (90, (SELECT tag_id FROM Tags WHERE tag_name = 'outdoor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (100, (SELECT tag_id FROM Tags WHERE tag_name = 'outdoor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (100, (SELECT tag_id FROM Tags WHERE tag_name = 'recreation'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (110, (SELECT tag_id FROM Tags WHERE tag_name = 'travel'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (110, (SELECT tag_id FROM Tags WHERE tag_name = 'luggage'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (120, (SELECT tag_id FROM Tags WHERE tag_name = 'office'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (120, (SELECT tag_id FROM Tags WHERE tag_name = 'professional'));
+
+-- Add tags to listings 130-500 (every 15th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (130, (SELECT tag_id FROM Tags WHERE tag_name = 'study'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (130, (SELECT tag_id FROM Tags WHERE tag_name = 'academic'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (145, (SELECT tag_id FROM Tags WHERE tag_name = 'kitchen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (145, (SELECT tag_id FROM Tags WHERE tag_name = 'cooking'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (160, (SELECT tag_id FROM Tags WHERE tag_name = 'bathroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (160, (SELECT tag_id FROM Tags WHERE tag_name = 'hygiene'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (175, (SELECT tag_id FROM Tags WHERE tag_name = 'bedroom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (175, (SELECT tag_id FROM Tags WHERE tag_name = 'sleep'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (190, (SELECT tag_id FROM Tags WHERE tag_name = 'living'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (190, (SELECT tag_id FROM Tags WHERE tag_name = 'comfort'));
+
+-- Add tags to listings 205-600 (every 20th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (205, (SELECT tag_id FROM Tags WHERE tag_name = 'dining'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (205, (SELECT tag_id FROM Tags WHERE tag_name = 'meal'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (225, (SELECT tag_id FROM Tags WHERE tag_name = 'laptop'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (225, (SELECT tag_id FROM Tags WHERE tag_name = 'computer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (245, (SELECT tag_id FROM Tags WHERE tag_name = 'phone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (245, (SELECT tag_id FROM Tags WHERE tag_name = 'mobile'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (265, (SELECT tag_id FROM Tags WHERE tag_name = 'textbook'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (265, (SELECT tag_id FROM Tags WHERE tag_name = 'course'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (285, (SELECT tag_id FROM Tags WHERE tag_name = 'chair'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (285, (SELECT tag_id FROM Tags WHERE tag_name = 'seating'));
+
+-- Add tags to listings 305-800 (every 25th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (305, (SELECT tag_id FROM Tags WHERE tag_name = 'desk'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (305, (SELECT tag_id FROM Tags WHERE tag_name = 'work'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (330, (SELECT tag_id FROM Tags WHERE tag_name = 'monitor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (330, (SELECT tag_id FROM Tags WHERE tag_name = 'display'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (355, (SELECT tag_id FROM Tags WHERE tag_name = 'keyboard'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (355, (SELECT tag_id FROM Tags WHERE tag_name = 'input'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (380, (SELECT tag_id FROM Tags WHERE tag_name = 'mouse'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (380, (SELECT tag_id FROM Tags WHERE tag_name = 'pointer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (405, (SELECT tag_id FROM Tags WHERE tag_name = 'tablet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (405, (SELECT tag_id FROM Tags WHERE tag_name = 'portable'));
+
+-- Add tags to listings 430-1000 (every 30th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (430, (SELECT tag_id FROM Tags WHERE tag_name = 'headphones'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (430, (SELECT tag_id FROM Tags WHERE tag_name = 'audio'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (460, (SELECT tag_id FROM Tags WHERE tag_name = 'calculator'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (460, (SELECT tag_id FROM Tags WHERE tag_name = 'math'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (490, (SELECT tag_id FROM Tags WHERE tag_name = 'microphone'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (490, (SELECT tag_id FROM Tags WHERE tag_name = 'recording'));
+
+-- Add tags to listings 520-1200 (every 35th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (520, (SELECT tag_id FROM Tags WHERE tag_name = 'charger'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (520, (SELECT tag_id FROM Tags WHERE tag_name = 'power'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (555, (SELECT tag_id FROM Tags WHERE tag_name = 'camera'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (555, (SELECT tag_id FROM Tags WHERE tag_name = 'photography'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (590, (SELECT tag_id FROM Tags WHERE tag_name = 'speaker'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (590, (SELECT tag_id FROM Tags WHERE tag_name = 'sound'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (625, (SELECT tag_id FROM Tags WHERE tag_name = 'printer'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (625, (SELECT tag_id FROM Tags WHERE tag_name = 'output'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (660, (SELECT tag_id FROM Tags WHERE tag_name = 'cable'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (660, (SELECT tag_id FROM Tags WHERE tag_name = 'connection'));
+
+-- Add tags to listings 695-1400 (every 40th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (695, (SELECT tag_id FROM Tags WHERE tag_name = 'adapter'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (695, (SELECT tag_id FROM Tags WHERE tag_name = 'compatibility'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (735, (SELECT tag_id FROM Tags WHERE tag_name = 'table'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (735, (SELECT tag_id FROM Tags WHERE tag_name = 'surface'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (775, (SELECT tag_id FROM Tags WHERE tag_name = 'bed'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (775, (SELECT tag_id FROM Tags WHERE tag_name = 'rest'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (815, (SELECT tag_id FROM Tags WHERE tag_name = 'couch'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (815, (SELECT tag_id FROM Tags WHERE tag_name = 'sofa'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (855, (SELECT tag_id FROM Tags WHERE tag_name = 'cabinet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (855, (SELECT tag_id FROM Tags WHERE tag_name = 'storage'));
+
+-- Add tags to listings 895-1600 (every 45th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (895, (SELECT tag_id FROM Tags WHERE tag_name = 'mirror'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (895, (SELECT tag_id FROM Tags WHERE tag_name = 'reflection'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (940, (SELECT tag_id FROM Tags WHERE tag_name = 'rug'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (940, (SELECT tag_id FROM Tags WHERE tag_name = 'floor'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (985, (SELECT tag_id FROM Tags WHERE tag_name = 'shirt'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (985, (SELECT tag_id FROM Tags WHERE tag_name = 'top'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1030, (SELECT tag_id FROM Tags WHERE tag_name = 'pants'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1030, (SELECT tag_id FROM Tags WHERE tag_name = 'bottom'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1075, (SELECT tag_id FROM Tags WHERE tag_name = 'shoes'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1075, (SELECT tag_id FROM Tags WHERE tag_name = 'footwear'));
+
+-- Add tags to listings 1120-1600 (every 50th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1120, (SELECT tag_id FROM Tags WHERE tag_name = 'jacket'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1120, (SELECT tag_id FROM Tags WHERE tag_name = 'outerwear'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1170, (SELECT tag_id FROM Tags WHERE tag_name = 'dress'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1170, (SELECT tag_id FROM Tags WHERE tag_name = 'garment'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1220, (SELECT tag_id FROM Tags WHERE tag_name = 'sweater'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1220, (SELECT tag_id FROM Tags WHERE tag_name = 'warm'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1270, (SELECT tag_id FROM Tags WHERE tag_name = 'pen'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1270, (SELECT tag_id FROM Tags WHERE tag_name = 'writing'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1320, (SELECT tag_id FROM Tags WHERE tag_name = 'pencil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1320, (SELECT tag_id FROM Tags WHERE tag_name = 'drawing'));
+
+-- Add tags to listings 1370-1600 (every 55th listing)
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1370, (SELECT tag_id FROM Tags WHERE tag_name = 'paper'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1370, (SELECT tag_id FROM Tags WHERE tag_name = 'sheet'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1425, (SELECT tag_id FROM Tags WHERE tag_name = 'folder'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1425, (SELECT tag_id FROM Tags WHERE tag_name = 'organize'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1480, (SELECT tag_id FROM Tags WHERE tag_name = 'backpack'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1480, (SELECT tag_id FROM Tags WHERE tag_name = 'carry'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1535, (SELECT tag_id FROM Tags WHERE tag_name = 'pot'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1535, (SELECT tag_id FROM Tags WHERE tag_name = 'cookware'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1590, (SELECT tag_id FROM Tags WHERE tag_name = 'pan'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1590, (SELECT tag_id FROM Tags WHERE tag_name = 'frying'));
+
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1600, (SELECT tag_id FROM Tags WHERE tag_name = 'utensil'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1600, (SELECT tag_id FROM Tags WHERE tag_name = 'eating'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1605, (SELECT tag_id FROM Tags WHERE tag_name = 'appliance'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1605, (SELECT tag_id FROM Tags WHERE tag_name = 'electric'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1610, (SELECT tag_id FROM Tags WHERE tag_name = 'dish'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1610, (SELECT tag_id FROM Tags WHERE tag_name = 'serve'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1613, (SELECT tag_id FROM Tags WHERE tag_name = 'cup'));
+INSERT INTO ListingTags (listing_id, tag_id) VALUES (1613, (SELECT tag_id FROM Tags WHERE tag_name = 'drink'));
+
+-- Popular users with many followers
+-- uid x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 is Alice, has 10 followers
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- barbara10 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('83af10c1-2021-4eca-a9e5-76e6f4e9523b', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- jeffrey10 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('5b5a7e61-14a4-4de1-9c3f-c093edeff64f', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- joshuajones follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- blakeerik follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- curtis61 follows alice
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1'); -- yherrera follows alice
+
+-- uid x8uocqJbNoWO7TL6ZCEXCR2Hm1k1 is Alice, follows 8
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', '2ab3410d-aa84-404e-a9f5-52caa19fe15b'); -- alice follows curtis61 (and vice versa)
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1','325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- alice follows yherrera (and vice versa)
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "3f9a1261-df93-4e67-9a77-09be06c35924");
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "5af9ae2f-b972-4a19-b095-ed3a1be078c3");
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "917e2c44-2103-4d80-b093-36e6270bac3b");
@@ -2694,6 +3226,7 @@ INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("917e2c44-2103-4d80-
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("917e2c44-2103-4d80-b093-36e6270bac3b", "e2c03bd2-0312-4c5d-a080-c00675893c0d");
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("bb076683-88d2-449f-9100-32ef4b0ba023", "abf7b346-09c2-4f9b-8b58-3d5afd4ec73e");
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("bb076683-88d2-449f-9100-32ef4b0ba023", "cc2f1171-02be-4fb3-9ecc-5a78cdf78ff0");
+
 -- This shouldn't get suggested because it is a friend of a user that Alice doesn't follow
 INSERT INTO UserFollowedUsers(user_id, followee_id) VALUES ("7ff59612-9d23-4501-824f-685d8c63967e", "abf7b346-09c2-4f9b-8b58-3d5afd4ec73e");
 
@@ -3178,5 +3711,365 @@ INSERT INTO Notifications (user_id, listing_id, message, is_read, created_at) VA
 ('59a35ba8-5e90-4e69-bf44-1801871c1f62', 42, 'New listing posted matching your preferences: Art Supplies Kit', FALSE, '2024-03-21 14:20:00'),
 ('794f7dbd-44f4-4a0f-bb76-91c1509d1142', 20, 'New listing posted matching your preferences: Engineering Textbook - Statics', FALSE, '2024-03-21 15:10:00'),
 ('7ca61f35-0be5-4b58-8007-9683d733f55b', 35, 'New listing posted matching your preferences: Desk Lamp LED', FALSE, '2024-03-21 16:30:00');
+=======
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '790818cc-bef4-4c39-beff-5b8bda31c3df'); -- barbara10 follows jennifercruz
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('790818cc-bef4-4c39-beff-5b8bda31c3df', '5b5a7e61-14a4-4de1-9c3f-c093edeff64f'); -- jennifercruz follows joshuajones
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('5b5a7e61-14a4-4de1-9c3f-c093edeff64f', '83af10c1-2021-4eca-a9e5-76e6f4e9523b'); -- joshuajones follows jeffrey10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('83af10c1-2021-4eca-a9e5-76e6f4e9523b', 'f13d3ec6-3459-4c95-aa8b-aaec381b41ed'); -- jeffrey10 follows brentgray
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f13d3ec6-3459-4c95-aa8b-aaec381b41ed', '5e00c6e1-e720-4f68-bc68-47a46729b6f2'); -- brentgray follows burchgeorge
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'bdb6f3dd-a498-41ba-8728-096dff3bd330'); -- johnsonjoshua follows blakeerik
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', '0dd06365-9be3-4651-afd4-e07d7ca2f825'); -- blakeerik follows mnavarro
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('0dd06365-9be3-4651-afd4-e07d7ca2f825', '53e5718a-7200-431f-837d-9507fd33531a'); -- mnavarro follows elizabeth56
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('53e5718a-7200-431f-837d-9507fd33531a', '8a861b52-9f73-4b55-9726-2492315c1ef0'); -- elizabeth56 follows jreed
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('8a861b52-9f73-4b55-9726-2492315c1ef0', '962d23e1-6578-422e-bbf4-dbe0c785ec06'); -- jreed follows danny49
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', '6016e394-db8d-4bd3-8615-fbb0131db924'); -- garzaanthony follows jennifermiles
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'bfa6b7ee-950d-4d2a-a875-d34b0a28becd'); -- jennifermiles follows sarahcampos
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bfa6b7ee-950d-4d2a-a875-d34b0a28becd', '27c6b33f-9448-4d0a-9b2f-ece54c58fc13'); -- sarahcampos follows qhughes
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('27c6b33f-9448-4d0a-9b2f-ece54c58fc13', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27'); -- qhughes follows younggabrielle
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f02aeab3-423a-44f7-bc40-7325ad2dcf27', '634bf525-a66b-4045-a55a-6691748a32e5'); -- younggabrielle follows linda71
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- Year 1: johnsonjoshua follows yherrera
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', '40d6af98-9170-40ec-95b1-9f521e4958f6'); -- Year 1: yherrera follows barbara10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'b1863163-0cb4-49f3-abbc-053c304480b3'); -- Year 2: garzaanthony follows jamesshawn
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1863163-0cb4-49f3-abbc-053c304480b3', '6016e394-db8d-4bd3-8615-fbb0131db924'); -- Year 2: jamesshawn follows jennifermiles
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('98eb6e25-dbf6-481e-8e96-360d2bf259f7', '15b960cf-c9ee-4159-8fee-6c355f988172'); -- julie69 follows jonesjason
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('15b960cf-c9ee-4159-8fee-6c355f988172', 'ee5d296c-9dce-4588-b318-4eefd1433c01'); -- jonesjason follows tasha01
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '247fc8f9-0491-49ce-aa15-86f829a9554e'); -- tasha01 follows meagan89
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('247fc8f9-0491-49ce-aa15-86f829a9554e', '78a25057-dcbb-44f9-b990-61d5ab966ba2'); -- meagan89 follows georgetracy
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6e6b8cff-96b5-4fea-bdb5-842d282951e1', '195b33a0-891f-472c-bc9d-85754eb86553'); -- kevin33 follows staffordmichelle
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('195b33a0-891f-472c-bc9d-85754eb86553', '81c5d050-2ff7-42d3-8bdb-84643598d71b'); -- staffordmichelle follows juliawells
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('81c5d050-2ff7-42d3-8bdb-84643598d71b', '3441d459-5cd8-46b1-988b-0dec3b661350'); -- juliawells follows cynthia72
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '40d6af98-9170-40ec-95b1-9f521e4958f6'); -- johnsonjoshua follows barbara10
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4'); -- barbara10 follows yherrera
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d'); -- yherrera follows johnsonjoshua
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', 'bdb6f3dd-a498-41ba-8728-096dff3bd330');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', 'ee5d296c-9dce-4588-b318-4eefd1433c01');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '4a77c430-6444-4592-8118-87e71cf5a08f');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b8430a4d-8943-4c6f-9f2e-088e4ba128ce', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('f02aeab3-423a-44f7-bc40-7325ad2dcf27', '0d9a2e3b-9fc8-493e-82e3-e496c39afa2b');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('634bf525-a66b-4045-a55a-6691748a32e5', '4a77c430-6444-4592-8118-87e71cf5a08f');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'dae7c09f-b7c6-45d2-9eb4-7bc249bcfc7c');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('8f00a996-7ea4-415e-8ed5-6c2057ad6520', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'bfa6b7ee-950d-4d2a-a875-d34b0a28becd');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bfa6b7ee-950d-4d2a-a875-d34b0a28becd', 'da41138e-2134-48ff-96a3-6a1d144e8874');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('da41138e-2134-48ff-96a3-6a1d144e8874', '29392e78-8c82-4785-8be9-fd280874f20a');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b4de64c8-bebd-4eb6-a2d8-640b781c7017', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('3db047ae-b3e1-47e5-855e-8a7a688f10ac', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('59a35ba8-5e90-4e69-bf44-1801871c1f62', '40d6af98-9170-40ec-95b1-9f521e4958f6');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4172543c-dd94-4191-a1a5-6d05b6566c74', 'bdb6f3dd-a498-41ba-8728-096dff3bd330');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('bdb6f3dd-a498-41ba-8728-096dff3bd330', '4a77c430-6444-4592-8118-87e71cf5a08f');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('4a77c430-6444-4592-8118-87e71cf5a08f', 'ee5d296c-9dce-4588-b318-4eefd1433c01');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', '4a77c430-6444-4592-8118-87e71cf5a08f');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6658a9cc-1f8d-4d49-871e-dcb29629a80d', '6016e394-db8d-4bd3-8615-fbb0131db924');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('6016e394-db8d-4bd3-8615-fbb0131db924', 'f02aeab3-423a-44f7-bc40-7325ad2dcf27');
+
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('98eb6e25-dbf6-481e-8e96-360d2bf259f7', 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('15b960cf-c9ee-4159-8fee-6c355f988172', '98eb6e25-dbf6-481e-8e96-360d2bf259f7');
+INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('ee5d296c-9dce-4588-b318-4eefd1433c01', '15b960cf-c9ee-4159-8fee-6c355f988172');
+
+-- ===== COMPREHENSIVE TESTING DATA FOR REPORT LISTING FEATURE =====
+
+-- ===== LISTINGS WITH VARIOUS REPORT COUNTS (1-4 reports, not flagged yet) =====
+
+-- Alice's listings with different report counts
+-- MacBook (ID 1588) - 3 reports (needs 2 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1588, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1588, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1588, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing');
+
+-- Calculus Textbook (ID 1589) - 2 reports (needs 3 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1589, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1589, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Study Desk (ID 1590) - 1 report (needs 4 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1590, '6016e394-db8d-4bd3-8615-fbb0131db924', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Coffee Maker (ID 1591) - 4 reports (needs 1 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1591, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (1591, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (1591, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (1591, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason');
+
+-- ===== LISTINGS THAT WILL BE FLAGGED (5+ reports) =====
+
+-- Winter Jacket (ID 1592) - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1592, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1592, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1592, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1592, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1592, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Wireless Headphones (ID 1593) - 6 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1593, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1593, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1593, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1593, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1593, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason'),
+  (1593, '6016e394-db8d-4bd3-8615-fbb0131db924', 'inappropriate', 'Duplicate inappropriate content');
+
+-- Notebook Set (ID 1594) - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1594, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (1594, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (1594, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (1594, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason'),
+  (1594, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Bookshelf (ID 1595) - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1595, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'fake', 'Fake listing'),
+  (1595, '4a77c430-6444-4592-8118-87e71cf5a08f', 'offensive', 'Offensive content'),
+  (1595, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'other', 'Other reason'),
+  (1595, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'inappropriate', 'This listing contains inappropriate content'),
+  (1595, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'spam', 'This seems like spam');
+
+-- Blender (ID 1596) - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1596, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'offensive', 'Offensive content'),
+  (1596, '4a77c430-6444-4592-8118-87e71cf5a08f', 'other', 'Other reason'),
+  (1596, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'inappropriate', 'This listing contains inappropriate content'),
+  (1596, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'spam', 'This seems like spam'),
+  (1596, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'fake', 'Fake listing');
+
+-- ===== RANDOM LISTINGS WITH VARIOUS REPORT COUNTS =====
+
+-- Random listing 100 - 4 reports (needs 1 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (100, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (100, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (100, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (100, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason');
+
+-- Random listing 200 - 3 reports (needs 2 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (200, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'inappropriate', 'This listing contains inappropriate content'),
+  (200, '6016e394-db8d-4bd3-8615-fbb0131db924', 'spam', 'This seems like spam'),
+  (200, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'fake', 'Fake listing');
+
+-- Random listing 300 - 2 reports (needs 3 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (300, '4a77c430-6444-4592-8118-87e71cf5a08f', 'offensive', 'Offensive content'),
+  (300, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'other', 'Other reason');
+
+-- Random listing 400 - 1 report (needs 4 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (400, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Random listing 500 - 4 reports (needs 1 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (500, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'spam', 'This seems like spam'),
+  (500, '6016e394-db8d-4bd3-8615-fbb0131db924', 'fake', 'Fake listing'),
+  (500, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'offensive', 'Offensive content'),
+  (500, '4a77c430-6444-4592-8118-87e71cf5a08f', 'other', 'Other reason');
+
+-- Random listing 600 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (600, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'inappropriate', 'This listing contains inappropriate content'),
+  (600, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'spam', 'This seems like spam'),
+  (600, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'fake', 'Fake listing'),
+  (600, '6016e394-db8d-4bd3-8615-fbb0131db924', 'offensive', 'Offensive content'),
+  (600, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'other', 'Other reason');
+
+-- Random listing 700 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (700, '4a77c430-6444-4592-8118-87e71cf5a08f', 'inappropriate', 'This listing contains inappropriate content'),
+  (700, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'spam', 'This seems like spam'),
+  (700, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'fake', 'Fake listing'),
+  (700, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'offensive', 'Offensive content'),
+  (700, '6016e394-db8d-4bd3-8615-fbb0131db924', 'other', 'Other reason');
+
+-- Random listing 800 - 3 reports (needs 2 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (800, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (800, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (800, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content');
+
+-- Random listing 900 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (900, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'inappropriate', 'This listing contains inappropriate content'),
+  (900, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'spam', 'This seems like spam'),
+  (900, '6016e394-db8d-4bd3-8615-fbb0131db924', 'fake', 'Fake listing'),
+  (900, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'offensive', 'Offensive content'),
+  (900, '4a77c430-6444-4592-8118-87e71cf5a08f', 'other', 'Other reason');
+
+-- Random listing 1000 - 2 reports (needs 3 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1000, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'spam', 'This seems like spam'),
+  (1000, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'fake', 'Fake listing');
+
+-- Random listing 1100 - 1 report (needs 4 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1100, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Random listing 1200 - 4 reports (needs 1 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1200, '6016e394-db8d-4bd3-8615-fbb0131db924', 'offensive', 'Offensive content'),
+  (1200, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'other', 'Other reason'),
+  (1200, '4a77c430-6444-4592-8118-87e71cf5a08f', 'inappropriate', 'This listing contains inappropriate content'),
+  (1200, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'spam', 'This seems like spam');
+
+-- Random listing 1300 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1300, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'fake', 'Fake listing'),
+  (1300, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'offensive', 'Offensive content'),
+  (1300, '6016e394-db8d-4bd3-8615-fbb0131db924', 'other', 'Other reason'),
+  (1300, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1300, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam');
+
+-- Random listing 1400 - 3 reports (needs 2 more to flag)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1400, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1400, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1400, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Random listing 1500 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1500, '6016e394-db8d-4bd3-8615-fbb0131db924', 'inappropriate', 'This listing contains inappropriate content'),
+  (1500, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (1500, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (1500, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (1500, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason');
+
+-- ===== LISTINGS THAT WERE FLAGGED AND THEN APPROVED BY ADMINS =====
+
+-- Listing 1600 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1600, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1600, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1600, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1600, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1600, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Listing 1601 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1601, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (1601, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (1601, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (1601, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason'),
+  (1601, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Listing 1602 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1602, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'fake', 'Fake listing'),
+  (1602, '4a77c430-6444-4592-8118-87e71cf5a08f', 'offensive', 'Offensive content'),
+  (1602, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'other', 'Other reason'),
+  (1602, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'inappropriate', 'This listing contains inappropriate content'),
+  (1602, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'spam', 'This seems like spam');
+
+-- Listing 1603 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1603, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'offensive', 'Offensive content'),
+  (1603, '4a77c430-6444-4592-8118-87e71cf5a08f', 'other', 'Other reason'),
+  (1603, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'inappropriate', 'This listing contains inappropriate content'),
+  (1603, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'spam', 'This seems like spam'),
+  (1603, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'fake', 'Fake listing');
+
+-- Listing 1604 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1604, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'other', 'Other reason'),
+  (1604, '4a77c430-6444-4592-8118-87e71cf5a08f', 'inappropriate', 'This listing contains inappropriate content'),
+  (1604, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'spam', 'This seems like spam'),
+  (1604, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'fake', 'Fake listing'),
+  (1604, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'offensive', 'Offensive content');
+
+-- Listing 1605 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1605, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1605, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1605, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1605, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1605, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Listing 1606 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1606, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'spam', 'This seems like spam'),
+  (1606, '4a77c430-6444-4592-8118-87e71cf5a08f', 'fake', 'Fake listing'),
+  (1606, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'offensive', 'Offensive content'),
+  (1606, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'other', 'Other reason'),
+  (1606, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'inappropriate', 'This listing contains inappropriate content');
+
+-- Listing 1607 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1607, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'fake', 'Fake listing'),
+  (1607, '4a77c430-6444-4592-8118-87e71cf5a08f', 'offensive', 'Offensive content'),
+  (1607, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'other', 'Other reason'),
+  (1607, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'inappropriate', 'This listing contains inappropriate content'),
+  (1607, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'spam', 'This seems like spam');
+
+-- Listing 1608 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1608, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'offensive', 'Offensive content'),
+  (1608, '4a77c430-6444-4592-8118-87e71cf5a08f', 'other', 'Other reason'),
+  (1608, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'inappropriate', 'This listing contains inappropriate content'),
+  (1608, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'spam', 'This seems like spam'),
+  (1608, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'fake', 'Fake listing');
+
+-- Listing 1609 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1609, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'other', 'Other reason'),
+  (1609, '4a77c430-6444-4592-8118-87e71cf5a08f', 'inappropriate', 'This listing contains inappropriate content'),
+  (1609, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'spam', 'This seems like spam'),
+  (1609, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'fake', 'Fake listing'),
+  (1609, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'offensive', 'Offensive content');
+
+-- Listing 1610 - 5 reports (will be flagged)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1610, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1610, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1610, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1610, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1610, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- This is to mock admin actions after the trigger has flagged these listings
+-- Approve some listings (change status from 'flagged' to 'for sale')
+UPDATE Listing SET status = 'for sale' WHERE id IN (1600, 1601, 1602, 1603, 1604);
+
+-- Remove some listings (change status from 'flagged' to 'removed')
+UPDATE Listing SET status = 'removed' WHERE id IN (1605, 1606, 1607, 1608, 1609, 1610);
+
+-- ===== SPECIAL TEST CASE: LISTING WITH MULTIPLE FLAGGING CYCLES =====
+-- Create a listing that was flagged, approved, flagged again, then removed
+
+-- First, add 5 reports to listing 1611 to flag it initially
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1611, 'b1321344-bbe9-4bf7-82b9-e1898f2e2d7d', 'inappropriate', 'This listing contains inappropriate content'),
+  (1611, '4a77c430-6444-4592-8118-87e71cf5a08f', 'spam', 'This seems like spam'),
+  (1611, 'bdb6f3dd-a498-41ba-8728-096dff3bd330', 'fake', 'Fake listing'),
+  (1611, '2ab3410d-aa84-404e-a9f5-52caa19fe15b', 'offensive', 'Offensive content'),
+  (1611, '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', 'other', 'Other reason');
+
+-- Simulate admin approving it (changes status from 'flagged' to 'for sale')
+UPDATE Listing SET status = 'for sale' WHERE id = 1611;
+
+-- Now add 5 more reports to flag it again (different users to avoid unique constraint)
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1611, '6016e394-db8d-4bd3-8615-fbb0131db924', 'inappropriate', 'This listing contains inappropriate content'),
+  (1611, '7ff59612-9d23-4501-824f-685d8c63967e', 'spam', 'This seems like spam'),
+  (1611, 'ddc899fd-5c20-4656-8c03-ec28bed09806', 'fake', 'Fake listing'),
+  (1611, 'dc5dbe09-3d8e-486b-9254-902ffb1f0d86', 'offensive', 'Offensive content'),
+  (1611, 'e2c03bd2-0312-4c5d-a080-c00675893c0d', 'other', 'Other reason');
+
+-- Simulate admin removing it this time (changes status from 'flagged' to 'removed')
+UPDATE Listing SET status = 'removed' WHERE id = 1611;
+
 
 

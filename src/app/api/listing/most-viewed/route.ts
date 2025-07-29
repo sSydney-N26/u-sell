@@ -1,4 +1,4 @@
-// src/app/api/listing/most‑viewed/route.ts
+// src/app/api/listing/most-viewed/route.ts
 import { NextResponse } from "next/server";
 import pool from "@/lib/db-config";
 
@@ -6,20 +6,19 @@ export async function GET() {
   try {
     const result = await pool.query(`
       SELECT
-        id,
-        title,
-        price,
-        type,
-        posted_by,
-        view_count,
-        image_storage_ref
-      FROM Listing
-      WHERE status = 'for sale'
-      ORDER BY view_count DESC, posted_date DESC
-      LIMIT 10
+        l.id,
+        l.title,
+        l.price,
+        l.type,
+        l.posted_by,
+        l.image_storage_ref,
+        v.view_count
+      FROM Top10View v
+      JOIN Listing l ON v.listing_id = l.id
+      WHERE l.status = 'for sale'
+      ORDER BY v.view_count DESC, l.posted_date DESC
     `);
 
-    // Normalizing
     let rows: any[];
     if (Array.isArray(result)) {
       rows = result[0] as any[];
