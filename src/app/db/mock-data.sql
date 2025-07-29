@@ -13,7 +13,9 @@ VALUES
   ('247fc8f9-0491-49ce-aa15-86f829a9554e', 'meagan89', 'ericfarmer@example.net', 'Biomedical Engineering', 1),
 
   ('uid_bob', 'Bob', 'bob@uwaterloo.ca', 'Electrical Engineering', 3),
-  ('uid_carol', 'Carol', 'carol@uwaterloo.ca', 'Mechanical Engineering', 1);
+  ('uid_carol', 'Carol', 'carol@uwaterloo.ca', 'Mechanical Engineering', 1),
+  ('uid_jane', 'Jane', 'jane@uwaterloo.ca', 'Mathematics', 2),
+  ('uid_joe', 'Joe', 'joe@uwaterloo.ca', 'Physics', 1);
 
 -- === Product Types ===
 INSERT INTO ProductType (type)
@@ -61,7 +63,10 @@ VALUES
   ('uid_bob', 'Furniture', 25.00, 'IKEA Chair', 'Sturdy and clean', 'like new', 1, 'Off-campus housing near Columbia', 'Bob', 'for sale', 'images/chair.jpg'),
   ('uid_carol', 'Kitchen', 10.00, 'Toaster', 'Still works perfectly, just upgraded', 'fair', 1, 'Village 1', 'Carol', 'pending', 'images/toaster.jpg'),
   ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Electronics', 100.00, 'Bluetooth Speaker', 'Bass heavy, battery still good', 'fair', 1, 'UWaterloo Dana Porter Library', 'Alice', 'sold', 'images/speaker.jpg'),
-  ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Alice', 'sold', 'images/speaker.jpg');
+  ('x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Alice', 'sold', 'images/speaker.jpg'),
+  ('uid_jane', 'Misc', 150.00, 'Hair Dryer Useful', 'Dyson Hair Dryer Pretty Useful', 'fair', 1, 'Davis Center Library', 'Jane', 'sold', 'images/speaker.jpg'),
+  ('uid_joe', 'Misc', 150.00, 'Hair Dryer', 'Dyson Hair Dryer', 'fair', 1, 'UWaterloo Dana Porter Library', 'Joe', 'sold', 'images/speaker.jpg');
+
 -- === Admins ===
 INSERT INTO Admin (admin_id)
 VALUES
@@ -82,3 +87,56 @@ INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f
 INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '790818cc-bef4-4c39-beff-5b8bda31c3df');
 INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('40d6af98-9170-40ec-95b1-9f521e4958f6', '325c8801-72e0-4f9f-aa7b-4de2c86ab3d4');
 INSERT INTO UserFollowedUsers (user_id, followee_id) VALUES ('325c8801-72e0-4f9f-aa7b-4de2c86ab3d4', '566f84e4-fc6a-4ab8-82be-c440c77b2745');
+
+
+-- === Initial Reports for Testing ===
+-- Add some initial reports to listing 1 to test the flagging mechanism
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (1, 'uid_bob', 'inappropriate', 'This listing contains inappropriate content'),
+  (1, 'uid_carol', 'spam', 'This seems like spam'),
+  (1, 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'fake', 'Fake listing'),
+  (1, 'uid_jane', 'offensive', 'Offensive content'),
+  (1, 'uid_joe', 'other', 'Other reason');
+
+-- Add a few reports to listing 2 to test multiple listings
+INSERT INTO Reports (listing_id, reporter_id, reason, description) VALUES
+  (2, 'x8uocqJbNoWO7TL6ZCEXCR2Hm1k1', 'inappropriate', 'Another inappropriate listing'),
+  (2, 'uid_carol', 'spam', 'Spam listing');
+
+-- === Tags for Testing ===
+-- Add some existing tags to test tag management
+INSERT INTO Tags (tag_name) VALUES
+  ('textbook'),
+  ('chair'),
+  ('speaker'),
+  ('electronics'),
+  ('furniture');
+
+-- === ListingTags for Testing ===
+-- Associate tags with listings to test tag usage
+INSERT INTO ListingTags (listing_id, tag_id) VALUES
+  (1, 1),  -- CS 246 Textbook -> textbook
+  (2, 2),  -- IKEA Chair -> chair
+  (2, 5),  -- IKEA Chair -> furniture
+  (4, 3),  -- Bluetooth Speaker -> speaker
+  (4, 4),  -- Bluetooth Speaker -> electronics
+  (6, 1),  -- CS 246 Textbook -> textbook
+  (8, 2),  -- IKEA Chair -> chair
+  (8, 5),  -- IKEA Chair -> furniture
+  (10, 3), -- Bluetooth Speaker -> speaker
+  (10, 4), -- Bluetooth Speaker -> electronics
+  (11, 1), -- CS 246 Textbook -> textbook
+  (12, 2), -- IKEA Chair -> chair
+  (12, 5), -- IKEA Chair -> furniture
+  (14, 3), -- Bluetooth Speaker -> speaker
+  (14, 4), -- Bluetooth Speaker -> electronics
+  (16, 1), -- CS 246 Textbook -> textbook
+  (17, 2), -- IKEA Chair -> chair
+  (17, 5), -- IKEA Chair -> furniture
+  (19, 3), -- Bluetooth Speaker -> speaker
+  (19, 4), -- Bluetooth Speaker -> electronics
+  (21, 1), -- CS 246 Textbook -> textbook
+  (22, 2), -- IKEA Chair -> chair
+  (22, 5), -- IKEA Chair -> furniture
+  (24, 3), -- Bluetooth Speaker -> speaker
+  (24, 4); -- Bluetooth Speaker -> electronics

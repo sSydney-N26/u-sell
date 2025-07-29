@@ -68,10 +68,11 @@ CREATE TABLE Reports (
     description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (listing_id) REFERENCES Listing(id) ON DELETE CASCADE,
-    FOREIGN KEY (reporter_id) REFERENCES Users(uid)
+    FOREIGN KEY (reporter_id) REFERENCES Users(uid),
+    UNIQUE KEY unique_user_report (listing_id, reporter_id)
 );
 
-
+CREATE INDEX idx_reports_listing_reporter ON Reports(listing_id, reporter_id);
 
 CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
 CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
