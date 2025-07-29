@@ -32,7 +32,7 @@ export async function GET(request : NextRequest) {
                 quantity, location, posted_date,
                 posted_by, status
         FROM Listing
-        WHERE status != 'removed' AND status != 'flagged' AND status != 'sold'
+        WHERE (status = 'for sale' OR status = 'pending')
         ${category !== "all" ? 'AND type = ?' : ''}
         ORDER BY posted_date ASC LIMIT ? OFFSET ?
         `;
@@ -48,8 +48,7 @@ export async function GET(request : NextRequest) {
         const countPageQuery = `
         SELECT COUNT(*) AS totalItems
         FROM Listing
-        WHERE status != 'removed'
-        AND status != 'flagged' AND status != 'sold'
+        WHERE (status = 'for sale' OR status = 'pending')
         ${category !== "all" ? 'AND type = ?' : ''}
       `;
 

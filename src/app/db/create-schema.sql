@@ -75,8 +75,7 @@ CREATE TABLE Reports (
 CREATE INDEX idx_reports_listing_reporter ON Reports(listing_id, reporter_id);
 
 CREATE INDEX idx_listing_seller_id ON Listing(seller_id, posted_date DESC);
-CREATE INDEX idx_listing_type_and_date ON Listing(type, posted_date ASC);
-CREATE INDEX idx_listing_date ON Listing(posted_date);
+CREATE INDEX idx_listing_total_items ON Listing(type, status, posted_date);
 CREATE INDEX idx_tags_name ON Tags(tag_name);
 CREATE INDEX idx_listing_tags_listing ON ListingTags(listing_id);
 CREATE INDEX idx_listing_tags_tag ON ListingTags(tag_id);
