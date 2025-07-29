@@ -96,14 +96,10 @@ npm install mysql2
 <h2>3.1 Basic Features</h2>
 <ul>
   <li><strong>R6 - User's Profile</strong> Users can view and manage their personal information and listings</li>
-  <li><strong>Listing Management:</strong>
-    <ul>
-      <li> R7 - Browse Listings + category Filtering to browse listing by categories (Electronics, School Supplies, etc.). Click on listing for a detailed view </li>
-      <li> R8 - Create new listings with title, description, price, condition, etc. </li>
-      <li> R9 - Delete Listing</li>
-      <li> R10 - Edit Existing Listings Details</li>
-    </ul>
-  </li>
+  <li> R7 - Browse Listings + category Filtering to browse listing by categories (Electronics, School Supplies, etc.). Click on listing for a detailed view </li>
+  <li> R8 - Create new listings with title, description, price, condition, etc. </li>
+  <li> R9 - Delete Listing</li>
+  <li> R10 - Edit Existing Listings Details</li>
 </ul>
 
 <h2>3.2 Advanced Features </h2>
@@ -117,10 +113,7 @@ npm install mysql2
 
 <h2>3.3 Bonus Features </h2>
 <ul>
-  <li><strong>Personalized Feed:</strong> Customized listing recommendations based on user preferences</li>
-  <li><strong>Preference Management:</strong>
-    <ul>
-      <li><strong>R16 - Tagging Recommendation:</strong> Add and browse listings using tags for better categorization</li>
-      <li><strong>R17 - Notification System:</strong> Get notified about relevant listings and activities</li>
-    </ul>
+  <li><strong>R16 - Tagging Recommendation:</strong> Add and browse listings using tags for better categorization</li>
+  <li><strong>R17 - Notification System:</strong> Get notified about relevant listings and activities</li>
 </ul>
+
