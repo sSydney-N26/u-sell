@@ -22,6 +22,6 @@ mysql -u admin -p"admin1!" u_sell < create-schema.sql
 
 # Run the production data script
 echo "Loading production data..."
-mysql -u admin -p"admin1!" u_sell < usell_prod_data.sql
+mysql -u admin -p"admin1!" u_sell < mock-data.sql
 
 echo "Database setup complete!"

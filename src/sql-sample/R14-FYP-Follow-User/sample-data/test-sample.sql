@@ -47,8 +47,8 @@ LIMIT 10;
 -- Query #4 used in FYP to start following a user with followee_id
 -- Alice now wants to follow timothyburton
 INSERT IGNORE INTO UserFollowedUsers(user_id, followee_id)
-VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "0a976727-cf65-4b6c-b138-89f83f843421");   
+VALUES ("x8uocqJbNoWO7TL6ZCEXCR2Hm1k1", "566f84e4-fc6a-4ab8-82be-c440c77b2745");   
 
 -- Query #5 used in FYP to unfollow a user with followee_id
 -- Alice now unfollows hannahking
-DELETE FROM UserFollowedUsers WHERE user_id = "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1" AND followee_id = "5af9ae2f-b972-4a19-b095-ed3a1be078c3";
+DELETE FROM UserFollowedUsers WHERE user_id = "x8uocqJbNoWO7TL6ZCEXCR2Hm1k1" AND followee_id = "2ab3410d-aa84-404e-a9f5-52caa19fe15b";

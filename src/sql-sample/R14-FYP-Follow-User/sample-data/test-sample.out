@@ -1,0 +1,63 @@
+1.
++--------------------------------------+----------------------------+-----------+------------------------+------+
+| uid                                  | email                      | username  | program                | year |
++--------------------------------------+----------------------------+-----------+------------------------+------+
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | melanie94@example.org      | curtis61  | Mechanical Engineering |    5 |
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera  | Environment            |    1 |
+| 40d6af98-9170-40ec-95b1-9f521e4958f6 | kendragalloway@example.org | barbara10 | Computer Science       |    1 |
++--------------------------------------+----------------------------+-----------+------------------------+------+
+3 rows in set (0.00 sec)
+
+2.
++--------------------------------------+--------------+----------------------------+------------------------+------+
+| uid                                  | username     | email                      | program                | year |
++--------------------------------------+--------------+----------------------------+------------------------+------+
+| 790818cc-bef4-4c39-beff-5b8bda31c3df | jennifercruz | psanchez@example.net       | Computer Science       |    1 |
+| ee5d296c-9dce-4588-b318-4eefd1433c01 | tasha01      | kayla51@example.com        | Biomedical Engineering |    3 |
+| 247fc8f9-0491-49ce-aa15-86f829a9554e | meagan89     | ericfarmer@example.net     | Biomedical Engineering |    1 |
+| 15b960cf-c9ee-4159-8fee-6c355f988172 | jonesjason   | david51@example.org        | Arts                   |    4 |
+| 566f84e4-fc6a-4ab8-82be-c440c77b2745 | stephanie79  | jrivas@example.com         | Management Engineering |    4 |
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | curtis61     | melanie94@example.org      | Mechanical Engineering |    5 |
+| 40d6af98-9170-40ec-95b1-9f521e4958f6 | barbara10    | kendragalloway@example.org | Computer Science       |    1 |
+| 83af10c1-2021-4eca-a9e5-76e6f4e9523b | jeffrey10    | herringjames@example.org   | Computer Science       |    1 |
+| uid_carol                            | Carol        | carol@uwaterloo.ca         | Mechanical Engineering |    1 |
+| uid_bob                              | Bob          | bob@uwaterloo.ca           | Electrical Engineering |    3 |
++--------------------------------------+--------------+----------------------------+------------------------+------+
+10 rows in set (0.00 sec)
+
+3.
++--------------------------------------+--------------+--------------------------+------------------------+------+
+| uid                                  | username     | email                    | program                | year |
++--------------------------------------+--------------+--------------------------+------------------------+------+
+| 566f84e4-fc6a-4ab8-82be-c440c77b2745 | stephanie79  | jrivas@example.com       | Management Engineering |    4 |
+| 83af10c1-2021-4eca-a9e5-76e6f4e9523b | jeffrey10    | herringjames@example.org | Computer Science       |    1 |
+| 790818cc-bef4-4c39-beff-5b8bda31c3df | jennifercruz | psanchez@example.net     | Computer Science       |    1 |
++--------------------------------------+--------------+--------------------------+------------------------+------+
+3 rows in set (0.00 sec)
+
+4.
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+After INSERT, the current following of that user is:
++--------------------------------------+----------------------------+-------------+------------------------+------+
+| uid                                  | email                      | username    | program                | year |
++--------------------------------------+----------------------------+-------------+------------------------+------+
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | melanie94@example.org      | curtis61    | Mechanical Engineering |    5 |
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera    | Environment            |    1 |
+| 40d6af98-9170-40ec-95b1-9f521e4958f6 | kendragalloway@example.org | barbara10   | Computer Science       |    1 |
+| 566f84e4-fc6a-4ab8-82be-c440c77b2745 | jrivas@example.com         | stephanie79 | Management Engineering |    4 |
++--------------------------------------+----------------------------+-------------+------------------------+------+
+4 rows in set (0.00 sec)
+
+5.
+Query OK, 1 row affected (0.01 sec)
+
+After DELETE, the current following of that user is:
++--------------------------------------+----------------------------+-------------+------------------------+------+
+| uid                                  | email                      | username    | program                | year |
++--------------------------------------+----------------------------+-------------+------------------------+------+
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera    | Environment            |    1 |
+| 40d6af98-9170-40ec-95b1-9f521e4958f6 | kendragalloway@example.org | barbara10   | Computer Science       |    1 |
+| 566f84e4-fc6a-4ab8-82be-c440c77b2745 | jrivas@example.com         | stephanie79 | Management Engineering |    4 |
++--------------------------------------+----------------------------+-------------+------------------------+------+
+3 rows in set (0.00 sec)

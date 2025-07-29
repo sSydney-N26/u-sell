@@ -1,0 +1,81 @@
+1.
++--------------------------------------+----------------------------+-------------+----------------------------+------+
+| uid                                  | email                      | username    | program                    | year |
++--------------------------------------+----------------------------+-------------+----------------------------+------+
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | melanie94@example.org      | curtis61    | Mechanical Engineering     |    5 |
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera    | Environment                |    1 |
+| 3f9a1261-df93-4e67-9a77-09be06c35924 | christopher51@example.net  | haynesjose  | Engineering                |    2 |
+| 5af9ae2f-b972-4a19-b095-ed3a1be078c3 | parkerwilliam@example.com  | hannahking  | Arts                       |    5 |
+| 917e2c44-2103-4d80-b093-36e6270bac3b | sydneyfloyd@example.org    | stephanie81 | Mathematics                |    2 |
+| bb076683-88d2-449f-9100-32ef4b0ba023 | kimberlybrandt@example.com | kari89      | Systems Design Engineering |    2 |
++--------------------------------------+----------------------------+-------------+----------------------------+------+
+6 rows in set (0.00 sec)
+
+
+2.
++--------------------------------------+----------------+--------------------------+----------------------------+------+
+| uid                                  | username       | email                    | program                    | year |
++--------------------------------------+----------------+--------------------------+----------------------------+------+
+| 2d0142bd-aebe-427f-a67d-6f2242d6cd9d | jessicachapman | aprilbyrd@example.org    | Architecture               |    5 |
+| 2f5fea89-61ff-41e2-adce-1324613913ea | lanedavid      | brooksjamie@example.com  | Mathematics                |    2 |
+| 4780f842-c50c-4618-bd98-ee28a7521f08 | rgarcia        | juliahoffman@example.org | Civil Engineering          |    5 |
+| dcc60c8c-3419-4e02-b632-34fb1f250d88 | ryanhawkins    | fgarcia@example.com      | Engineering                |    3 |
+| b4c970b4-72f7-4cad-869f-10a76ecc2778 | guerraapril    | fred53@example.com       | Mathematics                |    1 |
+| 15efa798-0641-44ea-8090-4f23e5b1126c | tanyafoster    | byrdjorge@example.org    | Physics                    |    3 |
+| 933ec3be-7c5c-42c4-bd7c-56e1b8f7f68d | stephentaylor  | rushmartin@example.net   | Environment                |    2 |
+| c8439bb4-49a9-4a02-9285-991506796a56 | icraig         | natalie60@example.net    | Systems Design Engineering |    1 |
+| 02b8663d-89d4-4200-a830-a3d61190dc77 | gary79         | hdunn@example.net        | Mathematics                |    3 |
+| 936611b2-4694-41ee-b787-8e094020cebe | ismall         | znelson@example.org      | Systems Design Engineering |    3 |
++--------------------------------------+----------------+--------------------------+----------------------------+------+
+10 rows in set (0.00 sec)
+
+
+3.
++--------------------------------------+---------------+----------------------------+------------------------+------+
+| uid                                  | username      | email                      | program                | year |
++--------------------------------------+---------------+----------------------------+------------------------+------+
+| 40d6af98-9170-40ec-95b1-9f521e4958f6 | barbara10     | kendragalloway@example.org | Computer Science       |    1 |
+| b1321344-bbe9-4bf7-82b9-e1898f2e2d7d | johnsonjoshua | donaldgarcia@example.net   | Software Engineering   |    1 |
+| 7ff59612-9d23-4501-824f-685d8c63967e | wsantos       | manuel01@example.net       | Engineering            |    4 |
+| ddc899fd-5c20-4656-8c03-ec28bed09806 | stevenbyrd    | asilva@example.net         | Arts                   |    5 |
+| dc5dbe09-3d8e-486b-9254-902ffb1f0d86 | donaldpayne   | sabrinaweaver@example.net  | Electrical Engineering |    1 |
+| e2c03bd2-0312-4c5d-a080-c00675893c0d | smithkyle     | kathleen12@example.org     | Architecture           |    1 |
+| abf7b346-09c2-4f9b-8b58-3d5afd4ec73e | jamesmills    | ana92@example.net          | Environment            |    1 |
+| cc2f1171-02be-4fb3-9ecc-5a78cdf78ff0 | louis43       | hardingderek@example.net   | Software Engineering   |    5 |
++--------------------------------------+---------------+----------------------------+------------------------+------+
+8 rows in set (0.00 sec)
+
+
+4.
+Query OK, 1 row affected (0.01 sec)
+
+After INSERT, the current following of that user is:
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+| uid                                  | email                      | username      | program                    | year |
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+| 0a976727-cf65-4b6c-b138-89f83f843421 | steven60@example.net       | timothyburton | Math                       |    1 |
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | melanie94@example.org      | curtis61      | Mechanical Engineering     |    5 |
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera      | Environment                |    1 |
+| 3f9a1261-df93-4e67-9a77-09be06c35924 | christopher51@example.net  | haynesjose    | Engineering                |    2 |
+| 5af9ae2f-b972-4a19-b095-ed3a1be078c3 | parkerwilliam@example.com  | hannahking    | Arts                       |    5 |
+| 917e2c44-2103-4d80-b093-36e6270bac3b | sydneyfloyd@example.org    | stephanie81   | Mathematics                |    2 |
+| bb076683-88d2-449f-9100-32ef4b0ba023 | kimberlybrandt@example.com | kari89        | Systems Design Engineering |    2 |
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+7 rows in set (0.00 sec)
+
+
+5.
+Query OK, 1 row affected (0.01 sec)
+
+After DELETE, the current following of that user is:
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+| uid                                  | email                      | username      | program                    | year |
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+| 0a976727-cf65-4b6c-b138-89f83f843421 | steven60@example.net       | timothyburton | Math                       |    1 |
+| 2ab3410d-aa84-404e-a9f5-52caa19fe15b | melanie94@example.org      | curtis61      | Mechanical Engineering     |    5 |
+| 325c8801-72e0-4f9f-aa7b-4de2c86ab3d4 | arnoldmaria@example.net    | yherrera      | Environment                |    1 |
+| 3f9a1261-df93-4e67-9a77-09be06c35924 | christopher51@example.net  | haynesjose    | Engineering                |    2 |
+| 917e2c44-2103-4d80-b093-36e6270bac3b | sydneyfloyd@example.org    | stephanie81   | Mathematics                |    2 |
+| bb076683-88d2-449f-9100-32ef4b0ba023 | kimberlybrandt@example.com | kari89        | Systems Design Engineering |    2 |
++--------------------------------------+----------------------------+---------------+----------------------------+------+
+6 rows in set (0.00 sec)
