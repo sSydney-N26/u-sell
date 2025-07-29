@@ -95,11 +95,11 @@ npm install mysql2
 
 <h2>3.1 Basic Features</h2>
 <ul>
-  <li><strong>R6 - User's Profile</strong> Users can view and manage their personal information and listings</li>
-  <li> R7 - Browse Listings + category Filtering to browse listing by categories (Electronics, School Supplies, etc.). Click on listing for a detailed view </li>
-  <li> R8 - Create new listings with title, description, price, condition, etc. </li>
-  <li> R9 - Delete Listing</li>
-  <li> R10 - Edit Existing Listings Details</li>
+  <li><strong>R6 - User's Profile:</strong> Users can view and manage their personal information and listings</li>
+  <li><strong> R7 - Browse Listings:</strong> + category Filtering to browse listing by categories (Electronics, School Supplies, etc.). Click on listing for a detailed view </li>
+  <li><strong> R8 - Create Listings:</strong> with title, description, price, condition, etc. </li>
+  <li><strong> R9 - Delete Listing:</strong> can only delete under My Profile, meaning the listing belongs to the user</li>
+  <li><strong> R10 - Edit Existing Listings Details </strong></li>
 </ul>
 
 <h2>3.2 Advanced Features </h2>
